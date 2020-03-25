@@ -58,10 +58,10 @@
 		FC6960B3242BE7770024EDFA /* Weather-App */ = {
 			isa = PBXGroup;
 			children = (
-				FC6960CB242BE8920024EDFA /* Supporting Files */,
-				FC6960B8242BE7770024EDFA /* ViewController.swift */,
-				FC6960CC242BE89F0024EDFA /* Views */,
 				FC6960CD242BE8A50024EDFA /* Models */,
+				FC6960CC242BE89F0024EDFA /* Views */,
+				FC6960B8242BE7770024EDFA /* ViewController.swift */,
+				FC6960CB242BE8920024EDFA /* Supporting Files */,
 			);
 			path = "Weather-App";
 			sourceTree = "<group>";
