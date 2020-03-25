@@ -58,16 +58,40 @@
 		FC6960B3242BE7770024EDFA /* Weather-App */ = {
 			isa = PBXGroup;
 			children = (
+				FC6960CB242BE8920024EDFA /* Supporting Files */,
+				FC6960B8242BE7770024EDFA /* ViewController.swift */,
+				FC6960CC242BE89F0024EDFA /* Views */,
+				FC6960CD242BE8A50024EDFA /* Models */,
+			);
+			path = "Weather-App";
+			sourceTree = "<group>";
+		};
+		FC6960CB242BE8920024EDFA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				FC6960B4242BE7770024EDFA /* AppDelegate.swift */,
 				FC6960B6242BE7770024EDFA /* SceneDelegate.swift */,
-				FC6960B8242BE7770024EDFA /* ViewController.swift */,
-				FC6960BA242BE7770024EDFA /* Main.storyboard */,
 				FC6960C0242BE7780024EDFA /* Assets.xcassets */,
 				FC6960C2242BE7780024EDFA /* LaunchScreen.storyboard */,
 				FC6960C5242BE7780024EDFA /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FC6960CC242BE89F0024EDFA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FC6960BA242BE7770024EDFA /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FC6960CD242BE8A50024EDFA /* Models */ = {
+			isa = PBXGroup;
+			children = (
 				FC6960BD242BE7770024EDFA /* Weather_App.xcdatamodeld */,
 			);
-			path = "Weather-App";
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,7 +314,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C39EPG5VUE;
-				INFOPLIST_FILE = "Weather-App/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Weather-App/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,7 +323,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevintanner.Weather-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -308,7 +333,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C39EPG5VUE;
-				INFOPLIST_FILE = "Weather-App/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Weather-App/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +342,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevintanner.Weather-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
