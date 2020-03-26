@@ -35,9 +35,6 @@ class ViewController: UIViewController {
 
     @IBAction func fetchButtonTapped(_ sender: UIButton) {
         locationManager.requestLocation()
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
 //        weatherManager.fetchWeather(latitude: 37.8267, longitude: -122.4233)
     }
     
@@ -56,10 +53,9 @@ extension ViewController: WeatherManagerDelegate {
             dailySummaries = weatherTest
             DispatchQueue.main.async {
                 self.currentTempLabel.text = weatherTest[0].summary
+                self.tableView.reloadData()
             }
         }
-        
-        
     }
     
     func didFailWithError(error: Error) {
