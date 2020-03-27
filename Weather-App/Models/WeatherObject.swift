@@ -10,7 +10,13 @@ import Foundation
 
 struct WeatherObject {
     
-    let summary: [String]
+    let currentTemp: Int
+    let currentSummary: String
+    let chanceOfRain: Int
+    let humidity: Int
+    let visibility: Int
+    let dailySummary: String
+    
     
     
 }

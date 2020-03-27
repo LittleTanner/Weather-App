@@ -10,16 +10,19 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var currentTempLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var currentSummaryLabel: UILabel!
+    @IBOutlet weak var chanceOfRainLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var visibilityLabel: UILabel!
+    @IBOutlet weak var dailySummaryLabel: UILabel!
+    
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
-    
-    var weatherData: WeatherData?
-    var dailySummaries: [DailyData]?
+    var weatherObject: WeatherObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,34 +30,38 @@ class ViewController: UIViewController {
         locationManager.delegate = self
         weatherManager.delegate = self
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        
         locationManager.requestWhenInUseAuthorization()
-    }
-
-    @IBAction func fetchButtonTapped(_ sender: UIButton) {
         locationManager.requestLocation()
-//        weatherManager.fetchWeather(latitude: 37.8267, longitude: -122.4233)
     }
-    
-    func setDailyWeather() {
-        
-    }
-    
 }
+
+// MARK: - Weather Manager Delegate
 
 extension ViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData) {
         
-        weatherData = weather
+        guard let currentWeather = weather.currently,
+              let dailyWeather = weather.daily,
+              let dailySummary = dailyWeather.data.first?.summary else { return }
         
-        if let weatherTest = weather.daily?.data {
-            dailySummaries = weatherTest
-            DispatchQueue.main.async {
-                self.currentTempLabel.text = weatherTest[0].summary
-                self.tableView.reloadData()
-            }
+        let currentTemp = Int(currentWeather.temperature)
+        let currentSummary = currentWeather.summary
+        let chanceOfRainAsDouble = currentWeather.precipProbability * 100.0
+        let chanceOfRain = Int(chanceOfRainAsDouble)
+        let humidityAsDouble = currentWeather.humidity * 100.0
+        let humidity = Int(humidityAsDouble)
+        let visibility = currentWeather.visibility
+        
+        weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary)
+        
+        print(chanceOfRainAsDouble)
+        DispatchQueue.main.async {
+            self.currentTempLabel.text = "\(currentTemp)°"
+            self.currentSummaryLabel.text = currentSummary
+            self.chanceOfRainLabel.text = "\(chanceOfRain)%"
+            self.humidityLabel.text = "\(humidity)%"
+            self.visibilityLabel.text = "\(visibility) km"
+            self.dailySummaryLabel.text = dailySummary
         }
     }
     
@@ -63,6 +70,8 @@ extension ViewController: WeatherManagerDelegate {
     }
 }
 
+// MARK: - Location Manager Delegate
+
 extension ViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -70,40 +79,10 @@ extension ViewController: CLLocationManagerDelegate {
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
-            
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("\nThere was an error in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
     }
-}
-
-
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if let weatherData = weatherData,
-            let dailyWeather = weatherData.daily {
-            return dailyWeather.data.count
-        } else {
-            return 1
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-//        if let weatherData = weatherData,
-//            let dailySummaries = weatherData.daily?.data {
-//            cell.textLabel?.text = dailySummaries[indexPath.row].summary
-//        }
-        if let dailySummaries = dailySummaries {
-            cell.textLabel?.text = dailySummaries[indexPath.row].summary
-        }
-        
-        return cell
-    }
-    
-    
 }

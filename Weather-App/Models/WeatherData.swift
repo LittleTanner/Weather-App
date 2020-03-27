@@ -25,9 +25,9 @@ struct Currently: Codable {
     let summary: String
     let icon: String
     let nearestStormDistance: Int
-    let nearestStormBearing: Int
-    let precipIntensity: Int
-    let precipProbability: Int
+    let nearestStormBearing: Int?
+    let precipIntensity: Double
+    let precipProbability: Double
     let temperature: Double
     let apparentTemperature: Double
     let dewPoint: Double
