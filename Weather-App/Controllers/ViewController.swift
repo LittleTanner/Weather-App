@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var visibilityLabel: UILabel!
     @IBOutlet weak var dailySummaryLabel: UILabel!
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var weatherCollectionView: UICollectionView!
     
     
     var weatherManager = WeatherManager()
@@ -32,6 +34,11 @@ class ViewController: UIViewController {
         
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        weatherCollectionView.delegate = self
+        weatherCollectionView.dataSource = self
+        let nib = UINib(nibName: "HourlyWeatherCollectionViewCell", bundle: nil)
+        weatherCollectionView.register(nib, forCellWithReuseIdentifier: "hourlyWeatherCellXIB")
     }
 }
 
@@ -42,7 +49,9 @@ extension ViewController: WeatherManagerDelegate {
         
         guard let currentWeather = weather.currently,
               let dailyWeather = weather.daily,
-              let dailySummary = dailyWeather.data.first?.summary else { return }
+            let dailySummary = dailyWeather.data.first?.summary,
+            let hourlyWeather = weather.hourly?.data,
+        let dailyWeatherData = weather.daily?.data else { return }
         
         let currentTemp = Int(currentWeather.temperature)
         let currentSummary = currentWeather.summary
@@ -51,10 +60,10 @@ extension ViewController: WeatherManagerDelegate {
         let humidityAsDouble = currentWeather.humidity * 100.0
         let humidity = Int(humidityAsDouble)
         let visibility = currentWeather.visibility
+        let icon = currentWeather.icon
         
-        weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary)
-        
-        print(chanceOfRainAsDouble)
+        weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
+
         DispatchQueue.main.async {
             self.currentTempLabel.text = "\(currentTemp)°"
             self.currentSummaryLabel.text = currentSummary
@@ -62,11 +71,22 @@ extension ViewController: WeatherManagerDelegate {
             self.humidityLabel.text = "\(humidity)%"
             self.visibilityLabel.text = "\(visibility) km"
             self.dailySummaryLabel.text = dailySummary
+            self.weatherCollectionView.reloadData()
+            if let weatherObject = self.weatherObject {
+                self.backgroundImageView.image = weatherObject.getImageForCurrent(for: weatherObject.icon)
+            }
         }
     }
     
     func didFailWithError(error: Error) {
-        print("\nThere was an error in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
+        // Show an alert saying there was an error fetching weather data at this time
+        let alert = UIAlertController(title: "Weather Forecast Missing", message: "Can't fetch the weather right now. Please try again later.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
     }
 }
 
@@ -84,5 +104,33 @@ extension ViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("\nThere was an error in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
+    }
+}
+
+// MARK: - Collection View Methods
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let weatherObject = weatherObject {
+            print(weatherObject.hourlyWeather.count)
+            return weatherObject.hourlyWeather.count
+        } else {
+            print("No hourly data")
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hourlyWeatherCellXIB", for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
+        
+        if let weatherObject = weatherObject {
+            let indexForObject = weatherObject.hourlyWeather[indexPath.row]
+            
+            cell.timeLabel.text = String(indexForObject.time)
+            cell.tempLabel.text = "\(indexForObject.temperature)°"
+            cell.rainLabel.text = "Rain: \(indexForObject.precipProbability)"
+        }
+        
+        return cell
     }
 }
