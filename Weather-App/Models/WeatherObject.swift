@@ -15,7 +15,7 @@ struct WeatherObject {
     let currentSummary: String
     let chanceOfRain: Int
     let humidity: Int
-    let visibility: Int
+    let visibility: Double
     let dailySummary: String
     let icon: String
     

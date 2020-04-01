@@ -21,10 +21,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     
     
+    
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
     var weatherObject: WeatherObject?
+    var hourlySelected: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +34,30 @@ class ViewController: UIViewController {
         locationManager.delegate = self
         weatherManager.delegate = self
         
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
-        
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
-        let nib = UINib(nibName: "HourlyWeatherCollectionViewCell", bundle: nil)
-        weatherCollectionView.register(nib, forCellWithReuseIdentifier: "hourlyWeatherCellXIB")
+        let hourlyNib = UINib(nibName: "HourlyWeatherCollectionViewCell", bundle: nil)
+        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: "hourlyWeatherCellXIB")
+        
+        let dailyNib = UINib(nibName: "DailyWeatherCollectionViewCell", bundle: nil)
+        weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: "dailyWeatherCellXIB")
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            // The hourly button is selected
+            hourlySelected = true
+            weatherCollectionView.reloadData()
+            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+        } else {
+            // The daily button is selected
+            hourlySelected = false
+            weatherCollectionView.reloadData()
+            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+        }
     }
 }
 
@@ -48,10 +67,10 @@ extension ViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData) {
         
         guard let currentWeather = weather.currently,
-              let dailyWeather = weather.daily,
+            let dailyWeather = weather.daily,
             let dailySummary = dailyWeather.data.first?.summary,
             let hourlyWeather = weather.hourly?.data,
-        let dailyWeatherData = weather.daily?.data else { return }
+            let dailyWeatherData = weather.daily?.data else { return }
         
         let currentTemp = Int(currentWeather.temperature)
         let currentSummary = currentWeather.summary
@@ -63,7 +82,10 @@ extension ViewController: WeatherManagerDelegate {
         let icon = currentWeather.icon
         
         weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
-
+        
+        guard let weatherObject = self.weatherObject else { return }
+        let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
+        
         DispatchQueue.main.async {
             self.currentTempLabel.text = "\(currentTemp)°"
             self.currentSummaryLabel.text = currentSummary
@@ -72,9 +94,7 @@ extension ViewController: WeatherManagerDelegate {
             self.visibilityLabel.text = "\(visibility) km"
             self.dailySummaryLabel.text = dailySummary
             self.weatherCollectionView.reloadData()
-            if let weatherObject = self.weatherObject {
-                self.backgroundImageView.image = weatherObject.getImageForCurrent(for: weatherObject.icon)
-            }
+            self.backgroundImageView.image = backgroundImage
         }
     }
     
@@ -85,7 +105,9 @@ extension ViewController: WeatherManagerDelegate {
             self.dismiss(animated: true, completion: nil)
         }
         alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
         
     }
 }
@@ -111,26 +133,82 @@ extension ViewController: CLLocationManagerDelegate {
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let weatherObject = weatherObject {
+        guard let weatherObject = weatherObject else { return 0 }
+        if hourlySelected == true {
             print(weatherObject.hourlyWeather.count)
             return weatherObject.hourlyWeather.count
         } else {
-            print("No hourly data")
-            return 0
+            print(weatherObject.dailyWeather.count)
+            return weatherObject.dailyWeather.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hourlyWeatherCellXIB", for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
         
-        if let weatherObject = weatherObject {
-            let indexForObject = weatherObject.hourlyWeather[indexPath.row]
+        if hourlySelected == true {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hourlyWeatherCellXIB", for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
-            cell.timeLabel.text = String(indexForObject.time)
-            cell.tempLabel.text = "\(indexForObject.temperature)°"
-            cell.rainLabel.text = "Rain: \(indexForObject.precipProbability)"
+            if let weatherObject = weatherObject {
+                let indexForObject = weatherObject.hourlyWeather[indexPath.row]
+                
+                let rainAsDouble = indexForObject.precipProbability * 100
+                let rainAsInt = Int(rainAsDouble)
+                
+                let unixTimestampAsDouble = Double(indexForObject.time)
+                let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+                let dateFormatter = DateFormatter()
+                let timezone = TimeZone.current.abbreviation() ?? "PST"
+                dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "h a"
+                let time = dateFormatter.string(from: date)
+                
+                
+                cell.timeLabel.text = time
+                cell.tempLabel.text = "\(Int(indexForObject.temperature))°"
+                cell.rainLabel.text = "Rain: \(rainAsInt)%"
+                
+                return cell
+            }
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dailyWeatherCellXIB", for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            
+            if let weatherObject = weatherObject {
+                let indexForObject = weatherObject.dailyWeather[indexPath.row]
+                
+                let rainAsDouble = indexForObject.precipProbability * 100
+                let rainAsInt = Int(rainAsDouble)
+                
+                let unixTimestampAsDouble = Double(indexForObject.time)
+                let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+                let dateFormatter = DateFormatter()
+                let timezone = TimeZone.current.abbreviation() ?? "PST"
+                dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "EEEE"
+                let day = dateFormatter.string(from: date)
+                
+                dateFormatter.dateFormat = "h:m a"
+                let sunriseTimeAsDouble = Double(indexForObject.sunriseTime)
+                let sunriseDate = Date(timeIntervalSinceNow: sunriseTimeAsDouble)
+                let sunrise = dateFormatter.string(from: sunriseDate)
+                
+                let sunsetTimeAsDouble = Double(indexForObject.sunsetTime)
+                let sunsetDate = Date(timeIntervalSinceNow: sunsetTimeAsDouble)
+                let sunset = dateFormatter.string(from: sunsetDate)
+                
+                
+                cell.dayLabel.text = day
+                cell.rainLabel.text = "Rain: \(rainAsInt)%"
+                cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
+                cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
+                cell.sunriseLabel.text = sunrise
+                cell.sunsetLabel.text = sunset
+                cell.weatherIconLabel.text = "🌧"
+                
+            }
+            return cell
         }
-        
-        return cell
+        return UICollectionViewCell()
     }
 }

@@ -53,7 +53,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1y-Ls-FYi" userLabel="Middle View">
                                         <rect key="frame" x="0.0" y="278" width="414" height="270"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Rda-Oq-WQa">
+                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Rda-Oq-WQa">
                                                 <rect key="frame" x="30" y="0.0" width="354" height="270"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUQ-5K-xyZ">
@@ -109,44 +109,59 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mkd-ts-s8Z" userLabel="Bottom View">
                                         <rect key="frame" x="0.0" y="548" width="414" height="270"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generally rainy with short storms. Wind EN 10 km/h. Grab your umbrella" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCv-Ny-XQh">
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generally rainy with short storms. Wind EN 10 km/h. Grab your umbrella" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCv-Ny-XQh">
                                                 <rect key="frame" x="30" y="0.0" width="207" height="61"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RqE-8b-Lus">
-                                                <rect key="frame" x="0.0" y="73" width="414" height="189"/>
+                                                <rect key="frame" x="20" y="152" width="394" height="110"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="110" id="Ydj-6J-0B6"/>
+                                                </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dSx-Dc-zbS">
                                                     <size key="itemSize" width="234" height="157"/>
-                                                    <size key="estimatedItemSize" width="130" height="130"/>
+                                                    <size key="estimatedItemSize" width="200" height="82"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="1zI-ev-QO8" customClass="HourlyWeatherCollectionViewCell" customModule="Weather_App" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="16" width="234" height="157"/>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="1zI-ev-QO8" customClass="HourlyWeatherCollectionViewCell" customModule="Weather_App" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="14" width="200" height="82"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yLx-Tn-dEQ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="234" height="157"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="82"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </collectionViewCellContentView>
-                                                        <size key="customSize" width="234" height="157"/>
+                                                        <size key="customSize" width="200" height="82"/>
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yy4-Im-PAx">
+                                                <rect key="frame" x="16" y="94" width="207" height="32"/>
+                                                <segments>
+                                                    <segment title="HOURLY"/>
+                                                    <segment title="DAILY"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlTapped:" destination="BYZ-38-t0r" eventType="valueChanged" id="3UM-Ut-C5P"/>
+                                                </connections>
+                                            </segmentedControl>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="RqE-8b-Lus" firstAttribute="leading" secondItem="mkd-ts-s8Z" secondAttribute="leading" id="0Rc-KO-NOX"/>
-                                            <constraint firstItem="RqE-8b-Lus" firstAttribute="height" secondItem="mkd-ts-s8Z" secondAttribute="height" multiplier="0.7" id="ATd-2g-bpW"/>
+                                            <constraint firstItem="RqE-8b-Lus" firstAttribute="leading" secondItem="mkd-ts-s8Z" secondAttribute="leading" constant="20" id="0Rc-KO-NOX"/>
+                                            <constraint firstItem="yy4-Im-PAx" firstAttribute="leading" secondItem="mkd-ts-s8Z" secondAttribute="leading" constant="16" id="HjU-HK-rAd"/>
                                             <constraint firstAttribute="bottom" secondItem="RqE-8b-Lus" secondAttribute="bottom" constant="8" id="KVA-Nw-uiA"/>
                                             <constraint firstItem="iCv-Ny-XQh" firstAttribute="top" secondItem="mkd-ts-s8Z" secondAttribute="top" id="Sdu-eh-0MK"/>
                                             <constraint firstAttribute="trailing" secondItem="RqE-8b-Lus" secondAttribute="trailing" id="UmH-Wc-Z90"/>
                                             <constraint firstItem="iCv-Ny-XQh" firstAttribute="width" secondItem="mkd-ts-s8Z" secondAttribute="width" multiplier="0.5" id="nb9-zX-QOX"/>
                                             <constraint firstItem="iCv-Ny-XQh" firstAttribute="leading" secondItem="mkd-ts-s8Z" secondAttribute="leading" constant="30" id="t20-0H-VZb"/>
+                                            <constraint firstItem="RqE-8b-Lus" firstAttribute="top" secondItem="yy4-Im-PAx" secondAttribute="bottom" constant="27" id="zZf-Cq-W5P"/>
+                                            <constraint firstItem="yy4-Im-PAx" firstAttribute="width" secondItem="mkd-ts-s8Z" secondAttribute="width" multiplier="0.5" id="zpH-aA-XGs"/>
                                         </constraints>
                                     </view>
                                 </subviews>
