@@ -36,11 +36,11 @@ class ViewController: UIViewController {
         
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
-        let hourlyNib = UINib(nibName: "HourlyWeatherCollectionViewCell", bundle: nil)
-        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: "hourlyWeatherCellXIB")
+        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
+        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
         
-        let dailyNib = UINib(nibName: "DailyWeatherCollectionViewCell", bundle: nil)
-        weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: "dailyWeatherCellXIB")
+        let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
+        weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
         
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
@@ -146,7 +146,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if hourlySelected == true {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hourlyWeatherCellXIB", for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.hourlyWeatherCellIdentifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let weatherObject = weatherObject {
                 let indexForObject = weatherObject.hourlyWeather[indexPath.row]
@@ -171,7 +171,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 return cell
             }
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dailyWeatherCellXIB", for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let weatherObject = weatherObject {
                 let indexForObject = weatherObject.dailyWeather[indexPath.row]
@@ -182,13 +182,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 let unixTimestampAsDouble = Double(indexForObject.time)
                 let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
                 let dateFormatter = DateFormatter()
-                let timezone = TimeZone.current.abbreviation() ?? "PST"
+                let timezone = TimeZone.current.abbreviation() ?? "PDT"
                 dateFormatter.timeZone = TimeZone(abbreviation: timezone)
                 dateFormatter.locale = NSLocale.current
                 dateFormatter.dateFormat = "EEEE"
                 let day = dateFormatter.string(from: date)
                 
-                dateFormatter.dateFormat = "h:m a"
+                dateFormatter.dateFormat = "h:mm a"
                 let sunriseTimeAsDouble = Double(indexForObject.sunriseTime)
                 let sunriseDate = Date(timeIntervalSinceNow: sunriseTimeAsDouble)
                 let sunrise = dateFormatter.string(from: sunriseDate)

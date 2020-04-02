@@ -24,17 +24,17 @@ struct WeatherObject {
     
     func getImageForCurrent(for icon: String) -> UIImage {
         switch icon {
-        case "clear-day":           return UIImage(named: "clear-day")!
-        case "clear-night":         return UIImage(named: "clear-night")!
-        case "rain":                return UIImage(named: "rain")!
-        case "snow":                return UIImage(named: "snow")!
-        case "sleet":               return UIImage(named: "sleet")!
-        case "wind":                return UIImage(named: "wind")!
-        case "fog":                 return UIImage(named: "fog")!
-        case "cloudy":              return UIImage(named: "cloudy")!
-        case "partly-cloudy-day":   return UIImage(named: "partly-cloudy-day")!
-        case "partly-cloudy-night": return UIImage(named: "partly-cloudy-night")!
-        default:                    return UIImage(named: "default")!
+        case Constants.clearDay:            return UIImage(named: Constants.clearDay)!
+        case Constants.clearNight:          return UIImage(named: Constants.clearNight)!
+        case Constants.rain:                return UIImage(named: Constants.rain)!
+        case Constants.snow:                return UIImage(named: Constants.snow)!
+        case Constants.sleet:               return UIImage(named: Constants.sleet)!
+        case Constants.wind:                return UIImage(named: Constants.wind)!
+        case Constants.fog:                 return UIImage(named: Constants.fog)!
+        case Constants.cloudy:              return UIImage(named: Constants.cloudy)!
+        case Constants.partlyCloudyDay:     return UIImage(named: Constants.partlyCloudyDay)!
+        case Constants.partlyCloudyNight:   return UIImage(named: Constants.partlyCloudyNight)!
+        default:                            return UIImage(named: Constants.defaultImage)!
         }
     }
 }

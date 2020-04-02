@@ -10,80 +10,62 @@ import UIKit
 import CoreLocation
 
 class SearchByAddressViewController: UIViewController {
-
+    
     @IBOutlet weak var searchByAddressSearchBar: UISearchBar!
     @IBOutlet weak var addressesTableView: UITableView!
     
     var searchBarText: String?
     var lat: Double?
     var lon: Double?
-    var weatherManager = WeatherManager()
-    
-    var weatherObject: WeatherObject?
-    var testLocation: String?
+
+    var locationInfo: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherManager.delegate = self
         searchByAddressSearchBar.delegate = self
         addressesTableView.delegate = self
         addressesTableView.dataSource = self
-        // Do any additional setup after loading the view.
     }
-    
-//    func getCoordinate(addressString: String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
-//        let geocoder = CLGeocoder()
-//
-//        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
-//            if error == nil {
-//                if let placemark = placemarks?[0] {
-//                    let location = placemark.location!
-//                    print("Placemark\n name:\(placemark.name)\n City:\(placemark.locality)\n State:\(placemark.administrativeArea)\n Country: \(placemark.isoCountryCode)")
-//                    completionHandler(location.coordinate, nil)
-//                    return
-//                }
-//            }
-//
-//            completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
-//        }
-//    }
     
     func getCoordinate(addressString: String, completionHandler: @escaping((info: String, coordinates: CLLocationCoordinate2D), NSError?) -> Void ) {
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(addressString) { (placemarks, error) in
             if error == nil {
+                
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
                     
-                    let outputString = "\(placemark.locality ?? "N/A"), \(placemark.administrativeArea ?? "N/A"), \(placemark.isoCountryCode ?? "N/A")"
-                    print("Placemark\n name:\(placemark.name)\n City:\(placemark.locality)\n State:\(placemark.administrativeArea)\n Country: \(placemark.isoCountryCode)")
+                    var outputString = ""
+                    
+                    if let city = placemark.locality,
+                        let state = placemark.administrativeArea,
+                        let country = placemark.country {
+                        outputString = "\(city), \(state), \(country)"
+                    }
+                    
                     completionHandler((outputString, location.coordinate), nil)
                     return
                 }
             }
             
-            completionHandler(("Error", kCLLocationCoordinate2DInvalid), error as NSError?)
+            completionHandler(("Location not found", kCLLocationCoordinate2DInvalid), error as NSError?)
         }
     }
 }
 
 extension SearchByAddressViewController: UITableViewDataSource, UITableViewDelegate {
-   
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.addressCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.addressCellIdentifier, for: indexPath)
         
-        if let weatherObject = weatherObject, let locationInfo = testLocation {
-        
+        if let locationInfo = locationInfo {
             cell.textLabel?.text = locationInfo
-            cell.detailTextLabel?.text = String(weatherObject.currentTemp)
-            
         }
-        
         return cell
     }
 }
@@ -92,45 +74,23 @@ extension SearchByAddressViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text {
             self.searchBarText = searchText
-            getCoordinate(addressString: searchText) { (coordinate, error) in
-                self.lat = coordinate.coordinates.latitude
-                self.lon = coordinate.coordinates.longitude
-                if let latitude = self.lat, let longitude = self.lon {
-                    print("\(latitude) \(longitude)")
-                    self.weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
-                }
-                self.testLocation = coordinate.info
+            getCoordinate(addressString: searchText) { (location, error) in
+                self.lat = location.coordinates.latitude
+                self.lon = location.coordinates.longitude
+                self.locationInfo = location.info
+                self.addressesTableView.reloadData()
             }
         }
         searchBar.resignFirstResponder()
     }
-}
-
-extension SearchByAddressViewController: WeatherManagerDelegate {
-    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData) {
-        guard let currentWeather = weather.currently,
-              let dailyWeather = weather.daily,
-              let dailySummary = dailyWeather.data.first?.summary else { return }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        let currentTemp = Int(currentWeather.temperature)
-        let currentSummary = currentWeather.summary
-        let chanceOfRainAsDouble = currentWeather.precipProbability * 100.0
-        let chanceOfRain = Int(chanceOfRainAsDouble)
-        let humidityAsDouble = currentWeather.humidity * 100.0
-        let humidity = Int(humidityAsDouble)
-        let visibility = currentWeather.visibility
-        let icon = currentWeather.icon
-        
-//        weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon)
-        DispatchQueue.main.async {
+        getCoordinate(addressString: searchText) { (location, error) in
+            self.lat = location.coordinates.latitude
+            self.lon = location.coordinates.longitude
+            self.locationInfo = location.info
             self.addressesTableView.reloadData()
         }
-        
     }
-    
-    func didFailWithError(error: Error) {
-        // Handle error
-    }
-    
-    
 }
