@@ -51,12 +51,12 @@ class ViewController: UIViewController {
             // The hourly button is selected
             hourlySelected = true
             weatherCollectionView.reloadData()
-            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
         } else {
             // The daily button is selected
             hourlySelected = false
             weatherCollectionView.reloadData()
-            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+            weatherCollectionView.scrollToItem(at: IndexPath(item: -1, section: 0), at: .left, animated: false)
         }
     }
 }
@@ -94,7 +94,8 @@ extension ViewController: WeatherManagerDelegate {
             self.visibilityLabel.text = "\(visibility) km"
             self.dailySummaryLabel.text = dailySummary
             self.weatherCollectionView.reloadData()
-            self.backgroundImageView.image = backgroundImage
+//            self.backgroundImageView.image = backgroundImage
+            self.backgroundImageView.image = UIImage(named: Constants.rain)
         }
     }
     
@@ -146,7 +147,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if hourlySelected == true {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.hourlyWeatherCellIdentifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let weatherObject = weatherObject {
                 let indexForObject = weatherObject.hourlyWeather[indexPath.row]
@@ -163,13 +164,71 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 dateFormatter.dateFormat = "h a"
                 let time = dateFormatter.string(from: date)
                 
+                let weatherIcon = indexForObject.icon
                 
-                cell.timeLabel.text = time
-                cell.tempLabel.text = "\(Int(indexForObject.temperature))°"
+                switch weatherIcon {
+                case Constants.clearDay: cell.weatherIconLabel.text = "☀️"
+                case Constants.clearNight: cell.weatherIconLabel.text = "🌙"
+                case Constants.rain: cell.weatherIconLabel.text = "🌧"
+                case Constants.snow: cell.weatherIconLabel.text = "🌨"
+                case Constants.sleet: cell.weatherIconLabel.text = "🌨"
+                case Constants.wind: cell.weatherIconLabel.text = "💨"
+                case Constants.fog: cell.weatherIconLabel.text = "🌫"
+                case Constants.cloudy: cell.weatherIconLabel.text = "☁️"
+                case Constants.partlyCloudyDay: cell.weatherIconLabel.text = "⛅️"
+                case Constants.partlyCloudyNight: cell.weatherIconLabel.text = "🌥"
+                default: cell.weatherIconLabel.text = "🤷🏼‍♂️"
+                }
+                
+                cell.dayLabel.text = time
+                cell.tempHighLabel.text = "\(Int(indexForObject.temperature))°"
+                cell.tempLowLabel.text = ""
                 cell.rainLabel.text = "Rain: \(rainAsInt)%"
+                
                 
                 return cell
             }
+            
+//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.hourlyWeatherCellIdentifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
+//
+//            if let weatherObject = weatherObject {
+//                let indexForObject = weatherObject.hourlyWeather[indexPath.row]
+//
+//                let rainAsDouble = indexForObject.precipProbability * 100
+//                let rainAsInt = Int(rainAsDouble)
+//
+//                let unixTimestampAsDouble = Double(indexForObject.time)
+//                let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+//                let dateFormatter = DateFormatter()
+//                let timezone = TimeZone.current.abbreviation() ?? "PST"
+//                dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+//                dateFormatter.locale = NSLocale.current
+//                dateFormatter.dateFormat = "h a"
+//                let time = dateFormatter.string(from: date)
+//
+//                let weatherIcon = indexForObject.icon
+//
+//                switch weatherIcon {
+//                case Constants.clearDay: cell.weatherIcon.text = "☀️"
+//                case Constants.clearNight: cell.weatherIcon.text = "🌙"
+//                case Constants.rain: cell.weatherIcon.text = "🌧"
+//                case Constants.snow: cell.weatherIcon.text = "🌨"
+//                case Constants.sleet: cell.weatherIcon.text = "🌨"
+//                case Constants.wind: cell.weatherIcon.text = "💨"
+//                case Constants.fog: cell.weatherIcon.text = "🌫"
+//                case Constants.cloudy: cell.weatherIcon.text = "☁️"
+//                case Constants.partlyCloudyDay: cell.weatherIcon.text = "⛅️"
+//                case Constants.partlyCloudyNight: cell.weatherIcon.text = "🌥"
+//                default: cell.weatherIcon.text = "🤷🏼‍♂️"
+//                }
+//
+//                cell.timeLabel.text = time
+//                cell.tempLabel.text = "\(Int(indexForObject.temperature))°"
+//                cell.rainLabel.text = "Rain: \(rainAsInt)%"
+//
+//
+//                return cell
+//            }
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
@@ -182,30 +241,27 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 let unixTimestampAsDouble = Double(indexForObject.time)
                 let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
                 let dateFormatter = DateFormatter()
-                let timezone = TimeZone.current.abbreviation() ?? "PDT"
-                dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-                dateFormatter.locale = NSLocale.current
                 dateFormatter.dateFormat = "EEEE"
                 let day = dateFormatter.string(from: date)
                 
-                dateFormatter.dateFormat = "h:mm a"
-                let sunriseTimeAsDouble = Double(indexForObject.sunriseTime)
-                let sunriseDate = Date(timeIntervalSinceNow: sunriseTimeAsDouble)
-                let sunrise = dateFormatter.string(from: sunriseDate)
-                
-                let sunsetTimeAsDouble = Double(indexForObject.sunsetTime)
-                let sunsetDate = Date(timeIntervalSinceNow: sunsetTimeAsDouble)
-                let sunset = dateFormatter.string(from: sunsetDate)
-                
+                switch indexForObject.icon {
+                case Constants.clearDay: cell.weatherIconLabel.text = "☀️"
+                case Constants.clearNight: cell.weatherIconLabel.text = "🌙"
+                case Constants.rain: cell.weatherIconLabel.text = "🌧"
+                case Constants.snow: cell.weatherIconLabel.text = "🌨"
+                case Constants.sleet: cell.weatherIconLabel.text = "🌨"
+                case Constants.wind: cell.weatherIconLabel.text = "💨"
+                case Constants.fog: cell.weatherIconLabel.text = "🌫"
+                case Constants.cloudy: cell.weatherIconLabel.text = "☁️"
+                case Constants.partlyCloudyDay: cell.weatherIconLabel.text = "⛅️"
+                case Constants.partlyCloudyNight: cell.weatherIconLabel.text = "🌥"
+                default: cell.weatherIconLabel.text = "🤷🏼‍♂️"
+                }
                 
                 cell.dayLabel.text = day
                 cell.rainLabel.text = "Rain: \(rainAsInt)%"
                 cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
                 cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
-                cell.sunriseLabel.text = sunrise
-                cell.sunsetLabel.text = sunset
-                cell.weatherIconLabel.text = "🌧"
-                
             }
             return cell
         }

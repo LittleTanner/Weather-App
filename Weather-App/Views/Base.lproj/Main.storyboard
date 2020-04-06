@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rain" translatesAutoresizingMaskIntoConstraints="NO" id="aEq-j1-fcV">
-                                <rect key="frame" x="-512.5" y="184" width="1666.5" height="538"/>
+                                <rect key="frame" x="-512.5" y="-31" width="1666.5" height="896"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CWd-q4-5bl">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
@@ -116,32 +116,33 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RqE-8b-Lus">
-                                                <rect key="frame" x="20" y="152" width="394" height="110"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <rect key="frame" x="20" y="172" width="394" height="90"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="110" id="Ydj-6J-0B6"/>
+                                                    <constraint firstAttribute="height" constant="90" id="Ydj-6J-0B6"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dSx-Dc-zbS">
                                                     <size key="itemSize" width="234" height="157"/>
-                                                    <size key="estimatedItemSize" width="200" height="82"/>
+                                                    <size key="estimatedItemSize" width="120" height="82"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="1zI-ev-QO8" customClass="HourlyWeatherCollectionViewCell" customModule="Weather_App" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="14" width="200" height="82"/>
+                                                        <rect key="frame" x="0.0" y="4" width="120" height="82"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yLx-Tn-dEQ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="82"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="82"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </collectionViewCellContentView>
-                                                        <size key="customSize" width="200" height="82"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <size key="customSize" width="120" height="82"/>
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yy4-Im-PAx">
-                                                <rect key="frame" x="16" y="94" width="207" height="32"/>
+                                                <rect key="frame" x="16" y="133" width="207" height="32"/>
                                                 <segments>
                                                     <segment title="HOURLY"/>
                                                     <segment title="DAILY"/>
@@ -160,7 +161,7 @@
                                             <constraint firstAttribute="trailing" secondItem="RqE-8b-Lus" secondAttribute="trailing" id="UmH-Wc-Z90"/>
                                             <constraint firstItem="iCv-Ny-XQh" firstAttribute="width" secondItem="mkd-ts-s8Z" secondAttribute="width" multiplier="0.5" id="nb9-zX-QOX"/>
                                             <constraint firstItem="iCv-Ny-XQh" firstAttribute="leading" secondItem="mkd-ts-s8Z" secondAttribute="leading" constant="30" id="t20-0H-VZb"/>
-                                            <constraint firstItem="RqE-8b-Lus" firstAttribute="top" secondItem="yy4-Im-PAx" secondAttribute="bottom" constant="27" id="zZf-Cq-W5P"/>
+                                            <constraint firstItem="RqE-8b-Lus" firstAttribute="top" secondItem="yy4-Im-PAx" secondAttribute="bottom" constant="8" id="zZf-Cq-W5P"/>
                                             <constraint firstItem="yy4-Im-PAx" firstAttribute="width" secondItem="mkd-ts-s8Z" secondAttribute="width" multiplier="0.5" id="zpH-aA-XGs"/>
                                         </constraints>
                                     </view>
@@ -174,12 +175,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="aEq-j1-fcV" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="1IQ-LD-eDI"/>
+                            <constraint firstItem="aEq-j1-fcV" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.92" id="1IQ-LD-eDI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="CWd-q4-5bl" secondAttribute="bottom" id="5L7-nt-WWy"/>
                             <constraint firstItem="CWd-q4-5bl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="AYH-HB-rmf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CWd-q4-5bl" secondAttribute="trailing" id="CB9-3B-YJO"/>
                             <constraint firstItem="aEq-j1-fcV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" multiplier="1.55" id="FKn-qK-kia"/>
-                            <constraint firstItem="aEq-j1-fcV" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.6" id="bYo-a6-jWJ"/>
+                            <constraint firstItem="aEq-j1-fcV" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="bYo-a6-jWJ"/>
                             <constraint firstItem="CWd-q4-5bl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oJE-zx-yz4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -248,6 +249,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zgh-2L-1zq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1053.6231884057972" y="136.60714285714286"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="rb0-nt-QaA">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="yZw-wT-IHM" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6sc-ry-Dq4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1870" y="137"/>
         </scene>
     </scenes>
     <resources>
