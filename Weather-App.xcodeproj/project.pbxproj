@@ -27,6 +27,7 @@
 		FC98D32C243BFDBD0047F022 /* WeatherPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */; };
 		FC98D32E243BFEE70047F022 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32D243BFEE70047F022 /* City.swift */; };
 		FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32F243C03AF0047F022 /* LocationsViewController.swift */; };
+		FC98D337243D2AF00047F022 /* LocationsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPageManager.swift; sourceTree = "<group>"; };
 		FC98D32D243BFEE70047F022 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		FC98D32F243C03AF0047F022 /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
+		FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,11 +142,12 @@
 		FC6960D2242C19550024EDFA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FC6960B8242BE7770024EDFA /* ViewController.swift */,
 				FC98D329243BFC5C0047F022 /* WeatherPageViewController.swift */,
+				FC6960B8242BE7770024EDFA /* ViewController.swift */,
 				FC1F2730242EDDDF00C08CAA /* SearchByAddressViewController.swift */,
 				FC98D32F243C03AF0047F022 /* LocationsViewController.swift */,
 				FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */,
+				FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */,
 				FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */,
 				FC98D32C243BFDBD0047F022 /* WeatherPageManager.swift in Sources */,
+				FC98D337243D2AF00047F022 /* LocationsNavigationController.swift in Sources */,
 				FC04E591243410DC00207762 /* DailyWeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

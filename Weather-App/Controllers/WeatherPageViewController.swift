@@ -30,11 +30,13 @@ class WeatherPageViewController: UIPageViewController {
     func createViewControllers() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        for num in 1 ... 5 {
+        for num in 0 ..< WeatherPageManager.shared.cities.count {
             guard let vc = storyboard.instantiateViewController(identifier: "WeatherForCitySID") as? ViewController else { return }
+            vc.city = WeatherPageManager.shared.cities[num]
+            vc.cityLabelText = WeatherPageManager.shared.cities[num].cityName
+            
             controllers.append(vc)
         }
-        
     }
     
     
@@ -44,8 +46,8 @@ class WeatherPageViewController: UIPageViewController {
         self.pageControl.currentPage = 0
         self.pageControl.alpha = 0.5
         self.pageControl.tintColor = UIColor.black
-        self.pageControl.pageIndicatorTintColor = UIColor.white
-        self.pageControl.currentPageIndicatorTintColor = UIColor.black
+        self.pageControl.pageIndicatorTintColor = UIColor.secondaryLabel
+        self.pageControl.currentPageIndicatorTintColor = UIColor.systemBlue
         self.view.addSubview(pageControl)
     }
     

@@ -69,4 +69,22 @@ struct WeatherManager {
             return nil
         }
     }
+    
+    
+    
+    static func getWeatherIcon(with icon: String) -> String {
+        switch icon {
+        case Constants.clearDay: return "☀️"
+        case Constants.clearNight: return "🌙"
+        case Constants.rain: return "🌧"
+        case Constants.snow: return "🌨"
+        case Constants.sleet: return "🌨"
+        case Constants.wind: return "💨"
+        case Constants.fog: return "🌫"
+        case Constants.cloudy: return "☁️"
+        case Constants.partlyCloudyDay: return "⛅️"
+        case Constants.partlyCloudyNight: return "🌥"
+        default: return "🤷🏼‍♂️"
+        }
+    }
 }

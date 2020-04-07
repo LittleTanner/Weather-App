@@ -23,6 +23,7 @@ class SearchByAddressViewController: UIViewController {
     
     var cities: [City]?
     var city: City?
+    var cityName: String?
     
     var weatherPageManagerDelegate: WeatherPageManagerDelegate?
     
@@ -31,6 +32,10 @@ class SearchByAddressViewController: UIViewController {
         searchByAddressSearchBar.delegate = self
         addressesTableView.delegate = self
         addressesTableView.dataSource = self
+    }
+    
+    @IBAction func navigationBackButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true)
     }
     
     func getCoordinate(addressString: String, completionHandler: @escaping((info: String, coordinates: CLLocationCoordinate2D), NSError?) -> Void ) {
@@ -46,8 +51,9 @@ class SearchByAddressViewController: UIViewController {
                     
                     if let city = placemark.locality,
                         let state = placemark.administrativeArea,
-                        let country = placemark.country {
+                        let country = placemark.isoCountryCode {
                         outputString = "\(city), \(state), \(country)"
+                        self.cityName = city
                     }
                     
                     completionHandler((outputString, location.coordinate), nil)
@@ -77,12 +83,12 @@ extension SearchByAddressViewController: UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let city = city else { return }
-        WeatherPageManager.shared.addCity(with: city)
+        guard let city = city, let cityName = cityName else { return }
+        WeatherPageManager.shared.addCity(with: City(cityName: cityName, latitude: city.latitude, longitude: city.longitude))
         print("Added city: \(city)")
         print("Cities: \(WeatherPageManager.shared.cities)")
         weatherPageManagerDelegate?.reloadTableView()
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
 }
 

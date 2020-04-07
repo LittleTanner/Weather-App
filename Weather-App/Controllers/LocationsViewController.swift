@@ -25,6 +25,14 @@ class LocationsViewController: UIViewController {
         locationsTableView.reloadData()
     }
     
+    @IBAction func backToWeatherButtonTapped(_ sender: UIBarButtonItem) {
+//        dismiss(animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: "WeatherPageViewControllerSID") as? WeatherPageViewController else { return }
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSearchByAddress" {
             guard let destinationVC = segue.destination as? SearchByAddressViewController else { return }

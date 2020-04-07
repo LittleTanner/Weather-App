@@ -11,6 +11,7 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var currentSummaryLabel: UILabel!
     @IBOutlet weak var chanceOfRainLabel: UILabel!
@@ -20,7 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     
-    
+    var city: City?
+    var cityLabelText: String?
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
@@ -30,7 +32,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         locationManager.delegate = self
         weatherManager.delegate = self
         
@@ -44,6 +45,15 @@ class ViewController: UIViewController {
         
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        cityNameLabel.text = cityLabelText
+    }
+    
+    @IBAction func locationButtonTapped(_ sender: UIButton) {
+
+    }
+    
+    @IBAction func settingsButtonTapped(_ sender: UIButton) {
     }
     
     @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
@@ -59,6 +69,9 @@ class ViewController: UIViewController {
             weatherCollectionView.scrollToItem(at: IndexPath(item: -1, section: 0), at: .left, animated: false)
         }
     }
+    
+    
+    
 }
 
 // MARK: - Weather Manager Delegate
@@ -109,7 +122,6 @@ extension ViewController: WeatherManagerDelegate {
         DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
         }
-        
     }
 }
 
@@ -118,11 +130,18 @@ extension ViewController: WeatherManagerDelegate {
 extension ViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
+        
+        if let location = city {
+            let latitude = location.latitude
+            let longitude = location.longitude
             weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
         }
+        
+//        if let location = locations.last {
+//            let latitude = location.coordinate.latitude
+//            let longitude = location.coordinate.longitude
+//            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
+//        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -164,26 +183,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 dateFormatter.dateFormat = "h a"
                 let time = dateFormatter.string(from: date)
                 
-                let weatherIcon = indexForObject.icon
-                
-                switch weatherIcon {
-                case Constants.clearDay: cell.weatherIconLabel.text = "☀️"
-                case Constants.clearNight: cell.weatherIconLabel.text = "🌙"
-                case Constants.rain: cell.weatherIconLabel.text = "🌧"
-                case Constants.snow: cell.weatherIconLabel.text = "🌨"
-                case Constants.sleet: cell.weatherIconLabel.text = "🌨"
-                case Constants.wind: cell.weatherIconLabel.text = "💨"
-                case Constants.fog: cell.weatherIconLabel.text = "🌫"
-                case Constants.cloudy: cell.weatherIconLabel.text = "☁️"
-                case Constants.partlyCloudyDay: cell.weatherIconLabel.text = "⛅️"
-                case Constants.partlyCloudyNight: cell.weatherIconLabel.text = "🌥"
-                default: cell.weatherIconLabel.text = "🤷🏼‍♂️"
-                }
-                
                 cell.dayLabel.text = time
+                cell.weatherIconLabel.text = WeatherManager.getWeatherIcon(with: indexForObject.icon)
                 cell.tempHighLabel.text = "\(Int(indexForObject.temperature))°"
                 cell.tempLowLabel.text = ""
-                cell.rainLabel.text = "Rain: \(rainAsInt)%"
+                cell.rainLabel.text = "☂️ \(rainAsInt)%"
                 
                 
                 return cell
@@ -241,25 +245,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 let unixTimestampAsDouble = Double(indexForObject.time)
                 let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "EEEE"
+                dateFormatter.dateFormat = "EEE"
                 let day = dateFormatter.string(from: date)
                 
-                switch indexForObject.icon {
-                case Constants.clearDay: cell.weatherIconLabel.text = "☀️"
-                case Constants.clearNight: cell.weatherIconLabel.text = "🌙"
-                case Constants.rain: cell.weatherIconLabel.text = "🌧"
-                case Constants.snow: cell.weatherIconLabel.text = "🌨"
-                case Constants.sleet: cell.weatherIconLabel.text = "🌨"
-                case Constants.wind: cell.weatherIconLabel.text = "💨"
-                case Constants.fog: cell.weatherIconLabel.text = "🌫"
-                case Constants.cloudy: cell.weatherIconLabel.text = "☁️"
-                case Constants.partlyCloudyDay: cell.weatherIconLabel.text = "⛅️"
-                case Constants.partlyCloudyNight: cell.weatherIconLabel.text = "🌥"
-                default: cell.weatherIconLabel.text = "🤷🏼‍♂️"
-                }
-                
                 cell.dayLabel.text = day
-                cell.rainLabel.text = "Rain: \(rainAsInt)%"
+                cell.weatherIconLabel.text = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                cell.rainLabel.text = "☂️ \(rainAsInt)%"
                 cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
                 cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
             }
