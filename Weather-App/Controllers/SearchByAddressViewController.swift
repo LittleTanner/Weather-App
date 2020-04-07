@@ -20,6 +20,12 @@ class SearchByAddressViewController: UIViewController {
 
     var locationInfo: String?
     
+    
+    var cities: [City]?
+    var city: City?
+    
+    var weatherPageManagerDelegate: WeatherPageManagerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchByAddressSearchBar.delegate = self
@@ -68,6 +74,16 @@ extension SearchByAddressViewController: UITableViewDataSource, UITableViewDeleg
         }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let city = city else { return }
+        WeatherPageManager.shared.addCity(with: city)
+        print("Added city: \(city)")
+        print("Cities: \(WeatherPageManager.shared.cities)")
+        weatherPageManagerDelegate?.reloadTableView()
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension SearchByAddressViewController: UISearchBarDelegate {
@@ -78,6 +94,9 @@ extension SearchByAddressViewController: UISearchBarDelegate {
                 self.lat = location.coordinates.latitude
                 self.lon = location.coordinates.longitude
                 self.locationInfo = location.info
+                
+                self.city = City(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+                
                 self.addressesTableView.reloadData()
             }
         }
@@ -90,6 +109,9 @@ extension SearchByAddressViewController: UISearchBarDelegate {
             self.lat = location.coordinates.latitude
             self.lon = location.coordinates.longitude
             self.locationInfo = location.info
+            
+            self.city = City(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+            
             self.addressesTableView.reloadData()
         }
     }

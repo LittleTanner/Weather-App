@@ -36,8 +36,8 @@ class ViewController: UIViewController {
         
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
-        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
-        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
+//        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
+//        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
         
         let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
         weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
             // The hourly button is selected
             hourlySelected = true
             weatherCollectionView.reloadData()
-            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+            weatherCollectionView.scrollToItem(at: IndexPath(item: -1, section: 0), at: .left, animated: false)
         } else {
             // The daily button is selected
             hourlySelected = false

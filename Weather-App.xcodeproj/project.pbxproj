@@ -23,6 +23,10 @@
 		FC6960CF242BE9D00024EDFA /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960CE242BE9D00024EDFA /* WeatherData.swift */; };
 		FC6960D1242C137D0024EDFA /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960D0242C137D0024EDFA /* WeatherManager.swift */; };
 		FC6960D5242C22250024EDFA /* WeatherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960D4242C22250024EDFA /* WeatherObject.swift */; };
+		FC98D32A243BFC5C0047F022 /* WeatherPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D329243BFC5C0047F022 /* WeatherPageViewController.swift */; };
+		FC98D32C243BFDBD0047F022 /* WeatherPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */; };
+		FC98D32E243BFEE70047F022 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32D243BFEE70047F022 /* City.swift */; };
+		FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32F243C03AF0047F022 /* LocationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		FC6960CE242BE9D00024EDFA /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		FC6960D0242C137D0024EDFA /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		FC6960D4242C22250024EDFA /* WeatherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherObject.swift; sourceTree = "<group>"; };
+		FC98D329243BFC5C0047F022 /* WeatherPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPageViewController.swift; sourceTree = "<group>"; };
+		FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPageManager.swift; sourceTree = "<group>"; };
+		FC98D32D243BFEE70047F022 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		FC98D32F243C03AF0047F022 /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +132,7 @@
 				FC6960CE242BE9D00024EDFA /* WeatherData.swift */,
 				FC6960D4242C22250024EDFA /* WeatherObject.swift */,
 				FC6960D0242C137D0024EDFA /* WeatherManager.swift */,
+				FC98D32D243BFEE70047F022 /* City.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -132,7 +141,10 @@
 			isa = PBXGroup;
 			children = (
 				FC6960B8242BE7770024EDFA /* ViewController.swift */,
+				FC98D329243BFC5C0047F022 /* WeatherPageViewController.swift */,
 				FC1F2730242EDDDF00C08CAA /* SearchByAddressViewController.swift */,
+				FC98D32F243C03AF0047F022 /* LocationsViewController.swift */,
+				FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -212,14 +224,18 @@
 			files = (
 				FC6960D1242C137D0024EDFA /* WeatherManager.swift in Sources */,
 				FC6960BF242BE7770024EDFA /* Weather_App.xcdatamodeld in Sources */,
+				FC98D32A243BFC5C0047F022 /* WeatherPageViewController.swift in Sources */,
 				FC04E58D2433F4B100207762 /* HourlyWeatherCollectionViewCell.swift in Sources */,
 				FC6960B9242BE7770024EDFA /* ViewController.swift in Sources */,
 				FC6960B5242BE7770024EDFA /* AppDelegate.swift in Sources */,
+				FC98D32E243BFEE70047F022 /* City.swift in Sources */,
 				FC1F2731242EDDDF00C08CAA /* SearchByAddressViewController.swift in Sources */,
 				FC6960CF242BE9D00024EDFA /* WeatherData.swift in Sources */,
 				FC6960D5242C22250024EDFA /* WeatherObject.swift in Sources */,
 				FC6960B7242BE7770024EDFA /* SceneDelegate.swift in Sources */,
+				FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */,
 				FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */,
+				FC98D32C243BFDBD0047F022 /* WeatherPageManager.swift in Sources */,
 				FC04E591243410DC00207762 /* DailyWeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,79 @@
+//
+//  WeatherPageViewController.swift
+//  Weather-App
+//
+//  Created by Kevin Tanner on 4/6/20.
+//  Copyright © 2020 Kevin Tanner. All rights reserved.
+//
+
+import UIKit
+
+class WeatherPageViewController: UIPageViewController {
+
+    var controllers = [UIViewController]()
+    var pageControl = UIPageControl()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        dataSource = self
+        delegate = self
+
+        createViewControllers()
+        
+        self.setViewControllers([controllers[0]], direction: .forward, animated: false)
+        configurePageControl()
+    }
+    
+    
+    func createViewControllers() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        for num in 1 ... 5 {
+            guard let vc = storyboard.instantiateViewController(identifier: "WeatherForCitySID") as? ViewController else { return }
+            controllers.append(vc)
+        }
+        
+    }
+    
+    
+    func configurePageControl() {
+        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
+        self.pageControl.numberOfPages = controllers.count
+        self.pageControl.currentPage = 0
+        self.pageControl.alpha = 0.5
+        self.pageControl.tintColor = UIColor.black
+        self.pageControl.pageIndicatorTintColor = UIColor.white
+        self.pageControl.currentPageIndicatorTintColor = UIColor.black
+        self.view.addSubview(pageControl)
+    }
+    
+}
+
+
+extension WeatherPageViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        if let index = controllers.firstIndex(of: viewController) {
+            if index > 0 {
+                return controllers[index - 1]
+            }
+        }
+        return nil
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        if let index = controllers.firstIndex(of: viewController) {
+            if index < controllers.count - 1 {
+                return controllers[index + 1]
+            }
+        }
+        return nil
+    }
+    
+    // Updates the dots to show the user which screen they are on
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        let pageContentViewController = pageViewController.viewControllers![0]
+        self.pageControl.currentPage = controllers.firstIndex(of: pageContentViewController)!
+    }
+}

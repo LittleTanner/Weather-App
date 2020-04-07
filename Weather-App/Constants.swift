@@ -13,7 +13,6 @@ struct Constants {
     // Table View Cell Identifiers
     static let addressCellIdentifier = "addressCell"
     
-    
     // Collection View Cells
     static let hourlyWeatherCell = "HourlyWeatherCollectionViewCell"
     static let dailyWeatherCell = "DailyWeatherCollectionViewCell"
