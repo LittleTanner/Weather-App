@@ -34,4 +34,17 @@ struct Constants {
     static let partlyCloudyNight = "partly-cloudy-night"
     static let defaultImage = "default"
 
+    
+    // Icons
+    static let clearDayIcon = "ClearDayIcon"
+    static let clearNightIcon = "ClearNightIcon"
+    static let rainIcon = "RainIcon"
+    static let snowIcon = "SnowIcon"
+    static let sleetIcon = "SleetIcon"
+    static let windIcon = "WindIcon"
+    static let fogIcon = "FogIcon"
+    static let cloudyIcon = "CloudyIcon"
+    static let partlyCloudyDayIcon = "PartlyCloudyDayIcon"
+    static let partlyCloudyNightIcon = "PartlyCloudyNightIcon"
+    static let defaultImageIcon = "CloudyIcon"
 }

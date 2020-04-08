@@ -52,27 +52,28 @@
                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🌧" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-KZ-nT6">
-                                <rect key="frame" x="102" y="4" width="34" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vp3-5O-fn6">
+                                <rect key="frame" x="102" y="4" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="4Oa-aF-9OW"/>
+                                    <constraint firstAttribute="width" constant="34" id="Aaz-51-YLr"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="sgB-E0-OzQ" secondAttribute="bottom" constant="4" id="6Iy-2t-qR9"/>
-                            <constraint firstAttribute="trailing" secondItem="tg2-KZ-nT6" secondAttribute="trailing" constant="4" id="8gR-GY-B04"/>
                             <constraint firstItem="nyw-Ei-GsE" firstAttribute="leading" secondItem="RSd-5c-0Jf" secondAttribute="leading" constant="4" id="9A4-sg-Vex"/>
                             <constraint firstItem="sgB-E0-OzQ" firstAttribute="width" secondItem="RSd-5c-0Jf" secondAttribute="width" id="9vG-HL-7bs"/>
                             <constraint firstItem="sgB-E0-OzQ" firstAttribute="leading" secondItem="RSd-5c-0Jf" secondAttribute="leading" constant="4" id="AT2-Nv-XUX"/>
                             <constraint firstItem="t4y-IX-NfN" firstAttribute="leading" secondItem="aWa-yY-X9S" secondAttribute="trailing" id="Mvi-QK-wZx"/>
                             <constraint firstAttribute="height" constant="82" id="P6h-7l-XwR"/>
                             <constraint firstItem="aWa-yY-X9S" firstAttribute="leading" secondItem="RSd-5c-0Jf" secondAttribute="leading" constant="4" id="SfE-PO-egS"/>
+                            <constraint firstItem="vp3-5O-fn6" firstAttribute="top" secondItem="RSd-5c-0Jf" secondAttribute="top" constant="4" id="Tx0-kf-GvF"/>
                             <constraint firstItem="nyw-Ei-GsE" firstAttribute="top" secondItem="RSd-5c-0Jf" secondAttribute="top" constant="4" id="UAL-ah-diY"/>
-                            <constraint firstItem="tg2-KZ-nT6" firstAttribute="top" secondItem="RSd-5c-0Jf" secondAttribute="top" constant="4" id="Vpo-eG-kUG"/>
                             <constraint firstAttribute="width" constant="140" id="gNx-Kt-tcw"/>
                             <constraint firstItem="t4y-IX-NfN" firstAttribute="centerY" secondItem="RSd-5c-0Jf" secondAttribute="centerY" id="hfp-gX-TdB"/>
                             <constraint firstItem="aWa-yY-X9S" firstAttribute="centerY" secondItem="RSd-5c-0Jf" secondAttribute="centerY" id="qRF-pT-sVb"/>
+                            <constraint firstAttribute="trailing" secondItem="vp3-5O-fn6" secondAttribute="trailing" constant="4" id="tsd-4c-Jy7"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -89,7 +90,7 @@
                 <outlet property="rainLabel" destination="sgB-E0-OzQ" id="Zb2-cV-5eV"/>
                 <outlet property="tempHighLabel" destination="aWa-yY-X9S" id="0AE-mX-hff"/>
                 <outlet property="tempLowLabel" destination="t4y-IX-NfN" id="QTM-VT-MVt"/>
-                <outlet property="weatherIconLabel" destination="tg2-KZ-nT6" id="IIv-u2-RBV"/>
+                <outlet property="weatherIconImageView" destination="vp3-5O-fn6" id="pxu-x1-deq"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="145.98214285714286"/>
         </collectionViewCell>

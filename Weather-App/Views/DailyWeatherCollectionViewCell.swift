@@ -12,7 +12,7 @@ class DailyWeatherCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var rainLabel: UILabel!
-    @IBOutlet weak var weatherIconLabel: UILabel!
+    @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var tempHighLabel: UILabel!
     @IBOutlet weak var tempLowLabel: UILabel!
     

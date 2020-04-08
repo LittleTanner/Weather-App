@@ -184,7 +184,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 let time = dateFormatter.string(from: date)
                 
                 cell.dayLabel.text = time
-                cell.weatherIconLabel.text = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
                 cell.tempHighLabel.text = "\(Int(indexForObject.temperature))°"
                 cell.tempLowLabel.text = ""
                 cell.rainLabel.text = "☂️ \(rainAsInt)%"
@@ -249,7 +249,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 let day = dateFormatter.string(from: date)
                 
                 cell.dayLabel.text = day
-                cell.weatherIconLabel.text = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
                 cell.rainLabel.text = "☂️ \(rainAsInt)%"
                 cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
                 cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
