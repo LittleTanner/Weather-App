@@ -54,6 +54,14 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            let cityToRemove = WeatherPageManager.shared.cities[indexPath.row]
+            WeatherPageManager.shared.removeCity(with: cityToRemove)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }t
+    
     
 }
 
