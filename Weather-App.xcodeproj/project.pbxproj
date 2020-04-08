@@ -144,8 +144,8 @@
 			children = (
 				FC98D329243BFC5C0047F022 /* WeatherPageViewController.swift */,
 				FC6960B8242BE7770024EDFA /* ViewController.swift */,
-				FC1F2730242EDDDF00C08CAA /* SearchByAddressViewController.swift */,
 				FC98D32F243C03AF0047F022 /* LocationsViewController.swift */,
+				FC1F2730242EDDDF00C08CAA /* SearchByAddressViewController.swift */,
 				FC98D32B243BFDBD0047F022 /* WeatherPageManager.swift */,
 				FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */,
 			);

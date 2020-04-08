@@ -26,7 +26,6 @@ class LocationsViewController: UIViewController {
     }
     
     @IBAction func backToWeatherButtonTapped(_ sender: UIBarButtonItem) {
-//        dismiss(animated: true)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "WeatherPageViewControllerSID") as? WeatherPageViewController else { return }
         vc.modalPresentationStyle = .fullScreen
@@ -52,6 +51,17 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = WeatherPageManager.shared.cities[indexPath.row].cityName
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let city = WeatherPageManager.shared.cities[indexPath.row]
+        guard let index = WeatherPageManager.shared.cities.firstIndex(of: city) else { return }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: "WeatherPageViewControllerSID") as? WeatherPageViewController else { return }
+        vc.pageIndex = index
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

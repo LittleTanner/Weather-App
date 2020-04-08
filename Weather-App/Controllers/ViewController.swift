@@ -245,7 +245,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 let unixTimestampAsDouble = Double(indexForObject.time)
                 let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "EEE"
+                dateFormatter.dateFormat = "EEEE"
                 let day = dateFormatter.string(from: date)
                 
                 cell.dayLabel.text = day

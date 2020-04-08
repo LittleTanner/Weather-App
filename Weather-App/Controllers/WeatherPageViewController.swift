@@ -13,6 +13,7 @@ class WeatherPageViewController: UIPageViewController {
     var controllers = [UIViewController]()
     var pageControl = UIPageControl()
     
+    var pageIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class WeatherPageViewController: UIPageViewController {
 
         createViewControllers()
         
-        self.setViewControllers([controllers[0]], direction: .forward, animated: false)
+        self.setViewControllers([controllers[pageIndex]], direction: .forward, animated: false)
         configurePageControl()
     }
     
@@ -43,7 +44,7 @@ class WeatherPageViewController: UIPageViewController {
     func configurePageControl() {
         pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = controllers.count
-        self.pageControl.currentPage = 0
+        self.pageControl.currentPage = pageIndex
         self.pageControl.alpha = 0.5
         self.pageControl.tintColor = UIColor.black
         self.pageControl.pageIndicatorTintColor = UIColor.secondaryLabel
