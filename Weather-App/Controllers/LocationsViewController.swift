@@ -60,7 +60,7 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
             WeatherPageManager.shared.removeCity(with: cityToRemove)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-    }t
+    }
     
     
 }
