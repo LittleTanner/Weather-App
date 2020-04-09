@@ -18,6 +18,9 @@ class LocationsViewController: UIViewController {
         super.viewDidLoad()
         locationsTableView.delegate = self
         locationsTableView.dataSource = self
+        
+        let locationNib = UINib(nibName: Constants.locationTableViewCell, bundle: nil)
+        locationsTableView.register(locationNib, forCellReuseIdentifier: Constants.locationCellIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,9 +49,11 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.locationCellIdentifier, for: indexPath) as? LocationTableViewCell else { return UITableViewCell() }
         
-        cell.textLabel?.text = WeatherPageManager.shared.cities[indexPath.row].cityName
+        cell.cityNameLabel.text = WeatherPageManager.shared.cities[indexPath.row].cityName
+        
+//        cell.textLabel?.text = WeatherPageManager.shared.cities[indexPath.row].cityName
         
         return cell
     }
@@ -71,8 +76,6 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
-    
-    
 }
 
 extension LocationsViewController: WeatherPageManagerDelegate {

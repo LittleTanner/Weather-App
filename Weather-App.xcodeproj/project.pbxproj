@@ -13,6 +13,8 @@
 		FC04E592243410DC00207762 /* DailyWeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC04E590243410DC00207762 /* DailyWeatherCollectionViewCell.xib */; };
 		FC1F2731242EDDDF00C08CAA /* SearchByAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2730242EDDDF00C08CAA /* SearchByAddressViewController.swift */; };
 		FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2733242EDEE200C08CAA /* Constants.swift */; };
+		FC6532A6243E94DE0014DC8A /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */; };
+		FC6532A7243E94DE0014DC8A /* LocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6532A5243E94DE0014DC8A /* LocationTableViewCell.xib */; };
 		FC6960B5242BE7770024EDFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960B4242BE7770024EDFA /* AppDelegate.swift */; };
 		FC6960B7242BE7770024EDFA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960B6242BE7770024EDFA /* SceneDelegate.swift */; };
 		FC6960B9242BE7770024EDFA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960B8242BE7770024EDFA /* ViewController.swift */; };
@@ -37,6 +39,8 @@
 		FC04E590243410DC00207762 /* DailyWeatherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyWeatherCollectionViewCell.xib; sourceTree = "<group>"; };
 		FC1F2730242EDDDF00C08CAA /* SearchByAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByAddressViewController.swift; sourceTree = "<group>"; };
 		FC1F2733242EDEE200C08CAA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		FC6532A5243E94DE0014DC8A /* LocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationTableViewCell.xib; sourceTree = "<group>"; };
 		FC6960B1242BE7770024EDFA /* Weather-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6960B4242BE7770024EDFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC6960B6242BE7770024EDFA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 				FC04E58C2433F4B100207762 /* HourlyWeatherCollectionViewCell.xib */,
 				FC04E58F243410DC00207762 /* DailyWeatherCollectionViewCell.swift */,
 				FC04E590243410DC00207762 /* DailyWeatherCollectionViewCell.xib */,
+				FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */,
+				FC6532A5243E94DE0014DC8A /* LocationTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,6 +218,7 @@
 			files = (
 				FC6960C4242BE7780024EDFA /* LaunchScreen.storyboard in Resources */,
 				FC6960C1242BE7780024EDFA /* Assets.xcassets in Resources */,
+				FC6532A7243E94DE0014DC8A /* LocationTableViewCell.xib in Resources */,
 				FC04E58E2433F4B100207762 /* HourlyWeatherCollectionViewCell.xib in Resources */,
 				FC04E592243410DC00207762 /* DailyWeatherCollectionViewCell.xib in Resources */,
 				FC6960BC242BE7770024EDFA /* Main.storyboard in Resources */,
@@ -239,6 +246,7 @@
 				FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */,
 				FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */,
 				FC98D32C243BFDBD0047F022 /* WeatherPageManager.swift in Sources */,
+				FC6532A6243E94DE0014DC8A /* LocationTableViewCell.swift in Sources */,
 				FC98D337243D2AF00047F022 /* LocationsNavigationController.swift in Sources */,
 				FC04E591243410DC00207762 /* DailyWeatherCollectionViewCell.swift in Sources */,
 			);

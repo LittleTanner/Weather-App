@@ -10,8 +10,12 @@ import Foundation
 
 struct Constants {
     
+    // Table View Cells
+    static let locationTableViewCell = "LocationTableViewCell"
+    
     // Table View Cell Identifiers
     static let addressCellIdentifier = "addressCell"
+    static let locationCellIdentifier = "locationCell"
     
     // Collection View Cells
     static let hourlyWeatherCell = "HourlyWeatherCollectionViewCell"
