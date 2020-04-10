@@ -19,6 +19,66 @@ struct WeatherManager {
     
     let baseURL = "https://api.darksky.net/forecast"
     
+    
+    func getWeather(latitude: Double, longitude: Double, completion: @escaping (WeatherObject?) -> Void) {
+        guard var builtURL = URL(string: baseURL) else { return }
+        
+        // Append API Key
+        builtURL.appendPathComponent("83e3034647d9444ddd308d1ba30f44f2")
+        
+        // Append location
+        builtURL.appendPathComponent("\(latitude),\(longitude)")
+        
+        let session = URLSession(configuration: .default)
+        
+        let dataTask = session.dataTask(with: builtURL) { (data, response, error) in
+            if let error = error {
+                // Handle error
+                print("\nThere was an error: Performing the weather request in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
+                completion(nil)
+                return
+            }
+            
+            if let data = data {
+                // parse json
+                let decoder = JSONDecoder()
+                
+                do {
+                    let weatherData = try decoder.decode(WeatherData.self, from: data)
+                    
+                    guard let currentWeather = weatherData.currently,
+                        let dailyWeather = weatherData.daily,
+                        let dailySummary = dailyWeather.data.first?.summary,
+                        let hourlyWeather = weatherData.hourly?.data,
+                        let dailyWeatherData = weatherData.daily?.data else { return }
+                    
+                    let currentTemp = Int(currentWeather.temperature)
+                    let currentSummary = currentWeather.summary
+                    let chanceOfRainAsDouble = currentWeather.precipProbability * 100.0
+                    let chanceOfRain = Int(chanceOfRainAsDouble)
+                    let humidityAsDouble = currentWeather.humidity * 100.0
+                    let humidity = Int(humidityAsDouble)
+                    let visibility = currentWeather.visibility
+                    let icon = currentWeather.icon
+                    
+                    let weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
+                    
+                    completion(weatherObject)
+                    return
+                    
+                } catch {
+                    // Handle Error
+                    print("\nThere was an error: Parsing JSON in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
+                    completion(nil)
+                    return
+                }
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    
     func fetchWeather(latitude: Double, longitude: Double) {
         guard var builtURL = URL(string: baseURL) else { return }
         

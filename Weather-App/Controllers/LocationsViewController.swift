@@ -52,14 +52,20 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.locationCellIdentifier, for: indexPath) as? LocationTableViewCell else { return UITableViewCell() }
         
         let city = WeatherPageManager.shared.cities[indexPath.row]
-        
         cell.cityNameLabel.text = city.cityName
-        if let dailySummary = city.weatherObjects.first?.dailySummary, let currentTemp = city.weatherObjects.first?.currentTemp {
+        
+        WeatherManager().getWeather(latitude: city.latitude, longitude: city.longitude) { (weatherObject) in
+            guard let weatherObject = weatherObject else { return }
             
-            cell.temperatureLabel.text = "\(currentTemp)°"
-            cell.dailySummaryLabel.text = dailySummary
+            let dailySummary = weatherObject.dailySummary
+            let currentTemp = weatherObject.currentTemp
             
+            DispatchQueue.main.async {
+                cell.temperatureLabel.text = "\(currentTemp)°"
+                cell.dailySummaryLabel.text = dailySummary
+            }
         }
+        
         
         return cell
     }
