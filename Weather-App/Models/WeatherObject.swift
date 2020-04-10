@@ -9,18 +9,31 @@
 import UIKit
 
 
-struct WeatherObject {
+class WeatherObject {
     
-    let currentTemp: Int
-    let currentSummary: String
-    let chanceOfRain: Int
-    let humidity: Int
-    let visibility: Double
-    let dailySummary: String
-    let icon: String
+    var currentTemp: Int
+    var currentSummary: String
+    var chanceOfRain: Int
+    var humidity: Int
+    var visibility: Double
+    var dailySummary: String
+    var icon: String
     
-    let hourlyWeather: [HourlyData]
-    let dailyWeather: [DailyData]
+    var hourlyWeather: [HourlyData]
+    var dailyWeather: [DailyData]
+    
+    init(currentTemp: Int, currentSummary: String, chanceOfRain: Int, humidity: Int, visibility: Double, dailySummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
+        self.currentTemp = currentTemp
+        self.currentSummary = currentSummary
+        self.chanceOfRain = chanceOfRain
+        self.humidity = humidity
+        self.visibility = visibility
+        self.dailySummary = dailySummary
+        self.icon = icon
+        self.hourlyWeather = hourlyWeather
+        self.dailyWeather = dailyWeather
+    }
+    
     
     func getImageForCurrent(for icon: String) -> UIImage {
         switch icon {
@@ -36,5 +49,19 @@ struct WeatherObject {
         case Constants.partlyCloudyNight:   return UIImage(named: Constants.partlyCloudyNight)!
         default:                            return UIImage(named: Constants.defaultImage)!
         }
+    }
+}
+
+extension WeatherObject: Equatable {
+    static func == (lhs: WeatherObject, rhs: WeatherObject) -> Bool {
+        return lhs.currentTemp == rhs.currentTemp
+            && lhs.currentSummary == rhs.currentSummary
+            && lhs.chanceOfRain == rhs.chanceOfRain
+            && lhs.humidity == rhs.humidity
+            && lhs.visibility == rhs.visibility
+            && lhs.dailySummary == rhs.dailySummary
+            && lhs.icon == rhs.icon
+            && lhs.hourlyWeather == rhs.hourlyWeather
+            && lhs.dailyWeather == rhs.dailyWeather
     }
 }

@@ -51,9 +51,15 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.locationCellIdentifier, for: indexPath) as? LocationTableViewCell else { return UITableViewCell() }
         
-        cell.cityNameLabel.text = WeatherPageManager.shared.cities[indexPath.row].cityName
+        let city = WeatherPageManager.shared.cities[indexPath.row]
         
-//        cell.textLabel?.text = WeatherPageManager.shared.cities[indexPath.row].cityName
+        cell.cityNameLabel.text = city.cityName
+        if let dailySummary = city.weatherObjects.first?.dailySummary, let currentTemp = city.weatherObjects.first?.currentTemp {
+            
+            cell.temperatureLabel.text = "\(currentTemp)°"
+            cell.dailySummaryLabel.text = dailySummary
+            
+        }
         
         return cell
     }

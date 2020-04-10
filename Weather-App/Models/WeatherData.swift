@@ -63,7 +63,7 @@ struct Hourly: Codable {
     let data: [HourlyData]
 }
 
-struct HourlyData: Codable {
+struct HourlyData: Codable, Equatable {
     let time: Int
     let summary: String
     let icon: String
@@ -90,7 +90,7 @@ struct Daily: Codable {
     let data: [DailyData]
 }
 
-struct DailyData: Codable {
+struct DailyData: Codable, Equatable {
     let time: Int
     let summary: String
     let icon: String

@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     
-    var city: City?
+    var city: KDTLocationObject?
     var cityLabelText: String?
     
     var weatherManager = WeatherManager()
@@ -37,8 +37,8 @@ class ViewController: UIViewController {
         
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
-//        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
-//        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
+        //        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
+        //        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
         
         let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
         weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
-
+        
     }
     
     @IBAction func settingsButtonTapped(_ sender: UIButton) {
@@ -97,6 +97,14 @@ extension ViewController: WeatherManagerDelegate {
         weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
         
         guard let weatherObject = self.weatherObject else { return }
+        
+        if let city = city {
+            if let weatherObject = city.weatherObjects.first {
+                WeatherPageManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
+            }
+            WeatherPageManager.shared.addWeatherObject(weatherObject, toLocationObject: city)
+            
+        }
         let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
         
         DispatchQueue.main.async {
@@ -107,7 +115,7 @@ extension ViewController: WeatherManagerDelegate {
             self.visibilityLabel.text = "\(visibility) km"
             self.dailySummaryLabel.text = dailySummary
             self.weatherCollectionView.reloadData()
-//            self.backgroundImageView.image = backgroundImage
+            //            self.backgroundImageView.image = backgroundImage
             self.backgroundImageView.image = UIImage(named: Constants.rain)
         }
     }
@@ -137,11 +145,12 @@ extension ViewController: CLLocationManagerDelegate {
             weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
         }
         
-//        if let location = locations.last {
-//            let latitude = location.coordinate.latitude
-//            let longitude = location.coordinate.longitude
-//            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
-//        }
+        //  Get weather for current location
+        //        if let location = locations.last {
+        //            let latitude = location.coordinate.latitude
+        //            let longitude = location.coordinate.longitude
+        //            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
+        //        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -168,93 +177,53 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         if hourlySelected == true {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
-            if let weatherObject = weatherObject {
-                let indexForObject = weatherObject.hourlyWeather[indexPath.row]
-                
-                let rainAsDouble = indexForObject.precipProbability * 100
-                let rainAsInt = Int(rainAsDouble)
-                
-                let unixTimestampAsDouble = Double(indexForObject.time)
-                let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-                let dateFormatter = DateFormatter()
-                let timezone = TimeZone.current.abbreviation() ?? "PST"
-                dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-                dateFormatter.locale = NSLocale.current
-                dateFormatter.dateFormat = "h a"
-                let time = dateFormatter.string(from: date)
-                
-                cell.dayLabel.text = time
-                cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
-                cell.tempHighLabel.text = "\(Int(indexForObject.temperature))°"
-                cell.tempLowLabel.text = ""
-                cell.rainLabel.text = "☂️ \(rainAsInt)%"
-                
-                
-                return cell
+            if let city = city {
+                if let indexForObject = city.weatherObjects.first?.hourlyWeather[indexPath.row] {
+                    let rainAsDouble = indexForObject.precipProbability * 100
+                    let rainAsInt = Int(rainAsDouble)
+                    
+                    let unixTimestampAsDouble = Double(indexForObject.time)
+                    let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+                    let dateFormatter = DateFormatter()
+                    let timezone = TimeZone.current.abbreviation() ?? "PST"
+                    dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+                    dateFormatter.locale = NSLocale.current
+                    dateFormatter.dateFormat = "h a"
+                    let time = dateFormatter.string(from: date)
+                    
+                    cell.dayLabel.text = time
+                    cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                    cell.tempHighLabel.text = "\(Int(indexForObject.temperature))°"
+                    cell.tempLowLabel.text = ""
+                    cell.rainLabel.text = "☂️ \(rainAsInt)%"
+                    
+                    return cell
+                }
             }
-            
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.hourlyWeatherCellIdentifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
-//
-//            if let weatherObject = weatherObject {
-//                let indexForObject = weatherObject.hourlyWeather[indexPath.row]
-//
-//                let rainAsDouble = indexForObject.precipProbability * 100
-//                let rainAsInt = Int(rainAsDouble)
-//
-//                let unixTimestampAsDouble = Double(indexForObject.time)
-//                let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-//                let dateFormatter = DateFormatter()
-//                let timezone = TimeZone.current.abbreviation() ?? "PST"
-//                dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-//                dateFormatter.locale = NSLocale.current
-//                dateFormatter.dateFormat = "h a"
-//                let time = dateFormatter.string(from: date)
-//
-//                let weatherIcon = indexForObject.icon
-//
-//                switch weatherIcon {
-//                case Constants.clearDay: cell.weatherIcon.text = "☀️"
-//                case Constants.clearNight: cell.weatherIcon.text = "🌙"
-//                case Constants.rain: cell.weatherIcon.text = "🌧"
-//                case Constants.snow: cell.weatherIcon.text = "🌨"
-//                case Constants.sleet: cell.weatherIcon.text = "🌨"
-//                case Constants.wind: cell.weatherIcon.text = "💨"
-//                case Constants.fog: cell.weatherIcon.text = "🌫"
-//                case Constants.cloudy: cell.weatherIcon.text = "☁️"
-//                case Constants.partlyCloudyDay: cell.weatherIcon.text = "⛅️"
-//                case Constants.partlyCloudyNight: cell.weatherIcon.text = "🌥"
-//                default: cell.weatherIcon.text = "🤷🏼‍♂️"
-//                }
-//
-//                cell.timeLabel.text = time
-//                cell.tempLabel.text = "\(Int(indexForObject.temperature))°"
-//                cell.rainLabel.text = "Rain: \(rainAsInt)%"
-//
-//
-//                return cell
-//            }
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
-            if let weatherObject = weatherObject {
-                let indexForObject = weatherObject.dailyWeather[indexPath.row]
-                
-                let rainAsDouble = indexForObject.precipProbability * 100
-                let rainAsInt = Int(rainAsDouble)
-                
-                let unixTimestampAsDouble = Double(indexForObject.time)
-                let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "EEEE"
-                let day = dateFormatter.string(from: date)
-                
-                cell.dayLabel.text = day
-                cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
-                cell.rainLabel.text = "☂️ \(rainAsInt)%"
-                cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
-                cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
+            if let city = city {
+                if let indexForObject = city.weatherObjects.first?.dailyWeather[indexPath.row] {
+                    
+                    let rainAsDouble = indexForObject.precipProbability * 100
+                    let rainAsInt = Int(rainAsDouble)
+                    
+                    let unixTimestampAsDouble = Double(indexForObject.time)
+                    let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "EEEE"
+                    let day = dateFormatter.string(from: date)
+                    
+                    cell.dayLabel.text = day
+                    cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                    cell.rainLabel.text = "☂️ \(rainAsInt)%"
+                    cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
+                    cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
+                    
+                    return cell
+                }
             }
-            return cell
         }
         return UICollectionViewCell()
     }

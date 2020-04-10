@@ -19,11 +19,10 @@ class SearchByAddressViewController: UIViewController {
     var lon: Double?
 
     var locationInfo: String?
-    
-    
-    var cities: [City]?
-    var city: City?
+    var cities: [KDTLocationObject]?
+    var city: KDTLocationObject?
     var cityName: String?
+    var state: String?
     
     var weatherPageManagerDelegate: WeatherPageManagerDelegate?
     
@@ -54,6 +53,7 @@ class SearchByAddressViewController: UIViewController {
                         let country = placemark.isoCountryCode {
                         outputString = "\(city), \(state), \(country)"
                         self.cityName = city
+                        self.state = state
                     }
                     
                     completionHandler((outputString, location.coordinate), nil)
@@ -83,8 +83,8 @@ extension SearchByAddressViewController: UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let city = city, let cityName = cityName else { return }
-        WeatherPageManager.shared.addCity(with: City(cityName: cityName, latitude: city.latitude, longitude: city.longitude))
+        guard let city = city, let cityName = cityName, let state = state else { return }
+        WeatherPageManager.shared.addCity(with: KDTLocationObject(cityName: cityName, state: state, latitude: city.latitude, longitude: city.longitude))
         print("Added city: \(city)")
         print("Cities: \(WeatherPageManager.shared.cities)")
         weatherPageManagerDelegate?.reloadTableView()
@@ -101,7 +101,7 @@ extension SearchByAddressViewController: UISearchBarDelegate {
                 self.lon = location.coordinates.longitude
                 self.locationInfo = location.info
                 
-                self.city = City(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+                self.city = KDTLocationObject(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
                 
                 self.addressesTableView.reloadData()
             }
@@ -116,7 +116,7 @@ extension SearchByAddressViewController: UISearchBarDelegate {
             self.lon = location.coordinates.longitude
             self.locationInfo = location.info
             
-            self.city = City(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+            self.city = KDTLocationObject(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
             
             self.addressesTableView.reloadData()
         }
