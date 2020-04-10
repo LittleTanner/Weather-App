@@ -21,19 +21,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     
-    var city: KDTLocationObject?
-    var cityLabelText: String?
-    
-    var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
-    var weatherObject: WeatherObject?
+    var city: KDTLocationObject?
+    var cityLabelText: String?
     var hourlySelected: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
-        weatherManager.delegate = self
         
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
@@ -74,65 +70,6 @@ class ViewController: UIViewController {
     
 }
 
-// MARK: - Weather Manager Delegate
-
-extension ViewController: WeatherManagerDelegate {
-    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData) {
-        
-        guard let currentWeather = weather.currently,
-            let dailyWeather = weather.daily,
-            let dailySummary = dailyWeather.data.first?.summary,
-            let hourlyWeather = weather.hourly?.data,
-            let dailyWeatherData = weather.daily?.data else { return }
-        
-        let currentTemp = Int(currentWeather.temperature)
-        let currentSummary = currentWeather.summary
-        let chanceOfRainAsDouble = currentWeather.precipProbability * 100.0
-        let chanceOfRain = Int(chanceOfRainAsDouble)
-        let humidityAsDouble = currentWeather.humidity * 100.0
-        let humidity = Int(humidityAsDouble)
-        let visibility = currentWeather.visibility
-        let icon = currentWeather.icon
-        
-        weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
-        
-        guard let weatherObject = self.weatherObject else { return }
-        
-        if let city = city {
-            if let weatherObject = city.weatherObjects.first {
-                WeatherPageManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
-            }
-            WeatherPageManager.shared.addWeatherObject(weatherObject, toLocationObject: city)
-            
-        }
-        let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
-        
-        DispatchQueue.main.async {
-            self.currentTempLabel.text = "\(currentTemp)°"
-            self.currentSummaryLabel.text = currentSummary
-            self.chanceOfRainLabel.text = "\(chanceOfRain)%"
-            self.humidityLabel.text = "\(humidity)%"
-            self.visibilityLabel.text = "\(visibility) km"
-            self.dailySummaryLabel.text = dailySummary
-            self.weatherCollectionView.reloadData()
-            //            self.backgroundImageView.image = backgroundImage
-            self.backgroundImageView.image = UIImage(named: Constants.rain)
-        }
-    }
-    
-    func didFailWithError(error: Error) {
-        // Show an alert saying there was an error fetching weather data at this time
-        let alert = UIAlertController(title: "Weather Forecast Missing", message: "Can't fetch the weather right now. Please try again later.", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default) { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(action)
-        DispatchQueue.main.async {
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-}
-
 // MARK: - Location Manager Delegate
 
 extension ViewController: CLLocationManagerDelegate {
@@ -140,9 +77,37 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = city {
-            let latitude = location.latitude
-            let longitude = location.longitude
-            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
+            
+            WeatherManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
+                guard let weatherObject = weatherObject else { return }
+                
+                let currentTemp = Int(weatherObject.currentTemp)
+                let currentSummary = weatherObject.currentSummary
+                let chanceOfRain = weatherObject.chanceOfRain
+                let humidity = weatherObject.humidity
+                let visibility = weatherObject.visibility
+                let icon = weatherObject.icon
+                
+                if let weatherObject = location.weatherObjects.first {
+                    WeatherPageManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
+                }
+                
+                WeatherPageManager.shared.addWeatherObject(weatherObject, toLocationObject: location)
+                
+                let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
+                
+                DispatchQueue.main.async {
+                    self.currentTempLabel.text = "\(currentTemp)°"
+                    self.currentSummaryLabel.text = currentSummary
+                    self.chanceOfRainLabel.text = "\(chanceOfRain)%"
+                    self.humidityLabel.text = "\(humidity)%"
+                    self.visibilityLabel.text = "\(visibility) km"
+                    self.dailySummaryLabel.text = weatherObject.dailySummary
+                    self.weatherCollectionView.reloadData()
+//                    self.backgroundImageView.image = backgroundImage
+                    self.backgroundImageView.image = UIImage(named: Constants.rain)
+                }
+            }
         }
         
         //  Get weather for current location
@@ -162,7 +127,7 @@ extension ViewController: CLLocationManagerDelegate {
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let weatherObject = weatherObject else { return 0 }
+        guard let weatherObject = city?.weatherObjects.first else { return 0 }
         if hourlySelected == true {
             print(weatherObject.hourlyWeather.count)
             return weatherObject.hourlyWeather.count
