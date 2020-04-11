@@ -13,12 +13,14 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var rainLabel: UILabel!
-    @IBOutlet weak var weatherIcon: UILabel!
+    @IBOutlet weak var weatherIcon: UIImageView!
+    @IBOutlet weak var cellBackgroundView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = 15
-        layer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 0.5)
+//        layer.cornerRadius = 15
+//        layer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 0.5)
+        cellBackgroundView.layer.cornerRadius = 10
     }
 
 }

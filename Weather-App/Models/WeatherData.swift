@@ -99,7 +99,7 @@ struct DailyData: Codable, Equatable {
     let moonPhase: Double
     let precipIntensity: Double
     let precipIntensityMax: Double
-    let precipIntensityMaxTime: Int
+    let precipIntensityMaxTime: Int?
     let precipProbability: Double
     let precipType: String?
     let temperatureHigh: Double
