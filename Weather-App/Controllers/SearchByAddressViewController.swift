@@ -33,6 +33,11 @@ class SearchByAddressViewController: UIViewController {
         addressesTableView.dataSource = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchByAddressSearchBar.becomeFirstResponder()
+    }
+    
     @IBAction func navigationBackButtonTapped(_ sender: UIButton) {
         dismiss(animated: true)
     }

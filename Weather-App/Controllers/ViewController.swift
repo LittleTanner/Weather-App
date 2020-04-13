@@ -14,10 +14,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var currentSummaryLabel: UILabel!
-    @IBOutlet weak var chanceOfRainLabel: UILabel!
-    @IBOutlet weak var humidityLabel: UILabel!
-    @IBOutlet weak var visibilityLabel: UILabel!
-    @IBOutlet weak var dailySummaryLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     @IBOutlet weak var hourlyOrDailySegmentedControl: UISegmentedControl!
@@ -100,10 +96,6 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.currentTempLabel.text = "\(currentTemp)°"
                     self.currentSummaryLabel.text = currentSummary
-                    self.chanceOfRainLabel.text = "\(chanceOfRain)%"
-                    self.humidityLabel.text = "\(humidity)%"
-                    self.visibilityLabel.text = "\(visibility) km"
-                    self.dailySummaryLabel.text = weatherObject.dailySummary
                     self.weatherCollectionView.reloadData()
                     //                    self.backgroundImageView.image = backgroundImage
                     self.backgroundImageView.image = UIImage(named: Constants.rain)
@@ -186,12 +178,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                     let unixTimestampAsDouble = Double(indexForObject.time)
                     let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "EEEE"
+                    dateFormatter.dateFormat = "EEE"
                     let day = dateFormatter.string(from: date)
                     
                     cell.dayLabel.text = day
                     cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
-                    cell.rainLabel.text = "☂️ \(rainAsInt)%"
+                    cell.rainLabel.text = "\(rainAsInt)%"
                     cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
                     cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
                     

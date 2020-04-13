@@ -15,13 +15,13 @@ class DailyWeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var tempHighLabel: UILabel!
     @IBOutlet weak var tempLowLabel: UILabel!
+    @IBOutlet weak var cellBackgroundView: UIView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        layer.cornerRadius = 15
-        layer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 0.5)
+        cellBackgroundView.layer.cornerRadius = 10
     }
 
 }

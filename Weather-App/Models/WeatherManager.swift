@@ -8,17 +8,9 @@
 
 import UIKit
 
-protocol WeatherManagerDelegate {
-    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherData)
-    func didFailWithError(error: Error)
-}
-
 struct WeatherManager {
     
-    var delegate: WeatherManagerDelegate?
-    
     let baseURL = "https://api.darksky.net/forecast"
-    
     
     func getWeather(latitude: Double, longitude: Double, completion: @escaping (WeatherObject?) -> Void) {
         guard var builtURL = URL(string: baseURL) else { return }
