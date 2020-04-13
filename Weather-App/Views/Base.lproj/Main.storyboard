@@ -117,9 +117,8 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="94" id="Ydj-6J-0B6"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="4" minimumInteritemSpacing="4" id="dSx-Dc-zbS">
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="4" minimumInteritemSpacing="4" id="dSx-Dc-zbS">
                                                     <size key="itemSize" width="234" height="80"/>
-                                                    <size key="estimatedItemSize" width="63" height="80"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                     <inset key="sectionInset" minX="18" minY="0.0" maxX="18" maxY="0.0"/>
