@@ -62,7 +62,9 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
             
             DispatchQueue.main.async {
                 cell.temperatureLabel.text = "\(currentTemp)°"
-                cell.dailySummaryLabel.text = dailySummary
+                cell.feelsLikeTempLabel.text = "Feels Like: \(weatherObject.currentFeelsLikeTemp)°"
+                cell.temperatureHighLowLabel.text = "\(weatherObject.dailyTempHigh)° / \(weatherObject.dailyTempLow)°"
+                cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: weatherObject.icon)
             }
         }
         

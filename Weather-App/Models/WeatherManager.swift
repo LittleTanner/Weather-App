@@ -50,7 +50,9 @@ struct WeatherManager {
                         let dailyWeather = weatherData.daily,
                         let dailySummary = dailyWeather.data.first?.summary,
                         let hourlyWeather = weatherData.hourly?.data,
-                        let dailyWeatherData = weatherData.daily?.data else { return }
+                        let dailyWeatherData = weatherData.daily?.data,
+                        let dailyTempHighAsDouble = dailyWeather.data.first?.temperatureHigh,
+                        let dailyTempLowAsDouble = dailyWeather.data.first?.temperatureLow else { return }
                     
                     let currentTemp = Int(currentWeather.temperature)
                     let currentSummary = currentWeather.summary
@@ -60,8 +62,11 @@ struct WeatherManager {
                     let humidity = Int(humidityAsDouble)
                     let visibility = currentWeather.visibility
                     let icon = currentWeather.icon
+                    let currentFeelsLikeTemp = Int(currentWeather.apparentTemperature)
+                    let dailyTempHigh = Int(dailyTempHighAsDouble)
+                    let dailyTempLow = Int(dailyTempLowAsDouble)
                     
-                    let weatherObject = WeatherObject(currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
+                    let weatherObject = WeatherObject(currentTemp: currentTemp, currentFeelsLikeTemp: currentFeelsLikeTemp, dailyTempHigh: dailyTempHigh, dailyTempLow: dailyTempLow, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: dailySummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
                     
                     completion(weatherObject)
                     return

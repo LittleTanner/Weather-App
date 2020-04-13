@@ -12,6 +12,9 @@ import UIKit
 class WeatherObject {
     
     var currentTemp: Int
+    var currentFeelsLikeTemp: Int
+    var dailyTempHigh: Int
+    var dailyTempLow: Int
     var currentSummary: String
     var chanceOfRain: Int
     var humidity: Int
@@ -22,8 +25,11 @@ class WeatherObject {
     var hourlyWeather: [HourlyData]
     var dailyWeather: [DailyData]
     
-    init(currentTemp: Int, currentSummary: String, chanceOfRain: Int, humidity: Int, visibility: Double, dailySummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
+    init(currentTemp: Int, currentFeelsLikeTemp: Int, dailyTempHigh: Int, dailyTempLow: Int, currentSummary: String, chanceOfRain: Int, humidity: Int, visibility: Double, dailySummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
         self.currentTemp = currentTemp
+        self.currentFeelsLikeTemp = currentFeelsLikeTemp
+        self.dailyTempHigh = dailyTempHigh
+        self.dailyTempLow = dailyTempLow
         self.currentSummary = currentSummary
         self.chanceOfRain = chanceOfRain
         self.humidity = humidity
