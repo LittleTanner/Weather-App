@@ -10,6 +10,10 @@ import Foundation
 
 struct Constants {
     
+    
+    // Storyboard IDs
+    static let weatherPageViewController = "WeatherPageViewControllerSID"
+    
     // Table View Cells
     static let locationTableViewCell = "LocationTableViewCell"
     
@@ -25,7 +29,7 @@ struct Constants {
     static let hourlyWeatherCellIdentifier = "hourlyWeatherCellXIB"
     static let dailyWeatherCellIdentifier = "dailyWeatherCellXIB"
     
-    // Images
+    // Weather Background Images
     static let clearDay = "clear-day"
     static let clearNight = "clear-night"
     static let rain = "rain"
@@ -39,7 +43,7 @@ struct Constants {
     static let defaultImage = "default"
 
     
-    // Icons
+    // Weather Icons
     static let clearDayIcon = "ClearDayIcon"
     static let clearNightIcon = "ClearNightIcon"
     static let rainIcon = "RainIcon"

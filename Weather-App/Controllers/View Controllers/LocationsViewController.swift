@@ -30,7 +30,7 @@ class LocationsViewController: UIViewController {
     
     @IBAction func backToWeatherButtonTapped(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: "WeatherPageViewControllerSID") as? WeatherPageViewController else { return }
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewController) as? WeatherPageViewController else { return }
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
@@ -38,61 +38,66 @@ class LocationsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSearchByAddress" {
             guard let destinationVC = segue.destination as? SearchByAddressViewController else { return }
-            destinationVC.weatherPageManagerDelegate = self
+            destinationVC.weatherManagerDelegate = self
         }
     }
 }
 
 extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return WeatherPageManager.shared.cities.count
+        return WeatherManager.shared.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.locationCellIdentifier, for: indexPath) as? LocationTableViewCell else { return UITableViewCell() }
         
-        let city = WeatherPageManager.shared.cities[indexPath.row]
+        let city = WeatherManager.shared.cities[indexPath.row]
         cell.cityNameLabel.text = city.cityName
         
-        WeatherManager().getWeather(latitude: city.latitude, longitude: city.longitude) { (weatherObject) in
+        WeatherNetworkManager().getWeather(latitude: city.latitude, longitude: city.longitude) { (weatherObject) in
             guard let weatherObject = weatherObject else { return }
             
-            let dailySummary = weatherObject.dailySummary
-            let currentTemp = weatherObject.currentTemp
-            
             DispatchQueue.main.async {
-                cell.temperatureLabel.text = "\(currentTemp)°"
+                cell.temperatureLabel.text = "\(weatherObject.currentTemp)°"
                 cell.feelsLikeTempLabel.text = "Feels Like: \(weatherObject.currentFeelsLikeTemp)°"
                 cell.temperatureHighLowLabel.text = "\(weatherObject.dailyTempHigh)° / \(weatherObject.dailyTempLow)°"
-                cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: weatherObject.icon)
+                cell.weatherIconImageView.image = WeatherNetworkManager.getWeatherIcon(with: weatherObject.icon)
             }
         }
-        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let city = WeatherPageManager.shared.cities[indexPath.row]
-        guard let index = WeatherPageManager.shared.cities.firstIndex(of: city) else { return }
+        let city = WeatherManager.shared.cities[indexPath.row]
+        guard let index = WeatherManager.shared.cities.firstIndex(of: city) else { return }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: "WeatherPageViewControllerSID") as? WeatherPageViewController else { return }
-        vc.pageIndex = index
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewController) as? WeatherPageViewController else { return }
+        WeatherManager.shared.pageIndex = index
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
-            let cityToRemove = WeatherPageManager.shared.cities[indexPath.row]
-            WeatherPageManager.shared.removeCity(with: cityToRemove)
+            let cityToRemove = WeatherManager.shared.cities[indexPath.row]
+            WeatherManager.shared.removeCity(with: cityToRemove)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        // If this is the first item in the weather array of locations do not allow it to be deleted.
+        let cityToRemove = WeatherManager.shared.cities[indexPath.row]
+        if cityToRemove == WeatherManager.shared.cities[0] {
+            return .none
+        }
+        return .delete
+    }
 }
 
-extension LocationsViewController: WeatherPageManagerDelegate {
+extension LocationsViewController: WeatherManagerDelegate {
     func reloadTableView() {
         locationsTableView.reloadData()
     }

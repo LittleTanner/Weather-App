@@ -1,5 +1,5 @@
 //
-//  WeatherManager.swift
+//  WeatherNetworkManager.swift
 //  Weather-App
 //
 //  Created by Kevin Tanner on 3/25/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WeatherManager {
+struct WeatherNetworkManager {
     
     let baseURL = "https://api.darksky.net/forecast"
     

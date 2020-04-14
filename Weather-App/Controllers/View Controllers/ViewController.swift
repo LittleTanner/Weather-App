@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         
 //        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
         
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
@@ -40,15 +41,17 @@ class ViewController: UIViewController {
         let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
         weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
         
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.requestLocation()
         
         cityNameLabel.text = cityLabelText
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        if WeatherManager.shared.pageIndex == 0 {
+//            locationManager.requestLocation()
+//        } else {
         updateWeather()
+//        }
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
@@ -75,7 +78,7 @@ class ViewController: UIViewController {
     func updateWeather() {
         if let location = city {
             
-            WeatherManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
+            WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
                 guard let weatherObject = weatherObject else { return }
                 
                 let currentTemp = Int(weatherObject.currentTemp)
@@ -86,10 +89,10 @@ class ViewController: UIViewController {
                 let icon = weatherObject.icon
                 
                 if let weatherObject = location.weatherObjects.first {
-                    WeatherPageManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
+                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
                 }
                 
-                WeatherPageManager.shared.addWeatherObject(weatherObject, toLocationObject: location)
+                WeatherManager.shared.addWeatherObject(weatherObject, toLocationObject: location)
                 
                 let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
                 
@@ -111,13 +114,34 @@ class ViewController: UIViewController {
 //extension ViewController: CLLocationManagerDelegate {
 //
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//
-//        //  Get weather for current location
-//        //        if let location = locations.last {
-//        //            let latitude = location.coordinate.latitude
-//        //            let longitude = location.coordinate.longitude
-//        //            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
-//        //        }
+//        
+//        // Get weather for current location
+//        if let location = locations.last {
+//            let latitude = location.coordinate.latitude
+//            let longitude = location.coordinate.longitude
+//            WeatherNetworkManager().getWeather(latitude: latitude, longitude: longitude) { (weatherObject) in
+//                guard let weatherObject = weatherObject else { return }
+//                
+//                let currentTemp = Int(weatherObject.currentTemp)
+//                let currentSummary = weatherObject.currentSummary
+//                let chanceOfRain = weatherObject.chanceOfRain
+//                let humidity = weatherObject.humidity
+//                let visibility = weatherObject.visibility
+//                let icon = weatherObject.icon
+//                
+//                WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
+//                
+//                let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
+//                
+//                DispatchQueue.main.async {
+//                    self.currentTempLabel.text = "\(currentTemp)°"
+//                    self.currentSummaryLabel.text = currentSummary
+//                    self.weatherCollectionView.reloadData()
+//                    //                    self.backgroundImageView.image = backgroundImage
+//                    self.backgroundImageView.image = UIImage(named: Constants.rain)
+//                }
+//            }
+//        }
 //    }
 //
 //    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -159,7 +183,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                     let time = dateFormatter.string(from: date)
                     
                     cell.timeLabel.text = time
-                    cell.weatherIcon.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                    cell.weatherIcon.image = WeatherNetworkManager.getWeatherIcon(with: indexForObject.icon)
                     cell.tempLabel.text = "\(Int(indexForObject.temperature))°"
                     cell.rainLabel.text = "\(rainAsInt)%"
                     
@@ -182,7 +206,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                     let day = dateFormatter.string(from: date)
                     
                     cell.dayLabel.text = day
-                    cell.weatherIconImageView.image = WeatherManager.getWeatherIcon(with: indexForObject.icon)
+                    cell.weatherIconImageView.image = WeatherNetworkManager.getWeatherIcon(with: indexForObject.icon)
                     cell.rainLabel.text = "\(rainAsInt)%"
                     cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
                     cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"

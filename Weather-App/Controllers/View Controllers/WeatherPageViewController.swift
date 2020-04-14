@@ -10,10 +10,10 @@ import UIKit
 
 class WeatherPageViewController: UIPageViewController {
 
-    var controllers = [UIViewController]()
+//    var controllers = [UIViewController]()
     var pageControl = UIPageControl()
     
-    var pageIndex = 0
+//    var pageIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,28 +23,29 @@ class WeatherPageViewController: UIPageViewController {
 
         createViewControllers()
         
-        self.setViewControllers([controllers[pageIndex]], direction: .forward, animated: false)
+        self.setViewControllers([WeatherManager.shared.pageControllers[WeatherManager.shared.pageIndex]], direction: .forward, animated: false)
         configurePageControl()
     }
     
     
     func createViewControllers() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        WeatherManager.shared.pageControllers = []
         
-        for num in 0 ..< WeatherPageManager.shared.cities.count {
+        for num in 0 ..< WeatherManager.shared.cities.count {
             guard let vc = storyboard.instantiateViewController(identifier: "WeatherForCitySID") as? ViewController else { return }
-            vc.city = WeatherPageManager.shared.cities[num]
-            vc.cityLabelText = WeatherPageManager.shared.cities[num].cityName
+            vc.city = WeatherManager.shared.cities[num]
+            vc.cityLabelText = WeatherManager.shared.cities[num].cityName
             
-            controllers.append(vc)
+            WeatherManager.shared.pageControllers.append(vc)
         }
     }
     
     
     func configurePageControl() {
         pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
-        self.pageControl.numberOfPages = controllers.count
-        self.pageControl.currentPage = pageIndex
+        self.pageControl.numberOfPages = WeatherManager.shared.pageControllers.count
+        self.pageControl.currentPage = WeatherManager.shared.pageIndex
         self.pageControl.alpha = 0.5
         self.pageControl.tintColor = UIColor.black
         self.pageControl.pageIndicatorTintColor = UIColor.secondaryLabel
@@ -57,18 +58,18 @@ class WeatherPageViewController: UIPageViewController {
 
 extension WeatherPageViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if let index = controllers.firstIndex(of: viewController) {
+        if let index = WeatherManager.shared.pageControllers.firstIndex(of: viewController) {
             if index > 0 {
-                return controllers[index - 1]
+                return WeatherManager.shared.pageControllers[index - 1]
             }
         }
         return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if let index = controllers.firstIndex(of: viewController) {
-            if index < controllers.count - 1 {
-                return controllers[index + 1]
+        if let index = WeatherManager.shared.pageControllers.firstIndex(of: viewController) {
+            if index < WeatherManager.shared.pageControllers.count - 1 {
+                return WeatherManager.shared.pageControllers[index + 1]
             }
         }
         return nil
@@ -77,6 +78,6 @@ extension WeatherPageViewController: UIPageViewControllerDelegate, UIPageViewCon
     // Updates the dots to show the user which screen they are on
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let pageContentViewController = pageViewController.viewControllers![0]
-        self.pageControl.currentPage = controllers.firstIndex(of: pageContentViewController)!
+        self.pageControl.currentPage = WeatherManager.shared.pageControllers.firstIndex(of: pageContentViewController)!
     }
 }

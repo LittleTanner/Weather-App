@@ -24,7 +24,7 @@ class SearchByAddressViewController: UIViewController {
     var cityName: String?
     var state: String?
     
-    var weatherPageManagerDelegate: WeatherPageManagerDelegate?
+    var weatherManagerDelegate: WeatherManagerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,10 +89,10 @@ extension SearchByAddressViewController: UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let city = city, let cityName = cityName, let state = state else { return }
-        WeatherPageManager.shared.addCity(with: KDTLocationObject(cityName: cityName, state: state, latitude: city.latitude, longitude: city.longitude))
+        WeatherManager.shared.addCity(with: KDTLocationObject(cityName: cityName, state: state, latitude: city.latitude, longitude: city.longitude))
         print("Added city: \(city)")
-        print("Cities: \(WeatherPageManager.shared.cities)")
-        weatherPageManagerDelegate?.reloadTableView()
+        print("Cities: \(WeatherManager.shared.cities)")
+        weatherManagerDelegate?.reloadTableView()
         dismiss(animated: true)
     }
 }

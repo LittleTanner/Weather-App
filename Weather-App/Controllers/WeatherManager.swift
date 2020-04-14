@@ -1,5 +1,5 @@
 //
-//  WeatherPageManager.swift
+//  WeatherManager.swift
 //  Weather-App
 //
 //  Created by Kevin Tanner on 4/6/20.
@@ -8,17 +8,21 @@
 
 import UIKit
 
-protocol WeatherPageManagerDelegate {
+protocol WeatherManagerDelegate {
     func reloadTableView()
 }
 
-class WeatherPageManager {
+class WeatherManager {
     
-    static let shared = WeatherPageManager()
+    static let shared = WeatherManager()
     
     var cities: [KDTLocationObject] = [KDTLocationObject(cityName: "Newhall", latitude: 34.3578323, longitude: -118.4972295),
                           KDTLocationObject(cityName: "Seattle", latitude: 47.603363, longitude: -122.330417),
                           KDTLocationObject(cityName: "Denver", latitude: 39.739212, longitude: -104.9903028)]
+    
+    
+    var pageControllers: [UIViewController] = []
+    var pageIndex: Int = 0
     
     func addCity(with city: KDTLocationObject) {
         cities.append(city)
