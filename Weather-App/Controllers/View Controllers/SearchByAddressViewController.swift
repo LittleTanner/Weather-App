@@ -90,8 +90,6 @@ extension SearchByAddressViewController: UITableViewDataSource, UITableViewDeleg
         
         guard let city = city, let cityName = cityName, let state = state else { return }
         WeatherManager.shared.addCity(with: KDTLocationObject(cityName: cityName, state: state, latitude: city.latitude, longitude: city.longitude))
-        print("Added city: \(city)")
-        print("Cities: \(WeatherManager.shared.cities)")
         weatherManagerDelegate?.reloadTableView()
         dismiss(animated: true)
     }

@@ -66,12 +66,12 @@ class ViewController: UIViewController {
             // The hourly button is selected
             hourlySelected = true
             weatherCollectionView.reloadData()
-            weatherCollectionView.scrollToItem(at: IndexPath(item: -1, section: 0), at: .left, animated: false)
+            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
         } else {
             // The daily button is selected
             hourlySelected = false
             weatherCollectionView.reloadData()
-            weatherCollectionView.scrollToItem(at: IndexPath(item: -1, section: 0), at: .left, animated: false)
+            weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
         }
     }
     
@@ -155,10 +155,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let weatherObject = city?.weatherObjects.first else { return 0 }
         if hourlySelected == true {
-            print(weatherObject.hourlyWeather.count)
             return weatherObject.hourlyWeather.count
         } else {
-            print(weatherObject.dailyWeather.count)
             return weatherObject.dailyWeather.count
         }
     }
