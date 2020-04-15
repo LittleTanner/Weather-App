@@ -20,11 +20,16 @@ class WeatherPageViewController: UIPageViewController {
 
         dataSource = self
         delegate = self
-
+        
+        WeatherManager.shared.loadFromPersistentStore()
         createViewControllers()
         
         self.setViewControllers([WeatherManager.shared.pageControllers[WeatherManager.shared.pageIndex]], direction: .forward, animated: false)
         configurePageControl()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     

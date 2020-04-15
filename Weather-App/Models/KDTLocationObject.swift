@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KDTLocationObject {
+class KDTLocationObject: Codable {
     let cityName: String
     var state: String?
     let latitude: Double

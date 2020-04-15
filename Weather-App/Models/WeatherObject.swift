@@ -9,7 +9,7 @@
 import UIKit
 
 
-class WeatherObject {
+class WeatherObject: Codable {
     
     var currentTemp: Int
     var currentFeelsLikeTemp: Int
