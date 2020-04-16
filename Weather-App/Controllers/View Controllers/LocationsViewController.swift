@@ -37,7 +37,7 @@ class LocationsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toSearchByAddress" {
-            guard let destinationVC = segue.destination as? SearchByAddressViewController else { return }
+            guard let destinationVC = segue.destination as? SearchForLocationViewController else { return }
             destinationVC.weatherManagerDelegate = self
         }
     }

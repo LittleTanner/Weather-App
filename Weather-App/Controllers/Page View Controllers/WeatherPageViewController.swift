@@ -38,7 +38,7 @@ class WeatherPageViewController: UIPageViewController {
         WeatherManager.shared.pageControllers = []
         
         for num in 0 ..< WeatherManager.shared.cities.count {
-            guard let vc = storyboard.instantiateViewController(identifier: "WeatherForCitySID") as? ViewController else { return }
+            guard let vc = storyboard.instantiateViewController(identifier: "WeatherForCitySID") as? LocationViewController else { return }
             vc.city = WeatherManager.shared.cities[num]
             vc.cityLabelText = WeatherManager.shared.cities[num].cityName
             

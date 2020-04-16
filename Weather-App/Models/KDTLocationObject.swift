@@ -9,10 +9,10 @@
 import Foundation
 
 class KDTLocationObject: Codable {
-    let cityName: String
+    var cityName: String
     var state: String?
-    let latitude: Double
-    let longitude: Double
+    var latitude: Double
+    var longitude: Double
     
     var weatherObjects: [WeatherObject]
     

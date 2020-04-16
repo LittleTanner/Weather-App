@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Location View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="WeatherForCitySID" id="BYZ-38-t0r" customClass="ViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherForCitySID" id="BYZ-38-t0r" customClass="LocationViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -50,18 +50,19 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah0-Y7-fVm">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ah0-Y7-fVm" userLabel="refreshButton">
                                                 <rect key="frame" x="350" y="0.0" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="93x-lk-pSj"/>
                                                     <constraint firstAttribute="width" constant="44" id="cSG-xT-WcV"/>
                                                 </constraints>
-                                                <state key="normal" image="MoreIcon"/>
+                                                <color key="tintColor" red="0.41564732789999997" green="0.4157112241" blue="0.41563338039999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="arrow.clockwise" catalog="system"/>
                                                 <connections>
-                                                    <action selector="settingsButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZfR-US-MPW"/>
+                                                    <action selector="refreshButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQY-5B-CHS"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eaa-Qr-1Gr">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eaa-Qr-1Gr" userLabel="menuButton">
                                                 <rect key="frame" x="20" y="0.0" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="K06-co-1Mr"/>
@@ -201,10 +202,10 @@
             </objects>
             <point key="canvasLocation" x="1478.2608695652175" y="77.678571428571431"/>
         </scene>
-        <!--Search By Address View Controller-->
+        <!--Search For Location View Controller-->
         <scene sceneID="EUb-q9-Uwq">
             <objects>
-                <viewController storyboardIdentifier="SearchByAddressViewControllerSID" id="Tp6-8d-w9e" customClass="SearchByAddressViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchByAddressViewControllerSID" id="Tp6-8d-w9e" customClass="SearchForLocationViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tlZ-jc-tan">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -348,7 +349,7 @@
     </scenes>
     <resources>
         <image name="MenuIcon" width="25" height="14"/>
-        <image name="MoreIcon" width="5" height="19"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="rain" width="1666.5" height="3621"/>
     </resources>

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LocationViewController.swift
 //  Weather-App
 //
 //  Created by Kevin Tanner on 3/25/20.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class LocationViewController: UIViewController {
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     @IBOutlet weak var hourlyOrDailySegmentedControl: UISegmentedControl!
     
-//    let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     
     var city: KDTLocationObject?
     var cityLabelText: String?
@@ -29,8 +29,8 @@ class ViewController: UIViewController {
         hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         
-//        locationManager.delegate = self
-//        locationManager.requestWhenInUseAuthorization()
+        //        locationManager.delegate = self
+        //        locationManager.requestWhenInUseAuthorization()
         
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
@@ -47,19 +47,23 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        if WeatherManager.shared.pageIndex == 0 {
-//            locationManager.requestLocation()
-//        } else {
-        updateWeather()
-//        }
+        if findPageIndex() == 0 {
+            locationManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+        } else {
+            updateWeather()
+        }
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
         
     }
     
-    @IBAction func settingsButtonTapped(_ sender: UIButton) {
+    @IBAction func refreshButtonTapped(_ sender: UIButton) {
+        updateWeather()
     }
+    
     
     @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -90,9 +94,10 @@ class ViewController: UIViewController {
                 
                 if let weatherObject = location.weatherObjects.first {
                     WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
+                } else {
+                    WeatherManager.shared.addWeatherObject(weatherObject, toLocationObject: location)
                 }
                 
-                WeatherManager.shared.addWeatherObject(weatherObject, toLocationObject: location)
                 
                 let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
                 
@@ -107,51 +112,94 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    func findPageIndex() -> Int {
+        guard let city = city, let indexOfCity = WeatherManager.shared.cities.firstIndex(of: city) else { return 0 }
+        print("Page Index: \(indexOfCity)")
+        return indexOfCity
+    }
+    
+    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void ) {
+        // Use the last reported location.
+        if let lastLocation = self.locationManager.location {
+            let geocoder = CLGeocoder()
+            
+            // Look up the location and pass it to the completion handler
+            geocoder.reverseGeocodeLocation(lastLocation, completionHandler: { (placemarks, error) in
+                if error == nil {
+                    let firstLocation = placemarks?[0]
+                    completionHandler(firstLocation)
+                }
+                else {
+                    // An error occurred during geocoding.
+                    completionHandler(nil)
+                }
+            })
+        }
+        else {
+            // No location was available.
+            completionHandler(nil)
+        }
+    }
 }
 
 // MARK: - Location Manager Delegate
 
-//extension ViewController: CLLocationManagerDelegate {
-//
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        
-//        // Get weather for current location
-//        if let location = locations.last {
-//            let latitude = location.coordinate.latitude
-//            let longitude = location.coordinate.longitude
-//            WeatherNetworkManager().getWeather(latitude: latitude, longitude: longitude) { (weatherObject) in
-//                guard let weatherObject = weatherObject else { return }
-//                
-//                let currentTemp = Int(weatherObject.currentTemp)
-//                let currentSummary = weatherObject.currentSummary
-//                let chanceOfRain = weatherObject.chanceOfRain
-//                let humidity = weatherObject.humidity
-//                let visibility = weatherObject.visibility
-//                let icon = weatherObject.icon
-//                
-//                WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
-//                
-//                let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
-//                
-//                DispatchQueue.main.async {
-//                    self.currentTempLabel.text = "\(currentTemp)°"
-//                    self.currentSummaryLabel.text = currentSummary
-//                    self.weatherCollectionView.reloadData()
-//                    //                    self.backgroundImageView.image = backgroundImage
-//                    self.backgroundImageView.image = UIImage(named: Constants.rain)
-//                }
-//            }
-//        }
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print("\nThere was an error in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
-//    }
-//}
+extension LocationViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Get weather for current location
+        if let location = locations.last {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            
+            let geocoder = CLGeocoder()
+            
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                if error == nil {
+                    if let firstLocation = placemarks?.first?.locality, let city = self.city {
+                        DispatchQueue.main.async {
+                            self.cityNameLabel.text = firstLocation
+                        }
+                        WeatherManager.shared.updateCity(with: firstLocation, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, location: city)
+                    }
+                }
+            }
+            
+            WeatherNetworkManager().getWeather(latitude: latitude, longitude: longitude) { (weatherObject) in
+                guard let weatherObject = weatherObject else { return }
+                
+                let currentTemp = Int(weatherObject.currentTemp)
+                let currentSummary = weatherObject.currentSummary
+                let chanceOfRain = weatherObject.chanceOfRain
+                let humidity = weatherObject.humidity
+                let visibility = weatherObject.visibility
+                let icon = weatherObject.icon
+                
+                WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
+                
+                let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
+                
+                DispatchQueue.main.async {
+                    self.currentTempLabel.text = "\(currentTemp)°"
+                    self.currentSummaryLabel.text = currentSummary
+                    self.weatherCollectionView.reloadData()
+                    //                    self.backgroundImageView.image = backgroundImage
+                    self.backgroundImageView.image = UIImage(named: Constants.rain)
+                }
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("\nThere was an error in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
+    }
+}
 
 // MARK: - Collection View Methods
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension LocationViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let weatherObject = city?.weatherObjects.first else { return 0 }
         if hourlySelected == true {

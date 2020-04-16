@@ -30,6 +30,14 @@ class WeatherManager {
         saveToPersistentStore()
     }
     
+    func updateCity(with cityName: String, latitude: Double, longitude: Double, location: KDTLocationObject) {
+        location.cityName = cityName
+        location.latitude = latitude
+        location.longitude = longitude
+        
+        saveToPersistentStore()
+    }
+    
     func removeCity(with city: KDTLocationObject) {
         guard let cityToRemove = cities.firstIndex(of: city) else { return }
         cities.remove(at: cityToRemove)

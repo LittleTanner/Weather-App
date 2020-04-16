@@ -1,5 +1,5 @@
 //
-//  SearchByAddressViewController.swift
+//  SearchForLocationViewController.swift
 //  Weather-App
 //
 //  Created by Kevin Tanner on 3/27/20.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SearchByAddressViewController: UIViewController {
+class SearchForLocationViewController: UIViewController {
     
     @IBOutlet weak var searchByAddressSearchBar: UISearchBar!
     @IBOutlet weak var addressesTableView: UITableView!
@@ -71,7 +71,7 @@ class SearchByAddressViewController: UIViewController {
     }
 }
 
-extension SearchByAddressViewController: UITableViewDataSource, UITableViewDelegate {
+extension SearchForLocationViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -95,7 +95,7 @@ extension SearchByAddressViewController: UITableViewDataSource, UITableViewDeleg
     }
 }
 
-extension SearchByAddressViewController: UISearchBarDelegate {
+extension SearchForLocationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text {
             self.searchBarText = searchText
