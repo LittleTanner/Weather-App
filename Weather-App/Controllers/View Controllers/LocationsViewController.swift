@@ -57,6 +57,8 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         WeatherNetworkManager().getWeather(latitude: city.latitude, longitude: city.longitude) { (weatherObject) in
             guard let weatherObject = weatherObject else { return }
             
+            WeatherManager.shared.updateWeatherObject(with: weatherObject, location: city)
+            
             DispatchQueue.main.async {
                 cell.temperatureLabel.text = "\(weatherObject.currentTemp)°"
                 cell.feelsLikeTempLabel.text = "Feels Like: \(weatherObject.currentFeelsLikeTemp)°"
@@ -69,12 +71,9 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let city = WeatherManager.shared.cities[indexPath.row]
-        guard let index = WeatherManager.shared.cities.firstIndex(of: city) else { return }
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewController) as? WeatherPageViewController else { return }
-        WeatherManager.shared.pageIndex = index
+        WeatherManager.shared.pageIndex = indexPath.row
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
@@ -83,7 +82,12 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             let cityToRemove = WeatherManager.shared.cities[indexPath.row]
             WeatherManager.shared.removeCity(with: cityToRemove)
+            print("Delete row at indexpath: \(indexPath.row)")
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            if WeatherManager.shared.cities.count == indexPath.row {
+                WeatherManager.shared.pageIndex = 0
+            }
         }
     }
     

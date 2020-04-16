@@ -47,6 +47,8 @@ class LocationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        currentTempLabel.text = updateCurrentTemp()
+        currentSummaryLabel.text = updateCurrentSummary()
         if findPageIndex() == 0 {
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
@@ -54,6 +56,16 @@ class LocationViewController: UIViewController {
         } else {
             updateWeather()
         }
+    }
+    
+    func updateCurrentTemp() -> String {
+        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentTemp else { return "🤷🏼‍♂️" }
+        return "\(currentTemp)°"
+    }
+    
+    func updateCurrentSummary() -> String {
+        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentSummary else { return "🤷🏼‍♂️" }
+        return currentSummary
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
@@ -83,23 +95,23 @@ class LocationViewController: UIViewController {
         if let location = city {
             
             WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
-                guard let weatherObject = weatherObject else { return }
+                guard let newWeatherObject = weatherObject else { return }
                 
-                let currentTemp = Int(weatherObject.currentTemp)
-                let currentSummary = weatherObject.currentSummary
-                let chanceOfRain = weatherObject.chanceOfRain
-                let humidity = weatherObject.humidity
-                let visibility = weatherObject.visibility
-                let icon = weatherObject.icon
+                let currentTemp = Int(newWeatherObject.currentTemp)
+                let currentSummary = newWeatherObject.currentSummary
+                let chanceOfRain = newWeatherObject.chanceOfRain
+                let humidity = newWeatherObject.humidity
+                let visibility = newWeatherObject.visibility
+                let icon = newWeatherObject.icon
                 
                 if let weatherObject = location.weatherObjects.first {
-                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
+                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: newWeatherObject.dailySummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
                 } else {
-                    WeatherManager.shared.addWeatherObject(weatherObject, toLocationObject: location)
+                    WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
                 }
                 
                 
-                let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
+                let backgroundImage = newWeatherObject.getImageForCurrent(for: newWeatherObject.icon)
                 
                 DispatchQueue.main.async {
                     self.currentTempLabel.text = "\(currentTemp)°"

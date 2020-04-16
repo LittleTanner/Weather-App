@@ -67,6 +67,12 @@ class WeatherManager {
         saveToPersistentStore()
     }
     
+    func updateWeatherObject(with weatherObject: WeatherObject, location: KDTLocationObject) {
+        if location.weatherObjects.first != nil {
+            location.weatherObjects[0] = weatherObject
+        }
+    }
+    
     
     
     // MARK: - Persistence
