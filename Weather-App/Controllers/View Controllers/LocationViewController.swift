@@ -29,9 +29,6 @@ class LocationViewController: UIViewController {
         hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         
-        //        locationManager.delegate = self
-        //        locationManager.requestWhenInUseAuthorization()
-        
         weatherCollectionView.delegate = self
         weatherCollectionView.dataSource = self
         
@@ -40,7 +37,6 @@ class LocationViewController: UIViewController {
         
         let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
         weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
-        
         
         cityNameLabel.text = cityLabelText
     }
@@ -59,12 +55,12 @@ class LocationViewController: UIViewController {
     }
     
     func updateCurrentTemp() -> String {
-        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentTemp else { return "🤷🏼‍♂️" }
+        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentTemp else { return "" }
         return "\(currentTemp)°"
     }
     
     func updateCurrentSummary() -> String {
-        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentSummary else { return "🤷🏼‍♂️" }
+        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentSummary else { return "" }
         return currentSummary
     }
     
@@ -180,18 +176,23 @@ extension LocationViewController: CLLocationManagerDelegate {
             }
             
             WeatherNetworkManager().getWeather(latitude: latitude, longitude: longitude) { (weatherObject) in
-                guard let weatherObject = weatherObject else { return }
+                guard let newWeatherObject = weatherObject else { return }
                 
-                let currentTemp = Int(weatherObject.currentTemp)
-                let currentSummary = weatherObject.currentSummary
-                let chanceOfRain = weatherObject.chanceOfRain
-                let humidity = weatherObject.humidity
-                let visibility = weatherObject.visibility
-                let icon = weatherObject.icon
+                let currentTemp = Int(newWeatherObject.currentTemp)
+                let currentSummary = newWeatherObject.currentSummary
+                let chanceOfRain = newWeatherObject.chanceOfRain
+                let humidity = newWeatherObject.humidity
+                let visibility = newWeatherObject.visibility
+                let icon = newWeatherObject.icon
                 
-                WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: weatherObject.dailySummary, icon: icon, hourlyWeather: weatherObject.hourlyWeather, dailyWeather: weatherObject.dailyWeather)
                 
-                let backgroundImage = weatherObject.getImageForCurrent(for: weatherObject.icon)
+                if let weatherObject = WeatherManager.shared.cities[0].weatherObjects.first {
+                    WeatherManager.shared.updateWeatherObject(newWeatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: newWeatherObject.dailySummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
+                } else {
+                    WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: WeatherManager.shared.cities[0])
+                }
+                
+                let backgroundImage = newWeatherObject.getImageForCurrent(for: newWeatherObject.icon)
                 
                 DispatchQueue.main.async {
                     self.currentTempLabel.text = "\(currentTemp)°"

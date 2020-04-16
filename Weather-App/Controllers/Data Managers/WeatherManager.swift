@@ -16,9 +16,7 @@ class WeatherManager {
     
     static let shared = WeatherManager()
     
-    var cities: [KDTLocationObject] = [KDTLocationObject(cityName: "Newhall", latitude: 34.3578323, longitude: -118.4972295),
-                          KDTLocationObject(cityName: "Seattle", latitude: 47.603363, longitude: -122.330417),
-                          KDTLocationObject(cityName: "Denver", latitude: 39.739212, longitude: -104.9903028)]
+    var cities: [KDTLocationObject] = [KDTLocationObject(cityName: "Cupertino", latitude: 37.3230, longitude: -122.0322)]
     
     
     var pageControllers: [UIViewController] = []
