@@ -13,16 +13,11 @@ class SearchForLocationViewController: UIViewController {
     
     @IBOutlet weak var searchByAddressSearchBar: UISearchBar!
     @IBOutlet weak var addressesTableView: UITableView!
-    
-    var searchBarText: String?
-    var lat: Double?
-    var lon: Double?
 
     var locationInfo: String?
-    var cities: [KDTLocationObject]?
     var city: KDTLocationObject?
     var cityName: String?
-    var state: String?
+    var locationExists = false
     
     var weatherManagerDelegate: WeatherManagerDelegate?
     
@@ -58,7 +53,7 @@ class SearchForLocationViewController: UIViewController {
                         let country = placemark.isoCountryCode {
                         outputString = "\(city), \(state), \(country)"
                         self.cityName = city
-                        self.state = state
+                        self.locationExists = true
                     }
                     
                     completionHandler((outputString, location.coordinate), nil)
@@ -66,6 +61,7 @@ class SearchForLocationViewController: UIViewController {
                 }
             }
             
+            self.locationExists = false
             completionHandler(("Location not found", kCLLocationCoordinate2DInvalid), error as NSError?)
         }
     }
@@ -88,24 +84,36 @@ extension SearchForLocationViewController: UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let city = city, let cityName = cityName, let state = state else { return }
-        WeatherManager.shared.addCity(with: KDTLocationObject(cityName: cityName, state: state, latitude: city.latitude, longitude: city.longitude))
-        weatherManagerDelegate?.reloadTableView()
-        dismiss(animated: true)
+        guard let city = city, let cityName = cityName else { return }
+        
+        if locationExists {
+            
+            if !WeatherManager.shared.cities.contains(city) {
+                WeatherManager.shared.addCity(with: KDTLocationObject(cityName: cityName, latitude: city.latitude, longitude: city.longitude))
+                weatherManagerDelegate?.reloadTableView()
+                dismiss(animated: true)
+            } else {
+                // Show pop up saying you already added this city
+                print("This city already exists in your list of locations.")
+            }
+        } else {
+            // Show pop up saying this location can't be found please try again
+            print("This location can't be found please try again")
+        }
     }
 }
 
 extension SearchForLocationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text {
-            self.searchBarText = searchText
+
             getCoordinate(addressString: searchText) { (location, error) in
-                self.lat = location.coordinates.latitude
-                self.lon = location.coordinates.longitude
                 self.locationInfo = location.info
-                
-                self.city = KDTLocationObject(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
-                
+
+                let cityName = location.info.components(separatedBy: ",")
+
+                self.city = KDTLocationObject(cityName: cityName[0], latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+
                 self.addressesTableView.reloadData()
             }
         }
@@ -115,11 +123,10 @@ extension SearchForLocationViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         getCoordinate(addressString: searchText) { (location, error) in
-            self.lat = location.coordinates.latitude
-            self.lon = location.coordinates.longitude
             self.locationInfo = location.info
+            let cityName = location.info.components(separatedBy: ",")
             
-            self.city = KDTLocationObject(cityName: location.info, latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+            self.city = KDTLocationObject(cityName: cityName[0], latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
             
             self.addressesTableView.reloadData()
         }

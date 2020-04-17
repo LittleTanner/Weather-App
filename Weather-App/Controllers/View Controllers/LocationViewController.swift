@@ -123,7 +123,6 @@ class LocationViewController: UIViewController {
     
     func findPageIndex() -> Int {
         guard let city = city, let indexOfCity = WeatherManager.shared.cities.firstIndex(of: city) else { return 0 }
-        print("Page Index: \(indexOfCity)")
         return indexOfCity
     }
     
