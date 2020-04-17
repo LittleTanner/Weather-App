@@ -10,10 +10,7 @@ import UIKit
 
 class WeatherPageViewController: UIPageViewController {
 
-//    var controllers = [UIViewController]()
     var pageControl = UIPageControl()
-    
-//    var pageIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +31,11 @@ class WeatherPageViewController: UIPageViewController {
     
     
     func createViewControllers() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
         WeatherManager.shared.pageControllers = []
         
         for num in 0 ..< WeatherManager.shared.cities.count {
-            guard let vc = storyboard.instantiateViewController(identifier: "WeatherForCitySID") as? LocationViewController else { return }
+            guard let vc = storyboard.instantiateViewController(identifier: Constants.locationViewControllerID) as? LocationViewController else { return }
             vc.city = WeatherManager.shared.cities[num]
             vc.cityLabelText = WeatherManager.shared.cities[num].cityName
             

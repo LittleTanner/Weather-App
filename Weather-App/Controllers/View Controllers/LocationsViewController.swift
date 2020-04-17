@@ -29,14 +29,14 @@ class LocationsViewController: UIViewController {
     }
     
     @IBAction func backToWeatherButtonTapped(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewController) as? WeatherPageViewController else { return }
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toSearchByAddress" {
+        if segue.identifier == Constants.segueToSearchForLocation {
             guard let destinationVC = segue.destination as? SearchForLocationViewController else { return }
             destinationVC.weatherManagerDelegate = self
         }
@@ -71,8 +71,8 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewController) as? WeatherPageViewController else { return }
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
         WeatherManager.shared.pageIndex = indexPath.row
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
@@ -82,7 +82,6 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             let cityToRemove = WeatherManager.shared.cities[indexPath.row]
             WeatherManager.shared.removeCity(with: cityToRemove)
-            print("Delete row at indexpath: \(indexPath.row)")
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
             // If the user came to the locations page from the last city in the cities array and deletes that city then update the page index to zero to prevent an index out of range error for the WeatherPageViewController

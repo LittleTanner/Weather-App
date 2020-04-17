@@ -50,14 +50,10 @@ class WeatherManager {
         saveToPersistentStore()
     }
     
-    func updateWeatherObject(_ weatherObject: WeatherObject, currentTemp: Int, currentSummary: String, chanceOfRain: Int, humidity: Int, visibility: Double, dailySummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
+    func updateWeatherObject(_ weatherObject: WeatherObject, currentTemp: Int, currentSummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
 
         weatherObject.currentTemp = currentTemp
         weatherObject.currentSummary = currentSummary
-        weatherObject.chanceOfRain = chanceOfRain
-        weatherObject.humidity = humidity
-        weatherObject.visibility = visibility
-        weatherObject.dailySummary = dailySummary
         weatherObject.icon = icon
         weatherObject.hourlyWeather = hourlyWeather
         weatherObject.dailyWeather = dailyWeather
@@ -108,7 +104,6 @@ class WeatherManager {
             cities = decodedCities
         } catch let error {
             print("\nThere was an error decoding in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
-//            print("There was an error decoding!! \(decodingError.localizedDescription)")
         }
     }
 }

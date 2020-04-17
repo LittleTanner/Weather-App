@@ -95,13 +95,10 @@ class LocationViewController: UIViewController {
                 
                 let currentTemp = Int(newWeatherObject.currentTemp)
                 let currentSummary = newWeatherObject.currentSummary
-                let chanceOfRain = newWeatherObject.chanceOfRain
-                let humidity = newWeatherObject.humidity
-                let visibility = newWeatherObject.visibility
                 let icon = newWeatherObject.icon
                 
                 if let weatherObject = location.weatherObjects.first {
-                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: newWeatherObject.dailySummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
+                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
                 } else {
                     WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
                 }
@@ -179,14 +176,11 @@ extension LocationViewController: CLLocationManagerDelegate {
                 
                 let currentTemp = Int(newWeatherObject.currentTemp)
                 let currentSummary = newWeatherObject.currentSummary
-                let chanceOfRain = newWeatherObject.chanceOfRain
-                let humidity = newWeatherObject.humidity
-                let visibility = newWeatherObject.visibility
                 let icon = newWeatherObject.icon
                 
                 
                 if let weatherObject = WeatherManager.shared.cities[0].weatherObjects.first {
-                    WeatherManager.shared.updateWeatherObject(newWeatherObject, currentTemp: currentTemp, currentSummary: currentSummary, chanceOfRain: chanceOfRain, humidity: humidity, visibility: visibility, dailySummary: newWeatherObject.dailySummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
+                    WeatherManager.shared.updateWeatherObject(newWeatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
                 } else {
                     WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: WeatherManager.shared.cities[0])
                 }

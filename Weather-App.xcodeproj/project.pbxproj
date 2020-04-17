@@ -19,7 +19,6 @@
 		FC6960B7242BE7770024EDFA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960B6242BE7770024EDFA /* SceneDelegate.swift */; };
 		FC6960B9242BE7770024EDFA /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960B8242BE7770024EDFA /* LocationViewController.swift */; };
 		FC6960BC242BE7770024EDFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6960BA242BE7770024EDFA /* Main.storyboard */; };
-		FC6960BF242BE7770024EDFA /* Weather_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC6960BD242BE7770024EDFA /* Weather_App.xcdatamodeld */; };
 		FC6960C1242BE7780024EDFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6960C0242BE7780024EDFA /* Assets.xcassets */; };
 		FC6960C4242BE7780024EDFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6960C2242BE7780024EDFA /* LaunchScreen.storyboard */; };
 		FC6960CF242BE9D00024EDFA /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960CE242BE9D00024EDFA /* WeatherData.swift */; };
@@ -46,7 +45,6 @@
 		FC6960B6242BE7770024EDFA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FC6960B8242BE7770024EDFA /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		FC6960BB242BE7770024EDFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FC6960BE242BE7770024EDFA /* Weather_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weather_App.xcdatamodel; sourceTree = "<group>"; };
 		FC6960C0242BE7780024EDFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC6960C3242BE7780024EDFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC6960C5242BE7780024EDFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 		FC6960CD242BE8A50024EDFA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FC6960BD242BE7770024EDFA /* Weather_App.xcdatamodeld */,
 				FC6960CE242BE9D00024EDFA /* WeatherData.swift */,
 				FC6960D4242C22250024EDFA /* WeatherObject.swift */,
 				FC98D32D243BFEE70047F022 /* KDTLocationObject.swift */,
@@ -273,7 +270,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC6960D1242C137D0024EDFA /* WeatherNetworkManager.swift in Sources */,
-				FC6960BF242BE7770024EDFA /* Weather_App.xcdatamodeld in Sources */,
 				FC98D32A243BFC5C0047F022 /* WeatherPageViewController.swift in Sources */,
 				FC04E58D2433F4B100207762 /* HourlyWeatherCollectionViewCell.swift in Sources */,
 				FC6960B9242BE7770024EDFA /* LocationViewController.swift in Sources */,
@@ -488,19 +484,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		FC6960BD242BE7770024EDFA /* Weather_App.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				FC6960BE242BE7770024EDFA /* Weather_App.xcdatamodel */,
-			);
-			currentVersion = FC6960BE242BE7770024EDFA /* Weather_App.xcdatamodel */;
-			path = Weather_App.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = FC6960A9242BE7770024EDFA /* Project object */;
 }

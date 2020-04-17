@@ -10,9 +10,12 @@ import Foundation
 
 struct Constants {
     
-    
     // Storyboard IDs
-    static let weatherPageViewController = "WeatherPageViewControllerSID"
+    static let mainStoryboard = "Main"
+    
+    // View Controller IDs
+    static let weatherPageViewControllerID = "WeatherPageViewControllerID"
+    static let locationViewControllerID = "LocationViewControllerID"
     
     // Table View Cells
     static let locationTableViewCell = "LocationTableViewCell"
@@ -29,6 +32,10 @@ struct Constants {
     static let hourlyWeatherCellIdentifier = "hourlyWeatherCellXIB"
     static let dailyWeatherCellIdentifier = "dailyWeatherCellXIB"
     
+    // Segue Identifiers
+    static let segueToSearchForLocation = "toSearchForLocation"
+    static let segueToLocationsNavigationController = "toLocationsNavigationController"
+    
     // Weather Background Images
     static let clearDay = "clear-day"
     static let clearNight = "clear-night"
@@ -42,7 +49,6 @@ struct Constants {
     static let partlyCloudyNight = "partly-cloudy-night"
     static let defaultImage = "default"
 
-    
     // Weather Icons
     static let clearDayIcon = "ClearDayIcon"
     static let clearNightIcon = "ClearNightIcon"

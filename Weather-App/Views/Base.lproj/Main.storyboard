@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yZw-wT-IHM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +11,7 @@
         <!--Location View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="WeatherForCitySID" id="BYZ-38-t0r" customClass="LocationViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationViewControllerID" id="BYZ-38-t0r" customClass="LocationViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,7 +71,7 @@
                                                 <state key="normal" image="MenuIcon"/>
                                                 <connections>
                                                     <action selector="locationButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JJr-gn-tvb"/>
-                                                    <segue destination="QTa-ee-TxM" kind="show" identifier="toLocations" id="hjC-E6-VXh"/>
+                                                    <segue destination="QTa-ee-TxM" kind="show" identifier="toLocationsNavigationController" id="hjC-E6-VXh"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -307,7 +307,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bQ4-JB-XNK">
                             <color key="tintColor" red="0.41564732789999997" green="0.4157112241" blue="0.41563338039999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="Tp6-8d-w9e" kind="presentation" identifier="toSearchByAddress" id="Ldp-lk-oqC"/>
+                                <segue destination="Tp6-8d-w9e" kind="presentation" identifier="toSearchForLocation" id="Ldp-lk-oqC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -322,7 +322,7 @@
         <!--Weather Page View Controller-->
         <scene sceneID="rb0-nt-QaA">
             <objects>
-                <pageViewController storyboardIdentifier="WeatherPageViewControllerSID" autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="yZw-wT-IHM" customClass="WeatherPageViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="WeatherPageViewControllerID" autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="none" id="yZw-wT-IHM" customClass="WeatherPageViewController" customModule="Weather_App" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6sc-ry-Dq4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="580" y="78"/>

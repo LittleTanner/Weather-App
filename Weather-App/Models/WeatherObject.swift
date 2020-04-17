@@ -16,25 +16,17 @@ class WeatherObject: Codable {
     var dailyTempHigh: Int
     var dailyTempLow: Int
     var currentSummary: String
-    var chanceOfRain: Int
-    var humidity: Int
-    var visibility: Double
-    var dailySummary: String
     var icon: String
     
     var hourlyWeather: [HourlyData]
     var dailyWeather: [DailyData]
     
-    init(currentTemp: Int, currentFeelsLikeTemp: Int, dailyTempHigh: Int, dailyTempLow: Int, currentSummary: String, chanceOfRain: Int, humidity: Int, visibility: Double, dailySummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
+    init(currentTemp: Int, currentFeelsLikeTemp: Int, dailyTempHigh: Int, dailyTempLow: Int, currentSummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
         self.currentTemp = currentTemp
         self.currentFeelsLikeTemp = currentFeelsLikeTemp
         self.dailyTempHigh = dailyTempHigh
         self.dailyTempLow = dailyTempLow
         self.currentSummary = currentSummary
-        self.chanceOfRain = chanceOfRain
-        self.humidity = humidity
-        self.visibility = visibility
-        self.dailySummary = dailySummary
         self.icon = icon
         self.hourlyWeather = hourlyWeather
         self.dailyWeather = dailyWeather
@@ -62,10 +54,6 @@ extension WeatherObject: Equatable {
     static func == (lhs: WeatherObject, rhs: WeatherObject) -> Bool {
         return lhs.currentTemp == rhs.currentTemp
             && lhs.currentSummary == rhs.currentSummary
-            && lhs.chanceOfRain == rhs.chanceOfRain
-            && lhs.humidity == rhs.humidity
-            && lhs.visibility == rhs.visibility
-            && lhs.dailySummary == rhs.dailySummary
             && lhs.icon == rhs.icon
             && lhs.hourlyWeather == rhs.hourlyWeather
             && lhs.dailyWeather == rhs.dailyWeather
