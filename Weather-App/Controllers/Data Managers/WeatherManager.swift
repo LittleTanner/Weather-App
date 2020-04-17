@@ -46,7 +46,7 @@ class WeatherManager {
     
     
     func addWeatherObject(_ weatherObject: WeatherObject, toLocationObject locationObject: KDTLocationObject) {
-        locationObject.weatherObjects.append(weatherObject)
+        locationObject.weatherObject = weatherObject
         
         saveToPersistentStore()
     }
@@ -63,8 +63,8 @@ class WeatherManager {
     }
     
     func updateWeatherObject(with weatherObject: WeatherObject, location: KDTLocationObject) {
-        if location.weatherObjects.first != nil {
-            location.weatherObjects[0] = weatherObject
+        if location.weatherObject != nil {
+            location.weatherObject = weatherObject
         }
     }
     
@@ -135,9 +135,9 @@ class WeatherManager {
             let jsonCities = try jsonEncoder.encode(cities)
             // With the new json(d) cities, save it to the users device
             try jsonCities.write(to: createFileURLForPersistence())
-        } catch let encodingError {
+        } catch let error {
             // Handle the error, if there is one
-            print("There was an error saving!! \(encodingError.localizedDescription)")
+            print("\nThere was an error saving data in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
         }
     }
     

@@ -55,12 +55,12 @@ class LocationViewController: UIViewController {
     }
     
     func updateCurrentTemp() -> String {
-        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentTemp else { return "" }
+        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentTemp else { return "" }
         return "\(currentTemp)°"
     }
     
     func updateCurrentSummary() -> String {
-        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObjects.first?.currentSummary else { return "" }
+        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentSummary else { return "" }
         return currentSummary
     }
     
@@ -97,7 +97,7 @@ class LocationViewController: UIViewController {
                 let currentSummary = newWeatherObject.currentSummary
                 let icon = newWeatherObject.icon
                 
-                if let weatherObject = location.weatherObjects.first {
+                if let weatherObject = location.weatherObject {
                     WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
                 } else {
                     WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
@@ -153,7 +153,7 @@ extension LocationViewController: CLLocationManagerDelegate {
                 let icon = newWeatherObject.icon
                 
                 
-                if let weatherObject = WeatherManager.shared.cities[0].weatherObjects.first {
+                if let weatherObject = WeatherManager.shared.cities[0].weatherObject {
                     WeatherManager.shared.updateWeatherObject(newWeatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
                 } else {
                     WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: WeatherManager.shared.cities[0])
@@ -181,7 +181,7 @@ extension LocationViewController: CLLocationManagerDelegate {
 
 extension LocationViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let weatherObject = city?.weatherObjects.first else { return 0 }
+        guard let weatherObject = city?.weatherObject else { return 0 }
         if hourlySelected == true {
             return weatherObject.hourlyWeather.count
         } else {
@@ -195,7 +195,7 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.hourlyWeatherCellIdentifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let city = city {
-                if let indexForObject = city.weatherObjects.first?.hourlyWeather[indexPath.row] {
+                if let indexForObject = city.weatherObject?.hourlyWeather[indexPath.row] {
                     let rainAsDouble = indexForObject.precipProbability * 100
                     let rainAsInt = Int(rainAsDouble)
                     
@@ -220,7 +220,7 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let city = city {
-                if let indexForObject = city.weatherObjects.first?.dailyWeather[indexPath.row] {
+                if let indexForObject = city.weatherObject?.dailyWeather[indexPath.row] {
                     
                     let rainAsDouble = indexForObject.precipProbability * 100
                     let rainAsInt = Int(rainAsDouble)

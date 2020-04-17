@@ -13,13 +13,13 @@ class KDTLocationObject: Codable {
     var latitude: Double
     var longitude: Double
     
-    var weatherObjects: [WeatherObject]
+    var weatherObject: WeatherObject?
     
-    init(cityName: String, latitude: Double, longitude: Double, weatherObjects: [WeatherObject] = []) {
+    init(cityName: String, latitude: Double, longitude: Double, weatherObject: WeatherObject? = nil) {
         self.cityName = cityName
         self.latitude = latitude
         self.longitude = longitude
-        self.weatherObjects = weatherObjects
+        self.weatherObject = weatherObject
     }
 }
 
