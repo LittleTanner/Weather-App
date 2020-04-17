@@ -144,6 +144,7 @@
 		FC6960D2242C19550024EDFA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FCAE11DE244A2E010039B627 /* Helper Methods */,
 				FCA9791E2447CF34006F7628 /* Page View Controllers */,
 				FC85357924463254006F2FFD /* View Controllers */,
 				FCA9791B2447CF0C006F7628 /* Network Manager */,
@@ -193,6 +194,13 @@
 				FC98D329243BFC5C0047F022 /* WeatherPageViewController.swift */,
 			);
 			path = "Page View Controllers";
+			sourceTree = "<group>";
+		};
+		FCAE11DE244A2E010039B627 /* Helper Methods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Helper Methods";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

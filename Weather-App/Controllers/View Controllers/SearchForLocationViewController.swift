@@ -36,35 +36,6 @@ class SearchForLocationViewController: UIViewController {
     @IBAction func navigationBackButtonTapped(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    
-    func getCoordinate(addressString: String, completionHandler: @escaping((info: String, coordinates: CLLocationCoordinate2D), NSError?) -> Void ) {
-        let geocoder = CLGeocoder()
-        
-        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
-            if error == nil {
-                
-                if let placemark = placemarks?[0] {
-                    let location = placemark.location!
-                    
-                    var outputString = ""
-                    
-                    if let city = placemark.locality,
-                        let state = placemark.administrativeArea,
-                        let country = placemark.isoCountryCode {
-                        outputString = "\(city), \(state), \(country)"
-                        self.cityName = city
-                        self.locationExists = true
-                    }
-                    
-                    completionHandler((outputString, location.coordinate), nil)
-                    return
-                }
-            }
-            
-            self.locationExists = false
-            completionHandler(("Location not found", kCLLocationCoordinate2DInvalid), error as NSError?)
-        }
-    }
 }
 
 extension SearchForLocationViewController: UITableViewDataSource, UITableViewDelegate {
@@ -75,10 +46,7 @@ extension SearchForLocationViewController: UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.addressCellIdentifier, for: indexPath)
-        
-        if let locationInfo = locationInfo {
-            cell.textLabel?.text = locationInfo
-        }
+        cell.textLabel?.text = locationInfo
         return cell
     }
     
@@ -106,15 +74,19 @@ extension SearchForLocationViewController: UITableViewDataSource, UITableViewDel
 extension SearchForLocationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text {
-
-            getCoordinate(addressString: searchText) { (location, error) in
-                self.locationInfo = location.info
-
-                let cityName = location.info.components(separatedBy: ",")
-
-                self.city = KDTLocationObject(cityName: cityName[0], latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
-
-                self.addressesTableView.reloadData()
+            
+            WeatherManager.getCoordinates(from: searchText) { (location, error) in
+                if let _ = error {
+                    self.locationExists = false
+                } else {
+                    self.locationExists = true
+                    self.locationInfo = location.info
+                    
+                    let cityName = location.info.components(separatedBy: ",")
+                    self.cityName = cityName[0]
+                    self.city = KDTLocationObject(cityName: cityName[0], latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+                    self.addressesTableView.reloadData()
+                }
             }
         }
         searchBar.resignFirstResponder()
@@ -122,13 +94,18 @@ extension SearchForLocationViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        getCoordinate(addressString: searchText) { (location, error) in
-            self.locationInfo = location.info
-            let cityName = location.info.components(separatedBy: ",")
-            
-            self.city = KDTLocationObject(cityName: cityName[0], latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
-            
-            self.addressesTableView.reloadData()
+        WeatherManager.getCoordinates(from: searchText) { (location, error) in
+            if let _ = error {
+                self.locationExists = false
+            } else {
+                self.locationExists = true
+                self.locationInfo = location.info
+                
+                let cityName = location.info.components(separatedBy: ",")
+                self.cityName = cityName[0]
+                self.city = KDTLocationObject(cityName: cityName[0], latitude: location.coordinates.latitude, longitude: location.coordinates.longitude)
+                self.addressesTableView.reloadData()
+            }
         }
     }
 }

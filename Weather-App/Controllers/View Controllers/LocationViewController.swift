@@ -122,29 +122,6 @@ class LocationViewController: UIViewController {
         guard let city = city, let indexOfCity = WeatherManager.shared.cities.firstIndex(of: city) else { return 0 }
         return indexOfCity
     }
-    
-    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void ) {
-        // Use the last reported location.
-        if let lastLocation = self.locationManager.location {
-            let geocoder = CLGeocoder()
-            
-            // Look up the location and pass it to the completion handler
-            geocoder.reverseGeocodeLocation(lastLocation, completionHandler: { (placemarks, error) in
-                if error == nil {
-                    let firstLocation = placemarks?[0]
-                    completionHandler(firstLocation)
-                }
-                else {
-                    // An error occurred during geocoding.
-                    completionHandler(nil)
-                }
-            })
-        }
-        else {
-            // No location was available.
-            completionHandler(nil)
-        }
-    }
 }
 
 // MARK: - Location Manager Delegate
@@ -158,16 +135,13 @@ extension LocationViewController: CLLocationManagerDelegate {
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             
-            let geocoder = CLGeocoder()
-            
-            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-                if error == nil {
-                    if let firstLocation = placemarks?.first?.locality, let city = self.city {
-                        DispatchQueue.main.async {
-                            self.cityNameLabel.text = firstLocation
-                        }
-                        WeatherManager.shared.updateCity(with: firstLocation, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, location: city)
+            WeatherManager.getCityName(from: location) { (placemarks) in
+                
+                if let firstLocation = placemarks?.locality, let city = self.city {
+                    DispatchQueue.main.async {
+                        self.cityNameLabel.text = firstLocation
                     }
+                    WeatherManager.shared.updateCity(with: firstLocation, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, location: city)
                 }
             }
             

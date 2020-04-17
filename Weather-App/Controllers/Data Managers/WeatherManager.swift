@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol WeatherManagerDelegate {
     func reloadTableView()
@@ -67,6 +68,52 @@ class WeatherManager {
         }
     }
     
+    // MARK: - Helper Methods
+    
+    static func getCoordinates(from addressString: String, completionHandler: @escaping((info: String, coordinates: CLLocationCoordinate2D), NSError?) -> Void ) {
+        let geocoder = CLGeocoder()
+        
+        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+            if error == nil {
+                
+                if let placemark = placemarks?[0] {
+                    let location = placemark.location!
+                    
+                    var outputString = ""
+                    
+                    if let city = placemark.locality,
+                        let state = placemark.administrativeArea,
+                        let country = placemark.isoCountryCode {
+                        outputString = "\(city), \(state), \(country)"
+                    }
+                    
+                    completionHandler((outputString, location.coordinate), nil)
+                    return
+                }
+            }
+
+            completionHandler(("Location not found", kCLLocationCoordinate2DInvalid), error as NSError?)
+        }
+    }
+
+    static func getCityName(from location: CLLocation, completionHandler: @escaping (CLPlacemark?) -> Void ) {
+        
+        let geocoder = CLGeocoder()
+        
+        // Look up the location and pass it to the completion handler
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+            if error == nil {
+                let firstLocation = placemarks?[0]
+                completionHandler(firstLocation)
+            }
+            else {
+                // An error occurred during geocoding.
+                completionHandler(nil)
+            }
+        })
+    }
+    
+    
     
     
     // MARK: - Persistence
@@ -83,10 +130,10 @@ class WeatherManager {
     func saveToPersistentStore() {
         // Create an instance of JSON Encoder
         let jsonEncoder = JSONEncoder()
-        // Attempt to convert our playlists to JSON
+        // Attempt to convert our cities to JSON
         do {
             let jsonCities = try jsonEncoder.encode(cities)
-            // With the new json(d) Playlist, save it to the users device
+            // With the new json(d) cities, save it to the users device
             try jsonCities.write(to: createFileURLForPersistence())
         } catch let encodingError {
             // Handle the error, if there is one
@@ -95,7 +142,7 @@ class WeatherManager {
     }
     
     func loadFromPersistentStore() {
-        // The data we want will be JSON, and I want it to be a Playlist.
+        // The data we want will be JSON, and I want it to be a KDTLocationObject.
         let jsonDecoder = JSONDecoder()
         //Decode the data
         do {
