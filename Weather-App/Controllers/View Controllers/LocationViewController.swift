@@ -21,6 +21,7 @@ class LocationViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var city: KDTLocationObject?
+//    var cityy = WeatherManager.shared.cities[WeatherManager.shared.pageIndex]
     var cityLabelText: String?
     var hourlySelected: Bool = true
     
@@ -104,7 +105,7 @@ class LocationViewController: UIViewController {
                 }
                 
                 
-                let backgroundImage = newWeatherObject.getImageForCurrent(for: newWeatherObject.icon)
+                let backgroundImage = newWeatherObject.getBackgroundImage(for: newWeatherObject.icon)
                 
                 DispatchQueue.main.async {
                     self.currentTempLabel.text = "\(currentTemp)°"
@@ -154,12 +155,12 @@ extension LocationViewController: CLLocationManagerDelegate {
                 
                 
                 if let weatherObject = WeatherManager.shared.cities[0].weatherObject {
-                    WeatherManager.shared.updateWeatherObject(newWeatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
+                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
                 } else {
                     WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: WeatherManager.shared.cities[0])
                 }
                 
-                let backgroundImage = newWeatherObject.getImageForCurrent(for: newWeatherObject.icon)
+                let backgroundImage = newWeatherObject.getBackgroundImage(for: newWeatherObject.icon)
                 
                 DispatchQueue.main.async {
                     self.currentTempLabel.text = "\(currentTemp)°"
@@ -182,7 +183,7 @@ extension LocationViewController: CLLocationManagerDelegate {
 extension LocationViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let weatherObject = city?.weatherObject else { return 0 }
-        if hourlySelected == true {
+        if hourlySelected {
             return weatherObject.hourlyWeather.count
         } else {
             return weatherObject.dailyWeather.count
@@ -191,54 +192,23 @@ extension LocationViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if hourlySelected == true {
+        if hourlySelected {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.hourlyWeatherCellIdentifier, for: indexPath) as? HourlyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let city = city {
-                if let indexForObject = city.weatherObject?.hourlyWeather[indexPath.row] {
-                    let rainAsDouble = indexForObject.precipProbability * 100
-                    let rainAsInt = Int(rainAsDouble)
-                    
-                    let unixTimestampAsDouble = Double(indexForObject.time)
-                    let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-                    let dateFormatter = DateFormatter()
-                    let timezone = TimeZone.current.abbreviation() ?? "PST"
-                    dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-                    dateFormatter.locale = NSLocale.current
-                    dateFormatter.dateFormat = "h a"
-                    let time = dateFormatter.string(from: date)
-                    
-                    cell.timeLabel.text = time
-                    cell.weatherIcon.image = WeatherNetworkManager.getWeatherIcon(with: indexForObject.icon)
-                    cell.tempLabel.text = "\(Int(indexForObject.temperature))°"
-                    cell.rainLabel.text = "\(rainAsInt)%"
-                    
-                    return cell
-                }
+                
+                cell.configure(with: city, indexPath: indexPath)
+                
+                return cell
             }
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.dailyWeatherCellIdentifier, for: indexPath) as? DailyWeatherCollectionViewCell else { return UICollectionViewCell() }
             
             if let city = city {
-                if let indexForObject = city.weatherObject?.dailyWeather[indexPath.row] {
-                    
-                    let rainAsDouble = indexForObject.precipProbability * 100
-                    let rainAsInt = Int(rainAsDouble)
-                    
-                    let unixTimestampAsDouble = Double(indexForObject.time)
-                    let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "EEE"
-                    let day = dateFormatter.string(from: date)
-                    
-                    cell.dayLabel.text = day
-                    cell.weatherIconImageView.image = WeatherNetworkManager.getWeatherIcon(with: indexForObject.icon)
-                    cell.rainLabel.text = "\(rainAsInt)%"
-                    cell.tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
-                    cell.tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
-                    
-                    return cell
-                }
+                
+                cell.configure(with: city, indexPath: indexPath)
+                
+                return cell
             }
         }
         return UICollectionViewCell()

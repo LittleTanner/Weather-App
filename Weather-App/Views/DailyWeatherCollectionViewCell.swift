@@ -24,4 +24,24 @@ class DailyWeatherCollectionViewCell: UICollectionViewCell {
         cellBackgroundView.layer.cornerRadius = 10
     }
 
+    func configure(with city: KDTLocationObject, indexPath: IndexPath) {
+        if let indexForObject = city.weatherObject?.dailyWeather[indexPath.row] {
+            
+            let rainAsDouble = indexForObject.precipProbability * 100
+            let rainAsInt = Int(rainAsDouble)
+            
+            let unixTimestampAsDouble = Double(indexForObject.time)
+            let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEE"
+            let day = dateFormatter.string(from: date)
+            
+            dayLabel.text = day
+            weatherIconImageView.image = WeatherObject.getWeatherIcon(with: indexForObject.icon)
+            rainLabel.text = "\(rainAsInt)%"
+            tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
+            tempLowLabel.text = "\(Int(indexForObject.temperatureLow))°"
+        }
+    }
+    
 }

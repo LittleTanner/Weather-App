@@ -23,6 +23,8 @@ class KDTLocationObject: Codable {
     }
 }
 
+// MARK: - Equatable
+
 extension KDTLocationObject: Equatable {
     static func == (lhs: KDTLocationObject, rhs: KDTLocationObject) -> Bool {
         return lhs.cityName == rhs.cityName && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude

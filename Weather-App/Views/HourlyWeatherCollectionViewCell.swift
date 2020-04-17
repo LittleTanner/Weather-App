@@ -23,4 +23,26 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
         cellBackgroundView.layer.cornerRadius = 10
     }
 
+    
+    func configure(with city: KDTLocationObject, indexPath: IndexPath) {
+        if let indexForObject = city.weatherObject?.hourlyWeather[indexPath.row] {
+            let rainAsDouble = indexForObject.precipProbability * 100
+            let rainAsInt = Int(rainAsDouble)
+            
+            let unixTimestampAsDouble = Double(indexForObject.time)
+            let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
+            let dateFormatter = DateFormatter()
+            let timezone = TimeZone.current.abbreviation() ?? "PST"
+            dateFormatter.timeZone = TimeZone(abbreviation: timezone)
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "h a"
+            let time = dateFormatter.string(from: date)
+            
+            timeLabel.text = time
+            weatherIcon.image = WeatherObject.getWeatherIcon(with: indexForObject.icon)
+            tempLabel.text = "\(Int(indexForObject.temperature))°"
+            rainLabel.text = "\(rainAsInt)%"
+        }
+    }
+    
 }

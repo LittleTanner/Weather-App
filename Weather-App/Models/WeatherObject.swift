@@ -32,8 +32,9 @@ class WeatherObject: Codable {
         self.dailyWeather = dailyWeather
     }
     
+    // MARK: - Helper Methods
     
-    func getImageForCurrent(for icon: String) -> UIImage {
+    func getBackgroundImage(for icon: String) -> UIImage {
         switch icon {
         case Constants.clearDay:            return UIImage(named: Constants.clearDay)!
         case Constants.clearNight:          return UIImage(named: Constants.clearNight)!
@@ -48,7 +49,26 @@ class WeatherObject: Codable {
         default:                            return UIImage(named: Constants.defaultImage)!
         }
     }
+    
+    static func getWeatherIcon(with icon: String) -> UIImage {
+        switch icon {
+        case Constants.clearDay:            return UIImage(named: Constants.clearDayIcon)!
+        case Constants.clearNight:          return UIImage(named: Constants.clearNightIcon)!
+        case Constants.rain:                return UIImage(named: Constants.rainIcon)!
+        case Constants.snow:                return UIImage(named: Constants.snowIcon)!
+        case Constants.sleet:               return UIImage(named: Constants.sleetIcon)!
+        case Constants.wind:                return UIImage(named: Constants.windIcon)!
+        case Constants.fog:                 return UIImage(named: Constants.fogIcon)!
+        case Constants.cloudy:              return UIImage(named: Constants.cloudyIcon)!
+        case Constants.partlyCloudyDay:     return UIImage(named: Constants.partlyCloudyDayIcon)!
+        case Constants.partlyCloudyNight:   return UIImage(named: Constants.partlyCloudyNightIcon)!
+        default:                            return UIImage(named: Constants.cloudyIcon)!
+        }
+    }
+    
 }
+
+// MARK: - Equatable
 
 extension WeatherObject: Equatable {
     static func == (lhs: WeatherObject, rhs: WeatherObject) -> Bool {
