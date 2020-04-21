@@ -21,31 +21,23 @@ class LocationViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var city: KDTLocationObject?
-//    var cityy = WeatherManager.shared.cities[WeatherManager.shared.pageIndex]
     var cityLabelText: String?
     var hourlySelected: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
-        
-        weatherCollectionView.delegate = self
-        weatherCollectionView.dataSource = self
-        
-        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
-        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
-        
-        let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
-        weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
-        
-        cityNameLabel.text = cityLabelText
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         currentTempLabel.text = updateCurrentTemp()
         currentSummaryLabel.text = updateCurrentSummary()
+        
+        if let cityWeather = city?.weatherObject {
+            updateWeatherUI(with: cityWeather)
+        }
+        
         if findPageIndex() == 0 {
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
@@ -53,16 +45,6 @@ class LocationViewController: UIViewController {
         } else {
             updateWeather()
         }
-    }
-    
-    func updateCurrentTemp() -> String {
-        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentTemp else { return "" }
-        return "\(currentTemp)°"
-    }
-    
-    func updateCurrentSummary() -> String {
-        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentSummary else { return "" }
-        return currentSummary
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
@@ -88,13 +70,55 @@ class LocationViewController: UIViewController {
         }
     }
     
+    func setupUI() {
+        weatherCollectionView.delegate = self
+        weatherCollectionView.dataSource = self
+        
+        hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        
+        registerCollectionViewCells()
+        
+        cityNameLabel.text = cityLabelText
+    }
+    
+    func registerCollectionViewCells() {
+        let hourlyNib = UINib(nibName: Constants.hourlyWeatherCell, bundle: nil)
+        weatherCollectionView.register(hourlyNib, forCellWithReuseIdentifier: Constants.hourlyWeatherCellIdentifier)
+        
+        let dailyNib = UINib(nibName: Constants.dailyWeatherCell, bundle: nil)
+        weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
+    }
+    
+    func updateCurrentTemp() -> String {
+        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentTemp else { return "" }
+        return "\(currentTemp)°"
+    }
+    
+    func updateCurrentSummary() -> String {
+        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentSummary else { return "" }
+        return currentSummary
+    }
+    
+    
+    func updateWeatherUI(with weatherObject: WeatherObject) {
+        let backgroundImage = weatherObject.getBackgroundImage(for: weatherObject.icon)
+        
+        DispatchQueue.main.async {
+            self.currentTempLabel.text = "\(weatherObject.currentTemp)°"
+            self.currentSummaryLabel.text = weatherObject.currentSummary
+            self.weatherCollectionView.reloadData()
+            self.backgroundImageView.image = backgroundImage
+        }
+    }
+    
     func updateWeather() {
-        if let location = city {
+        let location = WeatherManager.shared.cities[findPageIndex()]
             
             WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
                 guard let newWeatherObject = weatherObject else { return }
                 
-                let currentTemp = Int(newWeatherObject.currentTemp)
+                let currentTemp = newWeatherObject.currentTemp
                 let currentSummary = newWeatherObject.currentSummary
                 let icon = newWeatherObject.icon
                 
@@ -104,19 +128,32 @@ class LocationViewController: UIViewController {
                     WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
                 }
                 
-                
-                let backgroundImage = newWeatherObject.getBackgroundImage(for: newWeatherObject.icon)
-                
-                DispatchQueue.main.async {
-                    self.currentTempLabel.text = "\(currentTemp)°"
-                    self.currentSummaryLabel.text = currentSummary
-                    self.weatherCollectionView.reloadData()
-                    //                    self.backgroundImageView.image = backgroundImage
-                    self.backgroundImageView.image = UIImage(named: Constants.rain)
-                }
+                self.updateWeatherUI(with: newWeatherObject)
             }
-        }
+        
     }
+    
+    
+//    func updateWeather() {
+//        if let location = city {
+//
+//            WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
+//                guard let newWeatherObject = weatherObject else { return }
+//
+//                let currentTemp = newWeatherObject.currentTemp
+//                let currentSummary = newWeatherObject.currentSummary
+//                let icon = newWeatherObject.icon
+//
+//                if let weatherObject = location.weatherObject {
+//                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
+//                } else {
+//                    WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
+//                }
+//
+//                self.updateWeatherUI(with: newWeatherObject)
+//            }
+//        }
+//    }
     
     
     func findPageIndex() -> Int {
@@ -133,9 +170,6 @@ extension LocationViewController: CLLocationManagerDelegate {
         
         // Get weather for current location
         if let location = locations.last {
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
-            
             WeatherManager.getCityName(from: location) { (placemarks) in
                 
                 if let firstLocation = placemarks?.locality, let city = self.city {
@@ -146,30 +180,7 @@ extension LocationViewController: CLLocationManagerDelegate {
                 }
             }
             
-            WeatherNetworkManager().getWeather(latitude: latitude, longitude: longitude) { (weatherObject) in
-                guard let newWeatherObject = weatherObject else { return }
-                
-                let currentTemp = Int(newWeatherObject.currentTemp)
-                let currentSummary = newWeatherObject.currentSummary
-                let icon = newWeatherObject.icon
-                
-                
-                if let weatherObject = WeatherManager.shared.cities[0].weatherObject {
-                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
-                } else {
-                    WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: WeatherManager.shared.cities[0])
-                }
-                
-                let backgroundImage = newWeatherObject.getBackgroundImage(for: newWeatherObject.icon)
-                
-                DispatchQueue.main.async {
-                    self.currentTempLabel.text = "\(currentTemp)°"
-                    self.currentSummaryLabel.text = currentSummary
-                    self.weatherCollectionView.reloadData()
-                    //                    self.backgroundImageView.image = backgroundImage
-                    self.backgroundImageView.image = UIImage(named: Constants.rain)
-                }
-            }
+            updateWeather()
         }
     }
     

@@ -59,6 +59,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to get the current weather for where you are located.</string>
+	<string>Drizzle needs access to your location to provide the local weather forecast.</string>
 </dict>
 </plist>

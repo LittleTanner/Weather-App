@@ -29,6 +29,9 @@
 		FC98D32E243BFEE70047F022 /* KDTLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32D243BFEE70047F022 /* KDTLocationObject.swift */; };
 		FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32F243C03AF0047F022 /* LocationsViewController.swift */; };
 		FC98D337243D2AF00047F022 /* LocationsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */; };
+		FCEE037C244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE037B244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift */; };
+		FCEE037E244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE037D244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift */; };
+		FCEE0380244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE037F244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +43,7 @@
 		FC1F2733242EDEE200C08CAA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		FC6532A5243E94DE0014DC8A /* LocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationTableViewCell.xib; sourceTree = "<group>"; };
-		FC6960B1242BE7770024EDFA /* Weather-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC6960B1242BE7770024EDFA /* Drizzle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Drizzle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC6960B4242BE7770024EDFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC6960B6242BE7770024EDFA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FC6960B8242BE7770024EDFA /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +59,9 @@
 		FC98D32D243BFEE70047F022 /* KDTLocationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDTLocationObject.swift; sourceTree = "<group>"; };
 		FC98D32F243C03AF0047F022 /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsNavigationController.swift; sourceTree = "<group>"; };
+		FCEE037B244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewController.swift; sourceTree = "<group>"; };
+		FCEE037D244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAllowLocationViewController.swift; sourceTree = "<group>"; };
+		FCEE037F244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAddLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +94,7 @@
 		FC6960B2242BE7770024EDFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FC6960B1242BE7770024EDFA /* Weather-App.app */,
+				FC6960B1242BE7770024EDFA /* Drizzle.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,6 +163,7 @@
 		FC85357924463254006F2FFD /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FCEE037A244FBEA100DC1AC2 /* Onboarding */,
 				FC6960B8242BE7770024EDFA /* LocationViewController.swift */,
 				FC98D32F243C03AF0047F022 /* LocationsViewController.swift */,
 				FC1F2730242EDDDF00C08CAA /* SearchForLocationViewController.swift */,
@@ -203,6 +210,16 @@
 			path = "Helper Methods";
 			sourceTree = "<group>";
 		};
+		FCEE037A244FBEA100DC1AC2 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				FCEE037B244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift */,
+				FCEE037D244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift */,
+				FCEE037F244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,7 +237,7 @@
 			);
 			name = "Weather-App";
 			productName = "Weather-App";
-			productReference = FC6960B1242BE7770024EDFA /* Weather-App.app */;
+			productReference = FC6960B1242BE7770024EDFA /* Drizzle.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,13 +302,16 @@
 				FC98D32E243BFEE70047F022 /* KDTLocationObject.swift in Sources */,
 				FC1F2731242EDDDF00C08CAA /* SearchForLocationViewController.swift in Sources */,
 				FC6960CF242BE9D00024EDFA /* WeatherData.swift in Sources */,
+				FCEE037E244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift in Sources */,
 				FC6960D5242C22250024EDFA /* WeatherObject.swift in Sources */,
+				FCEE037C244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift in Sources */,
 				FC6960B7242BE7770024EDFA /* SceneDelegate.swift in Sources */,
 				FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */,
 				FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */,
 				FC98D32C243BFDBD0047F022 /* WeatherManager.swift in Sources */,
 				FC6532A6243E94DE0014DC8A /* LocationTableViewCell.swift in Sources */,
 				FC98D337243D2AF00047F022 /* LocationsNavigationController.swift in Sources */,
+				FCEE0380244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift in Sources */,
 				FC04E591243410DC00207762 /* DailyWeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,7 +465,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevintanner.Weather-App";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Drizzle;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -464,7 +484,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kevintanner.Weather-App";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Drizzle;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
