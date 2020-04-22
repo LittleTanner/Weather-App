@@ -11,16 +11,14 @@ import UIKit
 
 
 class LocationsViewController: UIViewController {
-
+    
     @IBOutlet weak var locationsTableView: UITableView!
+    
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationsTableView.delegate = self
-        locationsTableView.dataSource = self
-        
-        let locationNib = UINib(nibName: Constants.locationTableViewCell, bundle: nil)
-        locationsTableView.register(locationNib, forCellReuseIdentifier: Constants.locationCellIdentifier)
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +31,34 @@ class LocationsViewController: UIViewController {
         guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
         vc.modalPresentationStyle = .fullScreen
         presentVCFromLeft(vc)
+    }
+    
+    @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
+        locationsTableView.isEditing = false
+        doneButton.title = ""
+    }
+    
+    func setupUI() {
+        locationsTableView.delegate = self
+        locationsTableView.dataSource = self
+        
+        configureLongPressTapGesture()
+        registerTableViewCells()
+    }
+    
+    func registerTableViewCells() {
+        let locationNib = UINib(nibName: Constants.locationTableViewCell, bundle: nil)
+        locationsTableView.register(locationNib, forCellReuseIdentifier: Constants.locationCellIdentifier)
+    }
+    
+    func configureLongPressTapGesture() {
+        let tap = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func longPress() {
+        locationsTableView.isEditing = true
+        doneButton.title = "Done"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,11 +97,14 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
-        WeatherManager.shared.pageIndex = indexPath.row
-        vc.modalPresentationStyle = .fullScreen
-        presentVCFromLeft(vc)
+        
+        if tableView.isEditing == false {
+            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+            guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
+            WeatherManager.shared.pageIndex = indexPath.row
+            vc.modalPresentationStyle = .fullScreen
+            presentVCFromLeft(vc)
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -91,6 +120,23 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == 0 {
+            return false
+        }
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if sourceIndexPath.row != 0 && destinationIndexPath.row != 0 {
+            let itemToMove = WeatherManager.shared.cities[sourceIndexPath.row]
+            WeatherManager.shared.cities.remove(at: sourceIndexPath.row)
+            WeatherManager.shared.cities.insert(itemToMove, at: destinationIndexPath.row)
+            WeatherManager.shared.saveToPersistentStore()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         // If this is the first item in the weather array of locations do not allow it to be deleted.
         let cityToRemove = WeatherManager.shared.cities[indexPath.row]
@@ -98,6 +144,10 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
             return .none
         }
         return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }
 

@@ -502,14 +502,22 @@
                                 <action selector="backToWeatherButtonTapped:" destination="PFs-ok-oW5" id="8wO-1s-puK"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="bQ4-JB-XNK">
-                            <color key="tintColor" red="0.41564732789999997" green="0.4157112241" blue="0.41563338039999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <segue destination="Tp6-8d-w9e" kind="presentation" identifier="toSearchForLocation" id="Ldp-lk-oqC"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="bQ4-JB-XNK">
+                                <color key="tintColor" red="0.41564732789999997" green="0.4157112241" blue="0.41563338039999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="Tp6-8d-w9e" kind="presentation" identifier="toSearchForLocation" id="Ldp-lk-oqC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem id="Nm2-gC-dSI">
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="PFs-ok-oW5" id="J3b-4W-Nc6"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="Nm2-gC-dSI" id="KJT-9O-xNK"/>
                         <outlet property="locationsTableView" destination="UHU-xU-bgD" id="XQW-6u-0r5"/>
                     </connections>
                 </viewController>
