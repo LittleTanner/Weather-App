@@ -62,11 +62,11 @@ extension SearchForLocationViewController: UITableViewDataSource, UITableViewDel
                 dismiss(animated: true)
             } else {
                 // Show pop up saying you already added this city
-                print("This city already exists in your list of locations.")
+                presentAlert(with: "Duplicate", message: "This location was already added to your list. Please add a different location.", actionButtonTitle: "Ok")
             }
         } else {
             // Show pop up saying this location can't be found please try again
-            print("This location can't be found please try again")
+            presentAlert(with: "Unknown Location", message: "Sorry this location can't be found at this time. Please try again later or try searching for a different city, zip code or street address.", actionButtonTitle: "Ok")
         }
     }
 }

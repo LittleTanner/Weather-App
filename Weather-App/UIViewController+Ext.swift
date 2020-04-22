@@ -30,4 +30,10 @@ extension UIViewController {
         view.window!.layer.add(transition, forKey: kCATransition)
         present(viewControllerToPresent, animated: false, completion: nil)
     }
+    
+    func presentAlert(with title: String, message: String, actionButtonTitle: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionButtonTitle, style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }
