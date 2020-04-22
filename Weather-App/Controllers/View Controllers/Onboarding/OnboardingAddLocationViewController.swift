@@ -13,6 +13,12 @@ class OnboardingAddLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        // Updates the user so the onboarding screne doesn't show again
+//        WeatherUserDefaults.shared.updateUser()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         // Updates the user so the onboarding screne doesn't show again
         WeatherUserDefaults.shared.updateUser()
     }

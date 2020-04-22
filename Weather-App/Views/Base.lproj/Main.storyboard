@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6n-M7-JJG">
-                                <rect key="frame" x="103.5" y="812" width="207" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6n-M7-JJG" customClass="ActionButton" customModule="Drizzle" customModuleProvider="target">
+                                <rect key="frame" x="103.5" y="797" width="207" height="45"/>
                                 <state key="normal" title="Let Get Started"/>
                                 <connections>
                                     <action selector="actionButtonTapped:" destination="9gP-nF-nwA" eventType="touchUpInside" id="4F2-wn-ogt"/>
@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here you will find the weather forecasts for locations you are interested in." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2F-uY-Yi7">
-                                <rect key="frame" x="20" y="523" width="374" height="269"/>
+                                <rect key="frame" x="20" y="523" width="374" height="254"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -46,7 +46,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="w8m-N0-aR1" firstAttribute="leading" secondItem="L4a-sv-tF3" secondAttribute="leading" constant="20" id="78a-Uw-Mpq"/>
-                            <constraint firstItem="j6n-M7-JJG" firstAttribute="height" secondItem="NoD-8C-fyf" secondAttribute="height" multiplier="0.0334821" id="9Dv-0y-2Su"/>
+                            <constraint firstItem="j6n-M7-JJG" firstAttribute="height" secondItem="NoD-8C-fyf" secondAttribute="height" multiplier="0.05" id="9Dv-0y-2Su"/>
                             <constraint firstItem="j6n-M7-JJG" firstAttribute="top" secondItem="Y2F-uY-Yi7" secondAttribute="bottom" constant="20" id="Fb3-l4-X0F"/>
                             <constraint firstItem="j6n-M7-JJG" firstAttribute="centerX" secondItem="L4a-sv-tF3" secondAttribute="centerX" id="HF0-Md-aiV"/>
                             <constraint firstItem="L4a-sv-tF3" firstAttribute="trailing" secondItem="Y2F-uY-Yi7" secondAttribute="trailing" constant="20" id="Ido-sH-8ja"/>
@@ -83,16 +83,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gb7-ZX-l9S">
-                                <rect key="frame" x="83" y="732.5" width="248" height="44.5"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gb7-ZX-l9S" customClass="ActionButton" customModule="Drizzle" customModuleProvider="target">
+                                <rect key="frame" x="83" y="797" width="248" height="45"/>
                                 <state key="normal" title="Allow"/>
                                 <connections>
                                     <action selector="allowButtonTapped:" destination="2QL-Ur-KcO" eventType="touchUpInside" id="Eve-1Y-IZs"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evQ-y5-zaL">
-                                <rect key="frame" x="103.5" y="797" width="207" height="45"/>
-                                <state key="normal" title="Not now"/>
+                                <rect key="frame" x="103.5" y="732.5" width="207" height="44.5"/>
+                                <state key="normal" title="Not now">
+                                    <color key="titleColor" name="blueBackground"/>
+                                </state>
                                 <connections>
                                     <action selector="notNowButtonTapped:" destination="2QL-Ur-KcO" eventType="touchUpInside" id="srx-S7-oTq"/>
                                 </connections>
@@ -114,8 +116,8 @@
                         <constraints>
                             <constraint firstItem="evQ-y5-zaL" firstAttribute="width" secondItem="Ta2-WM-HGv" secondAttribute="width" multiplier="0.5" id="99J-nz-1N1"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="height" secondItem="Ta2-WM-HGv" secondAttribute="height" multiplier="0.05" id="Axt-JZ-1ff"/>
-                            <constraint firstItem="evQ-y5-zaL" firstAttribute="top" secondItem="Gb7-ZX-l9S" secondAttribute="bottom" constant="20" id="IQR-wq-1qH"/>
-                            <constraint firstItem="Gb7-ZX-l9S" firstAttribute="top" secondItem="PR4-cu-1OW" secondAttribute="bottom" constant="20" id="Mkr-Xy-ZK5"/>
+                            <constraint firstItem="nOr-FU-qge" firstAttribute="bottom" secondItem="Gb7-ZX-l9S" secondAttribute="bottom" constant="20" id="IQR-wq-1qH"/>
+                            <constraint firstItem="evQ-y5-zaL" firstAttribute="top" secondItem="PR4-cu-1OW" secondAttribute="bottom" constant="20" id="Mkr-Xy-ZK5"/>
                             <constraint firstItem="dah-zj-ZMk" firstAttribute="top" secondItem="nOr-FU-qge" secondAttribute="top" constant="20" id="PzA-nl-Wdp"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="centerX" secondItem="nOr-FU-qge" secondAttribute="centerX" id="Uo5-jF-cLe"/>
                             <constraint firstItem="dah-zj-ZMk" firstAttribute="leading" secondItem="nOr-FU-qge" secondAttribute="leading" constant="20" id="YBk-EZ-ChI"/>
@@ -130,7 +132,7 @@
                             <constraint firstItem="nOr-FU-qge" firstAttribute="trailing" secondItem="PR4-cu-1OW" secondAttribute="trailing" constant="20" id="twQ-yf-AAE"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="width" secondItem="Ta2-WM-HGv" secondAttribute="width" multiplier="0.6" id="xK7-Lc-rqP"/>
                             <constraint firstItem="evQ-y5-zaL" firstAttribute="height" secondItem="Ta2-WM-HGv" secondAttribute="height" multiplier="0.05" id="xi0-8I-1qY"/>
-                            <constraint firstItem="nOr-FU-qge" firstAttribute="bottom" secondItem="evQ-y5-zaL" secondAttribute="bottom" constant="20" id="ypy-Xc-pNq"/>
+                            <constraint firstItem="Gb7-ZX-l9S" firstAttribute="top" secondItem="evQ-y5-zaL" secondAttribute="bottom" constant="20" id="ypy-Xc-pNq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nOr-FU-qge"/>
                     </view>
@@ -154,7 +156,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pO2-AE-5EV">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pO2-AE-5EV" customClass="ActionButton" customModule="Drizzle" customModuleProvider="target">
                                 <rect key="frame" x="83" y="797" width="248" height="45"/>
                                 <state key="normal" title="Check Out The Weather"/>
                                 <connections>
@@ -280,10 +282,10 @@
                                             <constraint firstAttribute="trailing" secondItem="CHF-Hl-D0u" secondAttribute="trailing" constant="30" id="Ja3-gz-1eN"/>
                                             <constraint firstAttribute="trailing" secondItem="udw-gs-1II" secondAttribute="trailing" constant="30" id="Js3-fo-1pg"/>
                                             <constraint firstItem="CHF-Hl-D0u" firstAttribute="top" secondItem="ggB-55-hpJ" secondAttribute="bottom" constant="10" id="Osy-fz-EJ0"/>
-                                            <constraint firstItem="udw-gs-1II" firstAttribute="leading" secondItem="6yc-ab-pdX" secondAttribute="leading" constant="30" id="Tr6-pn-phe"/>
+                                            <constraint firstItem="udw-gs-1II" firstAttribute="leading" relation="lessThanOrEqual" secondItem="6yc-ab-pdX" secondAttribute="leading" constant="30" id="Tr6-pn-phe"/>
                                             <constraint firstItem="udw-gs-1II" firstAttribute="top" secondItem="CHF-Hl-D0u" secondAttribute="bottom" constant="5" id="Ukw-wM-sqq"/>
                                             <constraint firstItem="Eaa-Qr-1Gr" firstAttribute="leading" secondItem="6yc-ab-pdX" secondAttribute="leading" constant="20" id="Vbm-bc-QUP"/>
-                                            <constraint firstItem="CHF-Hl-D0u" firstAttribute="leading" secondItem="6yc-ab-pdX" secondAttribute="leading" constant="30" id="WZg-iz-u5e"/>
+                                            <constraint firstItem="CHF-Hl-D0u" firstAttribute="leading" relation="lessThanOrEqual" secondItem="6yc-ab-pdX" secondAttribute="leading" constant="30" id="WZg-iz-u5e"/>
                                             <constraint firstItem="Eaa-Qr-1Gr" firstAttribute="top" secondItem="6yc-ab-pdX" secondAttribute="top" id="WmC-dV-oM7"/>
                                             <constraint firstItem="ggB-55-hpJ" firstAttribute="centerX" secondItem="6yc-ab-pdX" secondAttribute="centerX" id="ew9-jN-vGS"/>
                                             <constraint firstAttribute="trailing" secondItem="ah0-Y7-fVm" secondAttribute="trailing" constant="20" id="hsc-dR-Mo2"/>
