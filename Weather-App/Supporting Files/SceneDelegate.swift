@@ -30,7 +30,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingWelcomeViewControllerID) as? OnboardingWelcomeViewController else { return }
             window.rootViewController = vc
         } else {
-            window.rootViewController = WeatherPageViewController()
+            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+            guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
+            window.rootViewController = vc
         }
         
         // Shows the window and makes it the key window
