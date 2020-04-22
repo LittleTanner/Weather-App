@@ -98,7 +98,12 @@ class LocationViewController: UIViewController {
         let location = WeatherManager.shared.cities[findPageIndex()]
         
         WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
-            guard let newWeatherObject = weatherObject else { return }
+            guard let newWeatherObject = weatherObject else {
+                DispatchQueue.main.async {
+                    self.presentAlert(with: "An Error Has Occurred", message: "Please try again later. Maybe check your internet connection.", actionButtonTitle: "Ok")
+                }
+                return
+            }
             
             let currentTemp = newWeatherObject.currentTemp
             let currentSummary = newWeatherObject.currentSummary

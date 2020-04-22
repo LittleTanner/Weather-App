@@ -158,7 +158,7 @@
                                 <rect key="frame" x="83" y="797" width="248" height="45"/>
                                 <state key="normal" title="Check Out The Weather"/>
                                 <connections>
-                                    <segue destination="yZw-wT-IHM" kind="show" id="qKL-93-Gng"/>
+                                    <action selector="actionButtonTapped:" destination="1fW-sL-pxo" eventType="touchUpInside" id="FL3-RE-4aZ"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="partly-cloudy-day" translatesAutoresizingMaskIntoConstraints="NO" id="LfN-8S-s21">
@@ -518,9 +518,7 @@
         <!--Weather Page View Controller-->
         <scene sceneID="rb0-nt-QaA">
             <objects>
-                <pageViewController storyboardIdentifier="WeatherPageViewControllerID" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="fullScreen" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="yZw-wT-IHM" customClass="WeatherPageViewController" customModule="Drizzle" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="ngF-ju-WgL"/>
-                </pageViewController>
+                <pageViewController storyboardIdentifier="WeatherPageViewControllerID" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="fullScreen" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="yZw-wT-IHM" customClass="WeatherPageViewController" customModule="Drizzle" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6sc-ry-Dq4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="580" y="78"/>
