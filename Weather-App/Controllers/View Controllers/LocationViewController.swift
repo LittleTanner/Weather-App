@@ -27,32 +27,25 @@ class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        currentTempLabel.text = updateCurrentTemp()
-        currentSummaryLabel.text = updateCurrentSummary()
         
         if let cityWeather = city?.weatherObject {
-            updateWeatherUI(with: cityWeather)
+            updateUI(with: cityWeather)
         }
         
-        if findPageIndex() == 0 {
-            locationManager.delegate = self
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
-        } else {
-            updateWeather()
-        }
+        checkIfLocationServicesAllowed()
+        determineHowToUpdateWeather()
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.locationsNavigationControllerID) as? LocationsNavigationController else { return }
+        vc.modalPresentationStyle = .fullScreen
         
+        presentVCFromRight(vc)
     }
     
     @IBAction func refreshButtonTapped(_ sender: UIButton) {
-        updateWeather()
+        determineHowToUpdateWeather()
     }
     
     
@@ -75,7 +68,7 @@ class LocationViewController: UIViewController {
         weatherCollectionView.dataSource = self
         
         hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        hourlyOrDailySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.label], for: .normal)
         
         registerCollectionViewCells()
         
@@ -90,18 +83,7 @@ class LocationViewController: UIViewController {
         weatherCollectionView.register(dailyNib, forCellWithReuseIdentifier: Constants.dailyWeatherCellIdentifier)
     }
     
-    func updateCurrentTemp() -> String {
-        guard let currentTemp = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentTemp else { return "" }
-        return "\(currentTemp)°"
-    }
-    
-    func updateCurrentSummary() -> String {
-        guard let currentSummary = WeatherManager.shared.cities[findPageIndex()].weatherObject?.currentSummary else { return "" }
-        return currentSummary
-    }
-    
-    
-    func updateWeatherUI(with weatherObject: WeatherObject) {
+    func updateUI(with weatherObject: WeatherObject) {
         let backgroundImage = weatherObject.getBackgroundImage(for: weatherObject.icon)
         
         DispatchQueue.main.async {
@@ -114,47 +96,46 @@ class LocationViewController: UIViewController {
     
     func updateWeather() {
         let location = WeatherManager.shared.cities[findPageIndex()]
+        
+        WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
+            guard let newWeatherObject = weatherObject else { return }
             
-            WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
-                guard let newWeatherObject = weatherObject else { return }
-                
-                let currentTemp = newWeatherObject.currentTemp
-                let currentSummary = newWeatherObject.currentSummary
-                let icon = newWeatherObject.icon
-                
-                if let weatherObject = location.weatherObject {
-                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
-                } else {
-                    WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
-                }
-                
-                self.updateWeatherUI(with: newWeatherObject)
+            let currentTemp = newWeatherObject.currentTemp
+            let currentSummary = newWeatherObject.currentSummary
+            let icon = newWeatherObject.icon
+            
+            if let weatherObject = location.weatherObject {
+                WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
+            } else {
+                WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
             }
+            
+            self.updateUI(with: newWeatherObject)
+        }
         
     }
     
+    func checkIfLocationServicesAllowed() {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedAlways, .authorizedWhenInUse:
+                // Location Access Allowed
+                WeatherManager.shared.allowsLocation = true
+            default:
+                // Location Access Denied / Other
+                WeatherManager.shared.allowsLocation = false
+            }
+        }
+    }
     
-//    func updateWeather() {
-//        if let location = city {
-//
-//            WeatherNetworkManager().getWeather(latitude: location.latitude, longitude: location.longitude) { (weatherObject) in
-//                guard let newWeatherObject = weatherObject else { return }
-//
-//                let currentTemp = newWeatherObject.currentTemp
-//                let currentSummary = newWeatherObject.currentSummary
-//                let icon = newWeatherObject.icon
-//
-//                if let weatherObject = location.weatherObject {
-//                    WeatherManager.shared.updateWeatherObject(weatherObject, currentTemp: currentTemp, currentSummary: currentSummary, icon: icon, hourlyWeather: newWeatherObject.hourlyWeather, dailyWeather: newWeatherObject.dailyWeather)
-//                } else {
-//                    WeatherManager.shared.addWeatherObject(newWeatherObject, toLocationObject: location)
-//                }
-//
-//                self.updateWeatherUI(with: newWeatherObject)
-//            }
-//        }
-//    }
-    
+    func determineHowToUpdateWeather() {
+        if findPageIndex() == 0 && WeatherManager.shared.allowsLocation == true {
+            locationManager.delegate = self
+            locationManager.requestLocation()
+        } else {
+            updateWeather()
+        }
+    }
     
     func findPageIndex() -> Int {
         guard let city = city, let indexOfCity = WeatherManager.shared.cities.firstIndex(of: city) else { return 0 }
@@ -168,8 +149,9 @@ extension LocationViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        // Get weather for current location
+        // Get current location
         if let location = locations.last {
+            // Get city name
             WeatherManager.getCityName(from: location) { (placemarks) in
                 
                 if let firstLocation = placemarks?.locality, let city = self.city {

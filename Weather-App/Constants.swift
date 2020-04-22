@@ -16,6 +16,10 @@ struct Constants {
     // View Controller IDs
     static let weatherPageViewControllerID = "WeatherPageViewControllerID"
     static let locationViewControllerID = "LocationViewControllerID"
+    static let onboardingWelcomeViewControllerID = "OnboardingWelcomeViewController"
+    static let onboardingAllowLocationViewControllerID = "OnboardingAllowLocationViewController"
+    static let onboardingAddLocationViewControllerID = "OnboardingAddLocationViewController"
+    static let locationsNavigationControllerID = "LocationsNavigationController"
     
     // Table View Cells
     static let locationTableViewCell = "LocationTableViewCell"

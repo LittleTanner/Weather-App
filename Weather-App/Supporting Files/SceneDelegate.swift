@@ -14,10 +14,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // Makes it so the window fills up the full screen
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        
+        if let window = window {
+        // Assigns the windowScene to the window
+        window.windowScene = windowScene
+        
+        WeatherUserDefaults.shared.loadFromPersistentStore()
+        // Sets the root view controller
+        if WeatherUserDefaults.shared.isNewUser {
+            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+            guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingWelcomeViewControllerID) as? OnboardingWelcomeViewController else { return }
+            window.rootViewController = vc
+        } else {
+            window.rootViewController = WeatherPageViewController()
+        }
+        
+        // Shows the window and makes it the key window
+        window.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

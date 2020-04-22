@@ -18,31 +18,20 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        layer.cornerRadius = 15
-//        layer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 0.5)
-        cellBackgroundView.layer.cornerRadius = 10
+
+        cellBackgroundView.backgroundColor = .collectionCellBackground
+        cellBackgroundView.layer.cornerRadius = StyleGuide.cornerRadius
     }
 
-    
     func configure(with city: KDTLocationObject, indexPath: IndexPath) {
         if let indexForObject = city.weatherObject?.hourlyWeather[indexPath.row] {
             let rainAsDouble = indexForObject.precipProbability * 100
             let rainAsInt = Int(rainAsDouble)
             
-            let unixTimestampAsDouble = Double(indexForObject.time)
-            let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-            let dateFormatter = DateFormatter()
-            let timezone = TimeZone.current.abbreviation() ?? "PST"
-            dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-            dateFormatter.locale = NSLocale.current
-            dateFormatter.dateFormat = "h a"
-            let time = dateFormatter.string(from: date)
-            
-            timeLabel.text = time
+            timeLabel.text = WeatherManager.convertIntToTimeOfDay(indexForObject.time)
             weatherIcon.image = WeatherObject.getWeatherIcon(with: indexForObject.icon)
             tempLabel.text = "\(Int(indexForObject.temperature))°"
             rainLabel.text = "\(rainAsInt)%"
         }
     }
-    
 }

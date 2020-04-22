@@ -50,8 +50,8 @@ class WeatherPageViewController: UIPageViewController {
         self.pageControl.currentPage = WeatherManager.shared.pageIndex
         self.pageControl.alpha = 0.5
         self.pageControl.tintColor = UIColor.black
-        self.pageControl.pageIndicatorTintColor = UIColor.secondaryLabel
-        self.pageControl.currentPageIndicatorTintColor = UIColor.systemBlue
+        self.pageControl.pageIndicatorTintColor = UIColor.greyLabel
+        self.pageControl.currentPageIndicatorTintColor = UIColor.blueBackground
         self.view.addSubview(pageControl)
     }
     

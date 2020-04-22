@@ -16,15 +16,10 @@ class OnboardingWelcomeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAllowLocationViewControllerID) as? OnboardingAllowLocationViewController else { return }
+        vc.modalPresentationStyle = .fullScreen
+        presentVCFromRight(vc)
     }
-    */
-
 }

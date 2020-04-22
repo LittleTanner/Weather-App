@@ -7,24 +7,36 @@
 //
 
 import UIKit
+import CoreLocation
 
-class OnboardingAllowLocationViewController: UIViewController {
+class OnboardingAllowLocationViewController: UIViewController, CLLocationManagerDelegate {
 
+    var locationManager: CLLocationManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        locationManager = CLLocationManager()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func allowButtonTapped(_ sender: UIButton) {
+        locationManager?.delegate = self
+        locationManager?.requestWhenInUseAuthorization()
+        WeatherManager.shared.allowsLocation = true
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAddLocationViewControllerID) as? OnboardingAddLocationViewController else { return }
+        vc.modalPresentationStyle = .fullScreen
+        
+        presentVCFromRight(vc)
+        
+        
     }
-    */
-
+    
+    @IBAction func notNowButtonTapped(_ sender: UIButton) {
+        WeatherManager.shared.allowsLocation = false
+        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAddLocationViewControllerID) as? OnboardingAddLocationViewController else { return }
+        vc.modalPresentationStyle = .fullScreen
+        
+        presentVCFromRight(vc)
+    }
 }

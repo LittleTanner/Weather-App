@@ -18,7 +18,6 @@ class LocationTableViewCell: UITableViewCell {
     @IBOutlet weak var weatherBackgroundView: UIView!
     
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,8 +27,7 @@ class LocationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         weatherBackgroundView.layer.borderWidth = 3
-        weatherBackgroundView.layer.borderColor = #colorLiteral(red: 0.4508882761, green: 0.6078796983, blue: 0.6665825844, alpha: 1)
-        // Configure the view for the selected state
+        weatherBackgroundView.layer.borderColor = UIColor.blueBackground.cgColor
     }
     
 }

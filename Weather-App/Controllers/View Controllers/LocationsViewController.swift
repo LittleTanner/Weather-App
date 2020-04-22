@@ -32,7 +32,7 @@ class LocationsViewController: UIViewController {
         let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        presentVCFromLeft(vc)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -75,7 +75,7 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let vc = storyboard.instantiateViewController(identifier: Constants.weatherPageViewControllerID) as? WeatherPageViewController else { return }
         WeatherManager.shared.pageIndex = indexPath.row
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        presentVCFromLeft(vc)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

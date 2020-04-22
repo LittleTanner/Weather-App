@@ -20,8 +20,9 @@ class DailyWeatherCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        cellBackgroundView.layer.cornerRadius = 10
+
+        cellBackgroundView.backgroundColor = .collectionCellBackground
+        cellBackgroundView.layer.cornerRadius = StyleGuide.cornerRadius
     }
 
     func configure(with city: KDTLocationObject, indexPath: IndexPath) {
@@ -30,13 +31,7 @@ class DailyWeatherCollectionViewCell: UICollectionViewCell {
             let rainAsDouble = indexForObject.precipProbability * 100
             let rainAsInt = Int(rainAsDouble)
             
-            let unixTimestampAsDouble = Double(indexForObject.time)
-            let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEE"
-            let day = dateFormatter.string(from: date)
-            
-            dayLabel.text = day
+            dayLabel.text = WeatherManager.convertIntToDayOfWeek(indexForObject.time)
             weatherIconImageView.image = WeatherObject.getWeatherIcon(with: indexForObject.icon)
             rainLabel.text = "\(rainAsInt)%"
             tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"
