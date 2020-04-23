@@ -11,6 +11,8 @@ import CoreLocation
 
 class LocationViewController: UIViewController {
     
+    @IBOutlet weak var refreshButton: UIButton!
+    @IBOutlet weak var fetchingWeatherIndicator: UIActivityIndicatorView!
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var currentSummaryLabel: UILabel!
@@ -91,6 +93,8 @@ class LocationViewController: UIViewController {
             self.currentSummaryLabel.text = weatherObject.currentSummary
             self.weatherCollectionView.reloadData()
             self.backgroundImageView.image = backgroundImage
+            self.fetchingWeatherIndicator.stopAnimating()
+            self.refreshButton.isHidden = false
         }
     }
     
@@ -134,6 +138,9 @@ class LocationViewController: UIViewController {
     }
     
     func determineHowToUpdateWeather() {
+        refreshButton.isHidden = true
+        fetchingWeatherIndicator.startAnimating()
+        
         if findPageIndex() == 0 && WeatherManager.shared.allowsLocation == true {
             locationManager.delegate = self
             locationManager.requestLocation()

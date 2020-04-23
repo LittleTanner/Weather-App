@@ -274,6 +274,13 @@
                                                     <action selector="locationButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JJr-gn-tvb"/>
                                                 </connections>
                                             </button>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="QEV-NB-56N">
+                                                <rect key="frame" x="360" y="0.0" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="NdH-sE-QkW"/>
+                                                    <constraint firstAttribute="width" constant="44" id="m5v-oo-qcE"/>
+                                                </constraints>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -281,6 +288,7 @@
                                             <constraint firstItem="ah0-Y7-fVm" firstAttribute="top" secondItem="6yc-ab-pdX" secondAttribute="top" id="8Mg-PW-gHX"/>
                                             <constraint firstAttribute="trailing" secondItem="CHF-Hl-D0u" secondAttribute="trailing" constant="30" id="Ja3-gz-1eN"/>
                                             <constraint firstAttribute="trailing" secondItem="udw-gs-1II" secondAttribute="trailing" constant="30" id="Js3-fo-1pg"/>
+                                            <constraint firstItem="QEV-NB-56N" firstAttribute="top" secondItem="6yc-ab-pdX" secondAttribute="top" id="OfJ-bp-zn4"/>
                                             <constraint firstItem="CHF-Hl-D0u" firstAttribute="top" secondItem="ggB-55-hpJ" secondAttribute="bottom" constant="10" id="Osy-fz-EJ0"/>
                                             <constraint firstItem="udw-gs-1II" firstAttribute="leading" relation="lessThanOrEqual" secondItem="6yc-ab-pdX" secondAttribute="leading" constant="30" id="Tr6-pn-phe"/>
                                             <constraint firstItem="udw-gs-1II" firstAttribute="top" secondItem="CHF-Hl-D0u" secondAttribute="bottom" constant="5" id="Ukw-wM-sqq"/>
@@ -375,6 +383,7 @@
                             <constraint firstItem="aEq-j1-fcV" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="bch-nU-kLU"/>
                             <constraint firstAttribute="top" secondItem="g4r-1B-mL5" secondAttribute="top" id="dPg-MD-mYP"/>
                             <constraint firstAttribute="top" secondItem="aEq-j1-fcV" secondAttribute="top" constant="-15" id="dlw-EE-eCg"/>
+                            <constraint firstItem="6yc-ab-pdX" firstAttribute="trailing" secondItem="QEV-NB-56N" secondAttribute="trailing" constant="10" id="lnv-xS-fZL"/>
                             <constraint firstAttribute="trailing" secondItem="g4r-1B-mL5" secondAttribute="trailing" id="lyK-Jh-TWC"/>
                             <constraint firstItem="CWd-q4-5bl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oJE-zx-yz4"/>
                             <constraint firstAttribute="leading" secondItem="aEq-j1-fcV" secondAttribute="leading" id="oRQ-8U-ps4"/>
@@ -392,7 +401,9 @@
                         <outlet property="cityNameLabel" destination="ggB-55-hpJ" id="SPS-9h-f5K"/>
                         <outlet property="currentSummaryLabel" destination="udw-gs-1II" id="E0T-VJ-tmq"/>
                         <outlet property="currentTempLabel" destination="CHF-Hl-D0u" id="Tl1-yJ-R36"/>
+                        <outlet property="fetchingWeatherIndicator" destination="QEV-NB-56N" id="bJE-vP-vSa"/>
                         <outlet property="hourlyOrDailySegmentedControl" destination="yy4-Im-PAx" id="Gym-f2-rtJ"/>
+                        <outlet property="refreshButton" destination="ah0-Y7-fVm" id="0uk-0q-hir"/>
                         <outlet property="weatherCollectionView" destination="RqE-8b-Lus" id="10P-BJ-uOa"/>
                     </connections>
                 </viewController>
