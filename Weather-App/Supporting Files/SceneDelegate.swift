@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         WeatherUserDefaults.shared.loadFromPersistentStore()
         // Sets the root view controller
-        if WeatherUserDefaults.shared.isNewUser {
+            if WeatherUserDefaults.shared.isNewUser {
             let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
             guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingWelcomeViewControllerID) as? OnboardingWelcomeViewController else { return }
             window.rootViewController = vc

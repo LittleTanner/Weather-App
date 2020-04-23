@@ -11,6 +11,7 @@
 		FC04E58E2433F4B100207762 /* HourlyWeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC04E58C2433F4B100207762 /* HourlyWeatherCollectionViewCell.xib */; };
 		FC04E591243410DC00207762 /* DailyWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC04E58F243410DC00207762 /* DailyWeatherCollectionViewCell.swift */; };
 		FC04E592243410DC00207762 /* DailyWeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC04E590243410DC00207762 /* DailyWeatherCollectionViewCell.xib */; };
+		FC0FD01F24523BF1000F7ED8 /* WeatherUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91E7402450A1E600564256 /* WeatherUserDefaults.swift */; };
 		FC1F2731242EDDDF00C08CAA /* SearchForLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2730242EDDDF00C08CAA /* SearchForLocationViewController.swift */; };
 		FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2733242EDEE200C08CAA /* Constants.swift */; };
 		FC6532A6243E94DE0014DC8A /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */; };
@@ -33,10 +34,45 @@
 		FC98D32E243BFEE70047F022 /* KDTLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32D243BFEE70047F022 /* KDTLocationObject.swift */; };
 		FC98D330243C03AF0047F022 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32F243C03AF0047F022 /* LocationsViewController.swift */; };
 		FC98D337243D2AF00047F022 /* LocationsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */; };
+		FCEC1E102451EF120004944F /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEC1E0F2451EF120004944F /* NotificationCenter.framework */; };
+		FCEC1E132451EF120004944F /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEC1E122451EF120004944F /* TodayViewController.swift */; };
+		FCEC1E162451EF120004944F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCEC1E142451EF120004944F /* MainInterface.storyboard */; };
+		FCEC1E1A2451EF120004944F /* Drizzle Forecast.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FCEC1E0D2451EF120004944F /* Drizzle Forecast.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FCEC1E1F2451F5810004944F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6960C0242BE7780024EDFA /* Assets.xcassets */; };
+		FCEC1E202451F8870004944F /* WeatherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960D0242C137D0024EDFA /* WeatherNetworkManager.swift */; };
+		FCEC1E212451F8960004944F /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32B243BFDBD0047F022 /* WeatherManager.swift */; };
+		FCEC1E222451F8A40004944F /* KDTLocationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98D32D243BFEE70047F022 /* KDTLocationObject.swift */; };
+		FCEC1E232451F8A80004944F /* WeatherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960D4242C22250024EDFA /* WeatherObject.swift */; };
+		FCEC1E242451F8AB0004944F /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6960CE242BE9D00024EDFA /* WeatherData.swift */; };
+		FCEC1E252451F8B50004944F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2733242EDEE200C08CAA /* Constants.swift */; };
 		FCEE037C244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE037B244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift */; };
 		FCEE037E244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE037D244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift */; };
 		FCEE0380244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE037F244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FCEC1E182451EF120004944F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC6960A9242BE7770024EDFA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FCEC1E0C2451EF120004944F;
+			remoteInfo = TodayWeatherExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FCEC1E1B2451EF120004944F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FCEC1E1A2451EF120004944F /* Drizzle Forecast.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FC04E58B2433F4B100207762 /* HourlyWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -67,6 +103,11 @@
 		FC98D32D243BFEE70047F022 /* KDTLocationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDTLocationObject.swift; sourceTree = "<group>"; };
 		FC98D32F243C03AF0047F022 /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		FC98D336243D2AF00047F022 /* LocationsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsNavigationController.swift; sourceTree = "<group>"; };
+		FCEC1E0D2451EF120004944F /* Drizzle Forecast.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Drizzle Forecast.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCEC1E0F2451EF120004944F /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		FCEC1E122451EF120004944F /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		FCEC1E152451EF120004944F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		FCEC1E172451EF120004944F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCEE037B244FBEC300DC1AC2 /* OnboardingWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewController.swift; sourceTree = "<group>"; };
 		FCEE037D244FBEE800DC1AC2 /* OnboardingAllowLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAllowLocationViewController.swift; sourceTree = "<group>"; };
 		FCEE037F244FBEFC00DC1AC2 /* OnboardingAddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAddLocationViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +118,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FCEC1E0A2451EF120004944F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCEC1E102451EF120004944F /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				FC6960B3242BE7770024EDFA /* Weather-App */,
+				FCEC1E112451EF120004944F /* TodayWeatherExtension */,
+				FCEC1E0E2451EF120004944F /* Frameworks */,
 				FC6960B2242BE7770024EDFA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				FC6960B1242BE7770024EDFA /* Drizzle.app */,
+				FCEC1E0D2451EF120004944F /* Drizzle Forecast.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +274,24 @@
 			path = "Page View Controllers";
 			sourceTree = "<group>";
 		};
+		FCEC1E0E2451EF120004944F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FCEC1E0F2451EF120004944F /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FCEC1E112451EF120004944F /* TodayWeatherExtension */ = {
+			isa = PBXGroup;
+			children = (
+				FCEC1E122451EF120004944F /* TodayViewController.swift */,
+				FCEC1E142451EF120004944F /* MainInterface.storyboard */,
+				FCEC1E172451EF120004944F /* Info.plist */,
+			);
+			path = TodayWeatherExtension;
+			sourceTree = "<group>";
+		};
 		FCEE037A244FBEA100DC1AC2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,15 +312,34 @@
 				FC6960AD242BE7770024EDFA /* Sources */,
 				FC6960AE242BE7770024EDFA /* Frameworks */,
 				FC6960AF242BE7770024EDFA /* Resources */,
+				FCEC1E1B2451EF120004944F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FCEC1E192451EF120004944F /* PBXTargetDependency */,
 			);
 			name = "Weather-App";
 			productName = "Weather-App";
 			productReference = FC6960B1242BE7770024EDFA /* Drizzle.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FCEC1E0C2451EF120004944F /* TodayWeatherExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FCEC1E1E2451EF120004944F /* Build configuration list for PBXNativeTarget "TodayWeatherExtension" */;
+			buildPhases = (
+				FCEC1E092451EF120004944F /* Sources */,
+				FCEC1E0A2451EF120004944F /* Frameworks */,
+				FCEC1E0B2451EF120004944F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TodayWeatherExtension;
+			productName = TodayWeatherExtension;
+			productReference = FCEC1E0D2451EF120004944F /* Drizzle Forecast.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -258,12 +347,15 @@
 		FC6960A9242BE7770024EDFA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Kevin Tanner";
 				TargetAttributes = {
 					FC6960B0242BE7770024EDFA = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					FCEC1E0C2451EF120004944F = {
+						CreatedOnToolsVersion = 11.4.1;
 					};
 				};
 			};
@@ -281,6 +373,7 @@
 			projectRoot = "";
 			targets = (
 				FC6960B0242BE7770024EDFA /* Weather-App */,
+				FCEC1E0C2451EF120004944F /* TodayWeatherExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -296,6 +389,15 @@
 				FC04E58E2433F4B100207762 /* HourlyWeatherCollectionViewCell.xib in Resources */,
 				FC04E592243410DC00207762 /* DailyWeatherCollectionViewCell.xib in Resources */,
 				FC6960BC242BE7770024EDFA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FCEC1E0B2451EF120004944F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCEC1E1F2451F5810004944F /* Assets.xcassets in Resources */,
+				FCEC1E162451EF120004944F /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +434,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FCEC1E092451EF120004944F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCEC1E212451F8960004944F /* WeatherManager.swift in Sources */,
+				FCEC1E222451F8A40004944F /* KDTLocationObject.swift in Sources */,
+				FCEC1E132451EF120004944F /* TodayViewController.swift in Sources */,
+				FC0FD01F24523BF1000F7ED8 /* WeatherUserDefaults.swift in Sources */,
+				FCEC1E232451F8A80004944F /* WeatherObject.swift in Sources */,
+				FCEC1E252451F8B50004944F /* Constants.swift in Sources */,
+				FCEC1E242451F8AB0004944F /* WeatherData.swift in Sources */,
+				FCEC1E202451F8870004944F /* WeatherNetworkManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FCEC1E192451EF120004944F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FCEC1E0C2451EF120004944F /* TodayWeatherExtension */;
+			targetProxy = FCEC1E182451EF120004944F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FC6960BA242BE7770024EDFA /* Main.storyboard */ = {
@@ -349,6 +474,14 @@
 				FC6960C3242BE7780024EDFA /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FCEC1E142451EF120004944F /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FCEC1E152451EF120004944F /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -471,6 +604,7 @@
 		FC6960C9242BE7780024EDFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C39EPG5VUE;
@@ -480,7 +614,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kevintanner.Weather-App";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevintanner.Drizzle;
 				PRODUCT_NAME = Drizzle;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -490,6 +624,7 @@
 		FC6960CA242BE7780024EDFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C39EPG5VUE;
@@ -499,8 +634,48 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kevintanner.Weather-App";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevintanner.Drizzle;
 				PRODUCT_NAME = Drizzle;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FCEC1E1C2451EF120004944F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C39EPG5VUE;
+				INFOPLIST_FILE = TodayWeatherExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevintanner.Drizzle.TodayWeatherExtension;
+				PRODUCT_NAME = "Drizzle Forecast";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FCEC1E1D2451EF120004944F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C39EPG5VUE;
+				INFOPLIST_FILE = TodayWeatherExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kevintanner.Drizzle.TodayWeatherExtension;
+				PRODUCT_NAME = "Drizzle Forecast";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -523,6 +698,15 @@
 			buildConfigurations = (
 				FC6960C9242BE7780024EDFA /* Debug */,
 				FC6960CA242BE7780024EDFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FCEC1E1E2451EF120004944F /* Build configuration list for PBXNativeTarget "TodayWeatherExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FCEC1E1C2451EF120004944F /* Debug */,
+				FCEC1E1D2451EF120004944F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

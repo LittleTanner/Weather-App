@@ -166,15 +166,16 @@ extension LocationViewController: CLLocationManagerDelegate {
             // Get city name
             WeatherManager.getCityName(from: location) { (placemarks) in
                 
-                if let firstLocation = placemarks?.locality, let city = self.city {
+                if let cityName = placemarks?.locality, let city = self.city {
                     DispatchQueue.main.async {
-                        self.cityNameLabel.text = firstLocation
+                        self.cityNameLabel.text = cityName
                     }
-                    WeatherManager.shared.updateCity(with: firstLocation, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, location: city)
+                    WeatherManager.shared.updateCity(with: cityName, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, location: city)
+                    
+                    self.updateWeather()
                 }
             }
             
-            updateWeather()
         }
     }
     

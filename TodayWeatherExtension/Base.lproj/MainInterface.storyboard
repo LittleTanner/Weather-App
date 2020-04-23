@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Today View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="TodayWeatherExtension" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zx7-Zd-Oym">
+                                <rect key="frame" x="4" y="40" width="312" height="105"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cupertino" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKN-yd-HaY">
+                                        <rect key="frame" x="16" y="27.5" width="128" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ClearDayIcon" translatesAutoresizingMaskIntoConstraints="NO" id="8cB-5c-kub">
+                                        <rect key="frame" x="152" y="25.5" width="54" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="54" id="iKh-nW-mqW"/>
+                                            <constraint firstAttribute="height" constant="54" id="wHb-0d-x8s"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="76°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mis-Yi-yxg">
+                                        <rect key="frame" x="206" y="25.5" width="90" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="90" id="TkM-4d-jgN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="45"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="76° / 63°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyQ-2T-WZj">
+                                        <rect key="frame" x="16" y="56.5" width="61" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="AKN-yd-HaY" firstAttribute="leading" secondItem="Zx7-Zd-Oym" secondAttribute="leading" constant="16" id="4Da-BC-tC7"/>
+                                    <constraint firstItem="mis-Yi-yxg" firstAttribute="leading" secondItem="8cB-5c-kub" secondAttribute="trailing" id="8PO-OA-v0s"/>
+                                    <constraint firstItem="mis-Yi-yxg" firstAttribute="centerY" secondItem="Zx7-Zd-Oym" secondAttribute="centerY" id="8gp-Ja-Xla"/>
+                                    <constraint firstItem="eyQ-2T-WZj" firstAttribute="top" secondItem="AKN-yd-HaY" secondAttribute="bottom" constant="8" id="Jyy-1O-oK5"/>
+                                    <constraint firstAttribute="trailing" secondItem="mis-Yi-yxg" secondAttribute="trailing" constant="16" id="P0H-oZ-5Q6"/>
+                                    <constraint firstItem="8cB-5c-kub" firstAttribute="centerY" secondItem="Zx7-Zd-Oym" secondAttribute="centerY" id="agc-a5-ULq"/>
+                                    <constraint firstItem="8cB-5c-kub" firstAttribute="leading" secondItem="AKN-yd-HaY" secondAttribute="trailing" constant="8" id="be1-nh-V39"/>
+                                    <constraint firstItem="eyQ-2T-WZj" firstAttribute="leading" secondItem="Zx7-Zd-Oym" secondAttribute="leading" constant="16" id="cGp-FH-y7g"/>
+                                    <constraint firstItem="AKN-yd-HaY" firstAttribute="centerY" secondItem="Zx7-Zd-Oym" secondAttribute="centerY" constant="-14.5" id="xGq-e5-URr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Zx7-Zd-Oym" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" constant="4" id="7gK-KV-Lso"/>
+                            <constraint firstItem="Zx7-Zd-Oym" firstAttribute="bottom" secondItem="ssy-KU-ocm" secondAttribute="bottom" constant="-4" id="Dtr-OO-uX2"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="top" secondItem="Zx7-Zd-Oym" secondAttribute="top" constant="4" id="Uop-dB-CND"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="Zx7-Zd-Oym" secondAttribute="trailing" constant="4" id="dqC-K5-NrD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="149"/>
+                    <connections>
+                        <outlet property="currentTempLabel" destination="mis-Yi-yxg" id="IHH-eb-T4f"/>
+                        <outlet property="iconImageView" destination="8cB-5c-kub" id="0lp-Xy-Umy"/>
+                        <outlet property="locationNameLabel" destination="AKN-yd-HaY" id="1nx-Nf-WQw"/>
+                        <outlet property="temperatureRangeLabel" destination="eyQ-2T-WZj" id="baw-eP-kZb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140.57971014492756" y="138.28125"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ClearDayIcon" width="52" height="53"/>
+    </resources>
+</document>
