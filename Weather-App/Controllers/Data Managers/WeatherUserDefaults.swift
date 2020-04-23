@@ -12,8 +12,6 @@ class WeatherUserDefaults {
     
     static let shared = WeatherUserDefaults()
     
-    let defaults = UserDefaults.standard
-    
     var isNewUser = true
     
     func updateUser() {

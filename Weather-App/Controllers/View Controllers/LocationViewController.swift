@@ -143,6 +143,7 @@ class LocationViewController: UIViewController {
         
         if findPageIndex() == 0 && WeatherManager.shared.allowsLocation == true {
             locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             locationManager.requestLocation()
         } else {
             updateWeather()

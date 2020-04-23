@@ -18,44 +18,36 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var currentTempLabel: UILabel!
     
     var city: KDTLocationObject?
+    let defaults = UserDefaults.standard
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        WeatherManager.shared.loadFromPersistentStore()
         
-        city = WeatherManager.shared.cities[0]
-        print(WeatherManager.shared.cities[0].cityName)
-
-        if let city = city {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        
+        checkIfLocationServicesAllowed()
+        
+        if defaults.string(forKey: "cityName") != nil {
+            guard let temperatureRange = defaults.string(forKey: "temperatureRange"),
+                let weatherIcon = defaults.string(forKey: "weatherIcon"),
+                let currentTemperature = defaults.string(forKey: "currentTemperature") else { return }
             
-            WeatherUserDefaults.shared.defaults.set(city.cityName, forKey: "cityName")
-            WeatherUserDefaults.shared.defaults.set(city.latitude, forKey: "latitude")
-            WeatherUserDefaults.shared.defaults.set(city.longitude, forKey: "longitude")
+            let cityName = defaults.string(forKey: "cityName")!
+            
+            DispatchQueue.main.async {
+                self.locationNameLabel.text = cityName
+                self.temperatureRangeLabel.text = temperatureRange
+                self.iconImageView.image = WeatherObject.getWeatherIcon(with: weatherIcon)
+                self.currentTempLabel.text = currentTemperature
+            }
         }
-//        let cityName = WeatherUserDefaults.shared.defaults.string(forKey: "cityName") ?? "Unknkown"
-//        let latitude = WeatherUserDefaults.shared.defaults.double(forKey: "latitude") ?? 37.3230
-//        let longitude = WeatherUserDefaults.shared.defaults.double(forKey: "longitude") ?? -122.0322
-//        city = KDTLocationObject(cityName: cityName, latitude: latitude, longitude: longitude)
-//            updateUI(with: KDTLocationObject(cityName: cityName, latitude: latitude, longitude: longitude))
-        
-//        if let city = WeatherManager.shared.cities.first {
-//            updateUI(with: city)
-//        }
-        
     }
         
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
         // Perform any setup necessary in order to update the view.
-        guard let city = city else { completionHandler(NCUpdateResult.failed); return }
-        
-        getWeather(with: city.latitude, longitude: city.longitude)
-        
-        DispatchQueue.main.async {
-            self.locationNameLabel.text = city.cityName
-        }
-        
-        
         // If an error is encountered, use NCUpdateResult.Failed
         // If there's no update required, use NCUpdateResult.NoData
         // If there's an update, use NCUpdateResult.NewData
@@ -63,13 +55,26 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         completionHandler(NCUpdateResult.newData)
     }
     
+    func checkIfLocationServicesAllowed() {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .authorizedAlways, .authorizedWhenInUse:
+                // Location Access Allowed
+                locationManager.requestLocation()
+            default:
+                // Location Access Denied / Other
+                locationManager.requestWhenInUseAuthorization()
+            }
+        }
+    }
+    
     func updateUI(with city: KDTLocationObject) {
-        
+
         guard let iconString = city.weatherObject?.icon,
             let dailyTempHigh = city.weatherObject?.dailyTempHigh,
             let dailyTempLow = city.weatherObject?.dailyTempLow,
             let currentTemp = city.weatherObject?.currentTemp else { return }
-        
+
         DispatchQueue.main.async {
             self.locationNameLabel.text = city.cityName
             self.temperatureRangeLabel.text = "\(dailyTempHigh)° / \(dailyTempLow)°"
@@ -81,15 +86,54 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     func getWeather(with latitude: Double, longitude: Double) {
         
         WeatherNetworkManager().getWeather(latitude: latitude, longitude: longitude) { (newWeatherObject) in
-            guard let newWeatherObject = newWeatherObject, let city = self.city else { return }
+            guard let newWeatherObject = newWeatherObject else { return }
             
-            WeatherManager.shared.updateWeatherObject(with: newWeatherObject, location: city)
+            self.city?.weatherObject = newWeatherObject
             
-            DispatchQueue.main.async {
-                self.temperatureRangeLabel.text = "\(newWeatherObject.dailyTempHigh)° / \(newWeatherObject.dailyTempLow)°"
-                self.iconImageView.image = WeatherObject.getWeatherIcon(with: newWeatherObject.icon)
-                self.currentTempLabel.text = "\(newWeatherObject.currentTemp)°"
+            self.defaults.set("\(newWeatherObject.dailyTempHigh)° / \(newWeatherObject.dailyTempLow)°", forKey: "temperatureRange")
+            self.defaults.set(newWeatherObject.icon, forKey: "weatherIcon")
+            self.defaults.set("\(newWeatherObject.currentTemp)°", forKey: "currentTemperature")
+            
+            if let city = self.city {
+                self.updateUI(with: city)
             }
         }
+    }
+}
+
+
+
+extension TodayViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // Get current location
+        if let location = locations.last {
+            // Get city name
+            WeatherManager.getCityName(from: location) { (placemarks) in
+                
+                if let cityName = placemarks?.locality {
+
+                    self.city = KDTLocationObject(cityName: cityName, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+
+                    self.getWeather(with: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                    
+                    self.defaults.set(cityName, forKey: "cityName")
+                    self.defaults.set(location.coordinate.latitude, forKey: "latitude")
+                    self.defaults.set(location.coordinate.longitude, forKey: "longitude")
+                }
+            }
+            
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("\nThere was an error in \(#function)\nError: \(error)\nError.localizedDescription: \(error.localizedDescription)\n")
     }
 }
