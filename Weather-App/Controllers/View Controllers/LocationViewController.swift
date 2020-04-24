@@ -39,6 +39,8 @@ class LocationViewController: UIViewController {
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
+        WeatherManager.shared.pageIndex = findPageIndex()
+        
         let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: Constants.locationsNavigationControllerID) as? LocationsNavigationController else { return }
         vc.modalPresentationStyle = .fullScreen
