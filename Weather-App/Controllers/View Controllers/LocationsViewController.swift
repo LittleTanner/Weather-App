@@ -114,7 +114,7 @@ extension LocationsViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
             // If the user came to the locations page from the last city in the cities array and deletes that city then update the page index to zero to prevent an index out of range error for the WeatherPageViewController
-            if WeatherManager.shared.cities.count == indexPath.row {
+            if WeatherManager.shared.cities.count > indexPath.row {
                 WeatherManager.shared.pageIndex = 0
             }
         }
