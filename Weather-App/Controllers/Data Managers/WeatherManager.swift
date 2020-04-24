@@ -71,25 +71,6 @@ class WeatherManager {
     
     // MARK: - Helper Methods
     
-    static func convertIntToDayOfWeek(_ dateAsInt: Int) -> String {
-        let unixTimestampAsDouble = Double(dateAsInt)
-        let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE"
-        return dateFormatter.string(from: date)
-    }
-    
-    static func convertIntToTimeOfDay(_ dateAsInt: Int) -> String {
-        let unixTimestampAsDouble = Double(dateAsInt)
-        let date = Date(timeIntervalSince1970: unixTimestampAsDouble)
-        let dateFormatter = DateFormatter()
-        let timezone = TimeZone.current.abbreviation() ?? "PST"
-        dateFormatter.timeZone = TimeZone(abbreviation: timezone)
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "h a"
-        return dateFormatter.string(from: date)
-    }
-    
     static func getCoordinates(from addressString: String, completionHandler: @escaping((info: String, coordinates: CLLocationCoordinate2D), NSError?) -> Void ) {
         let geocoder = CLGeocoder()
         

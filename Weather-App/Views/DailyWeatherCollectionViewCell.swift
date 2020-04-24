@@ -26,12 +26,13 @@ class DailyWeatherCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(with city: KDTLocationObject, indexPath: IndexPath) {
-        if let indexForObject = city.weatherObject?.dailyWeather[indexPath.row] {
+        if let indexForObject = city.weatherObject?.dailyWeather[indexPath.row],
+            let timezone = city.weatherObject?.timezone {
             
             let rainAsDouble = indexForObject.precipProbability * 100
             let rainAsInt = Int(rainAsDouble)
             
-            dayLabel.text = WeatherManager.convertIntToDayOfWeek(indexForObject.time)
+            dayLabel.text = indexForObject.time.convertToDayAbbreviation(withTimezone: timezone)
             weatherIconImageView.image = WeatherObject.getWeatherIcon(with: indexForObject.icon)
             rainLabel.text = "\(rainAsInt)%"
             tempHighLabel.text = "\(Int(indexForObject.temperatureHigh))°"

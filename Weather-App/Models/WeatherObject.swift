@@ -17,17 +17,19 @@ class WeatherObject: Codable {
     var dailyTempLow: Int
     var currentSummary: String
     var icon: String
+    var timezone: String
     
     var hourlyWeather: [HourlyData]
     var dailyWeather: [DailyData]
     
-    init(currentTemp: Int, currentFeelsLikeTemp: Int, dailyTempHigh: Int, dailyTempLow: Int, currentSummary: String, icon: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
+    init(currentTemp: Int, currentFeelsLikeTemp: Int, dailyTempHigh: Int, dailyTempLow: Int, currentSummary: String, icon: String, timezone: String, hourlyWeather: [HourlyData], dailyWeather: [DailyData]) {
         self.currentTemp = currentTemp
         self.currentFeelsLikeTemp = currentFeelsLikeTemp
         self.dailyTempHigh = dailyTempHigh
         self.dailyTempLow = dailyTempLow
         self.currentSummary = currentSummary
         self.icon = icon
+        self.timezone = timezone
         self.hourlyWeather = hourlyWeather
         self.dailyWeather = dailyWeather
     }

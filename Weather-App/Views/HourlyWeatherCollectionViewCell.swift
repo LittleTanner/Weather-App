@@ -24,11 +24,12 @@ class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(with city: KDTLocationObject, indexPath: IndexPath) {
-        if let indexForObject = city.weatherObject?.hourlyWeather[indexPath.row] {
+        if let indexForObject = city.weatherObject?.hourlyWeather[indexPath.row],
+            let timezone = city.weatherObject?.timezone {
             let rainAsDouble = indexForObject.precipProbability * 100
             let rainAsInt = Int(rainAsDouble)
             
-            timeLabel.text = WeatherManager.convertIntToTimeOfDay(indexForObject.time)
+            timeLabel.text = indexForObject.time.convertToHourOfDay(withTimezone: timezone)
             weatherIcon.image = WeatherObject.getWeatherIcon(with: indexForObject.icon)
             tempLabel.text = "\(Int(indexForObject.temperature))°"
             rainLabel.text = "\(rainAsInt)%"

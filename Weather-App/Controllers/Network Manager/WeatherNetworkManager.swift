@@ -52,7 +52,7 @@ struct WeatherNetworkManager {
                     let dailyTempHigh = Int(dailyTempHighAsDouble)
                     let dailyTempLow = Int(dailyTempLowAsDouble)
                     
-                    let weatherObject = WeatherObject(currentTemp: currentTemp, currentFeelsLikeTemp: currentFeelsLikeTemp, dailyTempHigh: dailyTempHigh, dailyTempLow: dailyTempLow, currentSummary: currentSummary, icon: icon, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
+                    let weatherObject = WeatherObject(currentTemp: currentTemp, currentFeelsLikeTemp: currentFeelsLikeTemp, dailyTempHigh: dailyTempHigh, dailyTempLow: dailyTempLow, currentSummary: currentSummary, icon: icon, timezone: weatherData.timezone, hourlyWeather: hourlyWeather, dailyWeather: dailyWeatherData)
                     
                     completion(weatherObject)
                     return

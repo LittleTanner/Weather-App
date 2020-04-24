@@ -12,6 +12,7 @@
 		FC04E591243410DC00207762 /* DailyWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC04E58F243410DC00207762 /* DailyWeatherCollectionViewCell.swift */; };
 		FC04E592243410DC00207762 /* DailyWeatherCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC04E590243410DC00207762 /* DailyWeatherCollectionViewCell.xib */; };
 		FC0FD01F24523BF1000F7ED8 /* WeatherUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC91E7402450A1E600564256 /* WeatherUserDefaults.swift */; };
+		FC0FD02124534CFA000F7ED8 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0FD02024534CFA000F7ED8 /* DateHelper.swift */; };
 		FC1F2731242EDDDF00C08CAA /* SearchForLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2730242EDDDF00C08CAA /* SearchForLocationViewController.swift */; };
 		FC1F2734242EDEE200C08CAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F2733242EDEE200C08CAA /* Constants.swift */; };
 		FC6532A6243E94DE0014DC8A /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */; };
@@ -79,6 +80,7 @@
 		FC04E58C2433F4B100207762 /* HourlyWeatherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HourlyWeatherCollectionViewCell.xib; sourceTree = "<group>"; };
 		FC04E58F243410DC00207762 /* DailyWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		FC04E590243410DC00207762 /* DailyWeatherCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyWeatherCollectionViewCell.xib; sourceTree = "<group>"; };
+		FC0FD02024534CFA000F7ED8 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		FC1F2730242EDDDF00C08CAA /* SearchForLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchForLocationViewController.swift; sourceTree = "<group>"; };
 		FC1F2733242EDEE200C08CAA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FC6532A4243E94DE0014DC8A /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				FC1F2733242EDEE200C08CAA /* Constants.swift */,
 				FC91E7482450C93B00564256 /* StyleGuide.swift */,
 				FC91E74C2450E5FA00564256 /* Extensions */,
+				FC0FD02024534CFA000F7ED8 /* DateHelper.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				FC91E7412450A1E600564256 /* WeatherUserDefaults.swift in Sources */,
 				FC6960B9242BE7770024EDFA /* LocationViewController.swift in Sources */,
 				FC6960B5242BE7770024EDFA /* AppDelegate.swift in Sources */,
+				FC0FD02124534CFA000F7ED8 /* DateHelper.swift in Sources */,
 				FC91E7492450C93B00564256 /* StyleGuide.swift in Sources */,
 				FC98D32E243BFEE70047F022 /* KDTLocationObject.swift in Sources */,
 				FC91E7472450B6E500564256 /* UIViewController+Ext.swift in Sources */,
