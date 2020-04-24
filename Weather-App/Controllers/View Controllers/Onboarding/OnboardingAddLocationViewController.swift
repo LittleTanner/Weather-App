@@ -12,14 +12,11 @@ class OnboardingAddLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // Updates the user so the onboarding screne doesn't show again
-//        WeatherUserDefaults.shared.updateUser()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // Updates the user so the onboarding screne doesn't show again
+        // Updates the user so the onboarding screen doesn't show again
         WeatherUserDefaults.shared.updateUser()
     }
     
@@ -30,6 +27,5 @@ class OnboardingAddLocationViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
-    
 }
 
