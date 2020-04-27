@@ -20,12 +20,15 @@ class OnboardingAllowLocationViewController: UIViewController, CLLocationManager
     
     @IBAction func allowButtonTapped(_ sender: UIButton) {
         locationManager.requestWhenInUseAuthorization()
-        WeatherManager.shared.allowsLocation = true
-        let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
-        guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAddLocationViewControllerID) as? OnboardingAddLocationViewController else { return }
-        vc.modalPresentationStyle = .fullScreen
         
-        presentVCFromRight(vc)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            WeatherManager.shared.allowsLocation = true
+            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+            guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAddLocationViewControllerID) as? OnboardingAddLocationViewController else { return }
+            vc.modalPresentationStyle = .fullScreen
+            
+            self.presentVCFromRight(vc)
+        }
     }
     
     @IBAction func notNowButtonTapped(_ sender: UIButton) {

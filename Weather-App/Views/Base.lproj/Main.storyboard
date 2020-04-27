@@ -24,7 +24,7 @@
                                     <action selector="actionButtonTapped:" destination="9gP-nF-nwA" eventType="touchUpInside" id="4F2-wn-ogt"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="partly-cloudy-day" translatesAutoresizingMaskIntoConstraints="NO" id="w8m-N0-aR1">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingWelcome" translatesAutoresizingMaskIntoConstraints="NO" id="w8m-N0-aR1">
                                 <rect key="frame" x="20" y="129" width="374" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="w8m-N0-aR1" secondAttribute="height" multiplier="1:1" id="d28-QB-D2J"/>
@@ -105,7 +105,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="partly-cloudy-day" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-Mb-HEw">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingLocation" translatesAutoresizingMaskIntoConstraints="NO" id="IgK-Mb-HEw">
                                 <rect key="frame" x="20" y="129" width="374" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="IgK-Mb-HEw" secondAttribute="height" multiplier="1:1" id="vDC-tQ-0Og"/>
@@ -566,6 +566,8 @@
     <resources>
         <image name="CloudRefresh-0" width="52" height="52"/>
         <image name="MenuIcon" width="25" height="14"/>
+        <image name="OnboardingLocation" width="437" height="400"/>
+        <image name="OnboardingWelcome" width="600" height="600"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="partly-cloudy-day" width="1666.5" height="3621"/>
         <image name="rain" width="375" height="812"/>
