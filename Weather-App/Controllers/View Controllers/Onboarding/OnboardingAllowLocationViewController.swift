@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class OnboardingAllowLocationViewController: UIViewController, CLLocationManagerDelegate {
+class OnboardingAllowLocationViewController: UIViewController {
 
     var locationManager = CLLocationManager()
     
@@ -20,15 +20,6 @@ class OnboardingAllowLocationViewController: UIViewController, CLLocationManager
     
     @IBAction func allowButtonTapped(_ sender: UIButton) {
         locationManager.requestWhenInUseAuthorization()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            WeatherManager.shared.allowsLocation = true
-            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
-            guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAddLocationViewControllerID) as? OnboardingAddLocationViewController else { return }
-            vc.modalPresentationStyle = .fullScreen
-            
-            self.presentVCFromRight(vc)
-        }
     }
     
     @IBAction func notNowButtonTapped(_ sender: UIButton) {
@@ -38,5 +29,20 @@ class OnboardingAllowLocationViewController: UIViewController, CLLocationManager
         vc.modalPresentationStyle = .fullScreen
         
         presentVCFromRight(vc)
+    }
+}
+
+extension OnboardingAllowLocationViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            print("Authorized")
+            WeatherManager.shared.allowsLocation = true
+            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: nil)
+            guard let vc = storyboard.instantiateViewController(identifier: Constants.onboardingAddLocationViewControllerID) as? OnboardingAddLocationViewController else { return }
+            vc.modalPresentationStyle = .fullScreen
+            
+            self.presentVCFromRight(vc)
+        }
     }
 }
