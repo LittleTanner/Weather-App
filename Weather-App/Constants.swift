@@ -65,4 +65,10 @@ struct Constants {
     static let partlyCloudyDayIcon = "PartlyCloudyDayIcon"
     static let partlyCloudyNightIcon = "PartlyCloudyNightIcon"
     static let defaultImageIcon = "CloudyIcon"
+    
+    // Animation Image Prefix
+    static let cloudRefreshPrefix = "CloudRefresh"
+    
+    // Animation Image Total
+    static let cloudRefreshImageCount = 10
 }

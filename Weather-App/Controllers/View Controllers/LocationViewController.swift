@@ -12,19 +12,20 @@ import CoreLocation
 class LocationViewController: UIViewController {
     
     @IBOutlet weak var refreshButton: UIButton!
-    @IBOutlet weak var fetchingWeatherIndicator: UIActivityIndicatorView!
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var currentSummaryLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var weatherCollectionView: UICollectionView!
     @IBOutlet weak var hourlyOrDailySegmentedControl: UISegmentedControl!
+    @IBOutlet weak var cloudImageView: UIImageView!
     
     let locationManager = CLLocationManager()
     
     var city: KDTLocationObject?
     var cityLabelText: String?
     var hourlySelected: Bool = true
+    var cloudImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +78,8 @@ class LocationViewController: UIViewController {
         registerCollectionViewCells()
         
         cityNameLabel.text = cityLabelText
+        
+        cloudImages = cloudImages.createImageArray(total: Constants.cloudRefreshImageCount, imagePrefix: Constants.cloudRefreshPrefix)
     }
     
     func registerCollectionViewCells() {
@@ -95,8 +98,11 @@ class LocationViewController: UIViewController {
             self.currentSummaryLabel.text = weatherObject.currentSummary
             self.weatherCollectionView.reloadData()
             self.backgroundImageView.image = backgroundImage
-            self.fetchingWeatherIndicator.stopAnimating()
-            self.refreshButton.isHidden = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            self.cloudImageView.stopAnimation(imageView: self.cloudImageView)
+            self.refreshButton.isEnabled = true
         }
     }
     
@@ -140,8 +146,8 @@ class LocationViewController: UIViewController {
     }
     
     func determineHowToUpdateWeather() {
-        refreshButton.isHidden = true
-        fetchingWeatherIndicator.startAnimating()
+        cloudImageView.startAnimation(imageView: cloudImageView, images: cloudImages)
+        refreshButton.isEnabled = false
         
         if findPageIndex() == 0 && WeatherManager.shared.allowsLocation == true {
             locationManager.delegate = self

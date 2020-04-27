@@ -121,7 +121,7 @@
         <image name="HourlyHeader" width="50" height="21"/>
         <image name="RainDrop" width="8" height="10"/>
         <namedColor name="blueBackground">
-            <color red="0.48627450980392156" green="0.60392156862745094" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.22745098039215686" green="0.46666666666666667" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
