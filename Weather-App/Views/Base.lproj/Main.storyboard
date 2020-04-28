@@ -111,25 +111,45 @@
                                     <constraint firstAttribute="width" secondItem="IgK-Mb-HEw" secondAttribute="height" multiplier="1:1" id="vDC-tQ-0Og"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vKZ-AW-4Vq">
+                                <rect key="frame" x="385" y="457" width="29" height="15"/>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="H40-m6-qZ2"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aUv-Cb-WSj">
+                                <rect key="frame" x="0.0" y="457" width="29" height="15"/>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="IpH-43-XTI"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="aUv-Cb-WSj" firstAttribute="width" secondItem="Ta2-WM-HGv" secondAttribute="width" multiplier="0.07" id="6CA-T6-NE2"/>
                             <constraint firstItem="evQ-y5-zaL" firstAttribute="width" secondItem="Ta2-WM-HGv" secondAttribute="width" multiplier="0.5" id="99J-nz-1N1"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="height" secondItem="Ta2-WM-HGv" secondAttribute="height" multiplier="0.05" id="Axt-JZ-1ff"/>
                             <constraint firstItem="nOr-FU-qge" firstAttribute="bottom" secondItem="Gb7-ZX-l9S" secondAttribute="bottom" constant="20" id="IQR-wq-1qH"/>
+                            <constraint firstItem="vKZ-AW-4Vq" firstAttribute="centerY" secondItem="nOr-FU-qge" secondAttribute="centerY" multiplier="1.025" id="JWv-eq-M7W"/>
                             <constraint firstItem="evQ-y5-zaL" firstAttribute="top" secondItem="PR4-cu-1OW" secondAttribute="bottom" constant="20" id="Mkr-Xy-ZK5"/>
                             <constraint firstItem="dah-zj-ZMk" firstAttribute="top" secondItem="nOr-FU-qge" secondAttribute="top" constant="20" id="PzA-nl-Wdp"/>
+                            <constraint firstItem="aUv-Cb-WSj" firstAttribute="leading" secondItem="nOr-FU-qge" secondAttribute="leading" id="Ukm-S5-AiP"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="centerX" secondItem="nOr-FU-qge" secondAttribute="centerX" id="Uo5-jF-cLe"/>
                             <constraint firstItem="dah-zj-ZMk" firstAttribute="leading" secondItem="nOr-FU-qge" secondAttribute="leading" constant="20" id="YBk-EZ-ChI"/>
                             <constraint firstItem="PR4-cu-1OW" firstAttribute="top" secondItem="IgK-Mb-HEw" secondAttribute="bottom" constant="20" id="Ybe-LK-UXW"/>
                             <constraint firstItem="evQ-y5-zaL" firstAttribute="centerX" secondItem="nOr-FU-qge" secondAttribute="centerX" id="awI-K6-Seg"/>
                             <constraint firstItem="IgK-Mb-HEw" firstAttribute="top" secondItem="dah-zj-ZMk" secondAttribute="bottom" constant="20" id="cjl-rv-y2z"/>
+                            <constraint firstItem="vKZ-AW-4Vq" firstAttribute="width" secondItem="Ta2-WM-HGv" secondAttribute="width" multiplier="0.07" id="fEM-EX-kd0"/>
                             <constraint firstItem="nOr-FU-qge" firstAttribute="trailing" secondItem="IgK-Mb-HEw" secondAttribute="trailing" constant="20" id="k9v-re-IGf"/>
                             <constraint firstItem="IgK-Mb-HEw" firstAttribute="leading" secondItem="nOr-FU-qge" secondAttribute="leading" constant="20" id="nbG-Rr-cns"/>
                             <constraint firstItem="nOr-FU-qge" firstAttribute="trailing" secondItem="dah-zj-ZMk" secondAttribute="trailing" constant="20" id="o1L-hn-Ced"/>
                             <constraint firstItem="PR4-cu-1OW" firstAttribute="leading" secondItem="nOr-FU-qge" secondAttribute="leading" constant="20" id="rEe-a5-Pkk"/>
                             <constraint firstItem="dah-zj-ZMk" firstAttribute="height" secondItem="Ta2-WM-HGv" secondAttribute="height" multiplier="0.05" id="rWz-hM-8uo"/>
                             <constraint firstItem="nOr-FU-qge" firstAttribute="trailing" secondItem="PR4-cu-1OW" secondAttribute="trailing" constant="20" id="twQ-yf-AAE"/>
+                            <constraint firstItem="nOr-FU-qge" firstAttribute="trailing" secondItem="vKZ-AW-4Vq" secondAttribute="trailing" id="uab-Yq-TqU"/>
+                            <constraint firstItem="aUv-Cb-WSj" firstAttribute="centerY" secondItem="nOr-FU-qge" secondAttribute="centerY" multiplier="1.025" id="unG-Et-Cnp"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="width" secondItem="Ta2-WM-HGv" secondAttribute="width" multiplier="0.6" id="xK7-Lc-rqP"/>
                             <constraint firstItem="evQ-y5-zaL" firstAttribute="height" secondItem="Ta2-WM-HGv" secondAttribute="height" multiplier="0.05" id="xi0-8I-1qY"/>
                             <constraint firstItem="Gb7-ZX-l9S" firstAttribute="top" secondItem="evQ-y5-zaL" secondAttribute="bottom" constant="20" id="ypy-Xc-pNq"/>
@@ -137,6 +157,10 @@
                         <viewLayoutGuide key="safeArea" id="nOr-FU-qge"/>
                     </view>
                     <navigationItem key="navigationItem" id="fXK-SU-ngn"/>
+                    <connections>
+                        <outlet property="leftArrow" destination="vKZ-AW-4Vq" id="piL-Uq-zLt"/>
+                        <outlet property="rightArrow" destination="aUv-Cb-WSj" id="ekD-GT-GyD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXw-bD-XsG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -169,9 +193,8 @@
                                     <constraint firstAttribute="width" secondItem="LfN-8S-s21" secondAttribute="height" multiplier="1:1" id="crQ-zy-kAS"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhu-jm-P22">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are all setup to see the local weather forecast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhu-jm-P22">
                                 <rect key="frame" x="20" y="523" width="374" height="254"/>
-                                <string key="text">You are all setup to see the local weather forecast. It might take 10-30 seconds the first time for the weather to load depending on your internet.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -568,6 +591,8 @@
         <image name="MenuIcon" width="25" height="14"/>
         <image name="OnboardingLocation" width="437" height="400"/>
         <image name="OnboardingWelcome" width="600" height="600"/>
+        <image name="arrow.left" catalog="system" width="128" height="98"/>
+        <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="partly-cloudy-day" width="1666.5" height="3621"/>
         <image name="rain" width="375" height="812"/>

@@ -11,15 +11,23 @@ import CoreLocation
 
 class OnboardingAllowLocationViewController: UIViewController {
 
+    @IBOutlet weak var rightArrow: UIImageView!
+    @IBOutlet weak var leftArrow: UIImageView!
+    
+    
     var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
+        rightArrow.isHidden = true
+        leftArrow.isHidden = true
     }
     
     @IBAction func allowButtonTapped(_ sender: UIButton) {
         locationManager.requestWhenInUseAuthorization()
+        rightArrow.isHidden = false
+        leftArrow.isHidden = false
     }
     
     @IBAction func notNowButtonTapped(_ sender: UIButton) {
